@@ -1,4 +1,4 @@
 package net.manager.iym.exception;
 
-public class exception {
+public class Exception {
 }
