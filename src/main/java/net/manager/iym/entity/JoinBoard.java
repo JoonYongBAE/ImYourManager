@@ -14,4 +14,5 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JoinBoard {
+
 }
