@@ -14,7 +14,12 @@ public class Member {
 
     @Id
     @GeneratedValue
+    @Column(name = "id",length = 20)
     private String id;
+
+    @ManyToOne
+    @JoinColumn(name = "teamNum")
+    private Team team;
 
     @Column(length = 20, nullable = false)
     private String pass;
@@ -36,12 +41,5 @@ public class Member {
 
     @Column(length = 30, nullable = false)
     private String grade;
-
-    @Column
-    private Long teamNum;
-
-    @ManyToOne
-    @JoinColumn( name = "teamNum")
-    private Team team;
 
 }

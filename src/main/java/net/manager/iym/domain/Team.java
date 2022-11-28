@@ -14,7 +14,11 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "teamNum")
     private Long teamNum;
+
+    @Column(length = 20, nullable = false)
+    private String id;
 
     @Column(length = 20, nullable = false)
     private String teamName;

@@ -11,25 +11,21 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class JoinBoard {
+public class JoinBoard extends CommonEntity{//
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "joinBoardNum")
     private Long joinBoardNum;
 
-    @Column(length = 20, nullable = false)
-    private String id;
+    @ManyToOne
+    @JoinColumn(name="id")
+    private Member member;
 
     @Column(length = 100, nullable = false)
     private String joinTitle;
 
     @Column(length = 3000, nullable = false)
     private String joinContent;
-
-    @Column(length = 30, nullable = false)
-    private String grade;
-
-    @Column(length = 30, nullable = false)
-    private String name;
 
     @Column(length = 20, nullable = false)
     private String joinType;
@@ -39,10 +35,5 @@ public class JoinBoard {
 
     @Column(columnDefinition = "long default 0", nullable = false)
     private Long joinVisitCount;
-
-    @ManyToOne
-    @JoinColumn(name="id")
-    private Member member;
-
 
 }

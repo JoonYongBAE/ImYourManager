@@ -10,14 +10,16 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class NoticeBoard {
+public class NoticeBoard extends CommonEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "noticeBoardNum")
     private Long noticeBoardNum;
 
-    @Column(length = 20, nullable = false)
-    private String id;
+    @ManyToOne
+    @JoinColumn(name="id")
+    private Member member;
 
     @Column(length = 100, nullable = false)
     private String noticeTitle;
@@ -25,22 +27,10 @@ public class NoticeBoard {
     @Column(length = 3000, nullable = false)
     private String noticeContent;
 
-    @Column(length = 30, nullable = false)
-    private String grade;
-
     @Column(columnDefinition = "long default 0", nullable = false)
     private Long noticeVisitCount;
 
-    @Column(length = 30, nullable = false)
-    private String name;
-
     @Column(length = 3000)
     private String noticeFile;
-
-    @ManyToOne
-    @JoinColumn(name="id")
-    private Member member;
-
-
 
 }
