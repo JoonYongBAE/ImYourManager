@@ -14,7 +14,7 @@ public class Member {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id",length = 20)
     private String id;
 
     @ManyToOne

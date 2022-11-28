@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TeamBoard {////
+public class TeamBoard extends CommonEntity{////
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,9 +26,6 @@ public class TeamBoard {////
 
     @Column(length = 3000, nullable = false)
     private String teamBoardContent;
-
-    @Column(length = 30, nullable = false)
-    private String grade;
 
     @Column(columnDefinition = "long default 0", nullable = false)
     private Long teamBoardVisitCount;

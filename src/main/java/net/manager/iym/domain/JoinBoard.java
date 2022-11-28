@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class JoinBoard {//
+public class JoinBoard extends CommonEntity{//
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "joinBoardNum")
@@ -26,9 +26,6 @@ public class JoinBoard {//
 
     @Column(length = 3000, nullable = false)
     private String joinContent;
-
-    @Column(length = 30, nullable = false)
-    private String grade;
 
     @Column(length = 20, nullable = false)
     private String joinType;

@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class NoticeBoard {
+public class NoticeBoard extends CommonEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,9 +26,6 @@ public class NoticeBoard {
 
     @Column(length = 3000, nullable = false)
     private String noticeContent;
-
-    @Column(length = 30, nullable = false)
-    private String grade;
 
     @Column(columnDefinition = "long default 0", nullable = false)
     private Long noticeVisitCount;

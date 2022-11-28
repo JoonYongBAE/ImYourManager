@@ -25,9 +25,6 @@ public class Schedule {
     @Column(nullable = false)
     private Long teamNum;
 
-    @Column(length = 30, nullable = false)
-    private String grade;
-
     @Column(length = 50, nullable = false)
     private String ground;
 
