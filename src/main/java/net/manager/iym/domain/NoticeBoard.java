@@ -38,7 +38,7 @@ public class NoticeBoard {
     private String noticeFile;
 
     @ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="member_id")
     private Member member;
 
 

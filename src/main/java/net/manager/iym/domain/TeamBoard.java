@@ -35,7 +35,7 @@ public class TeamBoard {////
     private String teamBoardFile;
 
     @ManyToOne
-    @JoinColumn(name="teamNum")
+    @JoinColumn(name="team_Num")
     private Member member;
 
 

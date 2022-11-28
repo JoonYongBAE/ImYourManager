@@ -16,8 +16,6 @@ public class JoinBoard {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long joinBoardNum;
 
-    @Column(length = 20, nullable = false)
-    private String id;
 
     @Column(length = 100, nullable = false)
     private String joinTitle;

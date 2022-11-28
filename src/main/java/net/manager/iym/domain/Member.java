@@ -14,6 +14,7 @@ public class Member {
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private String id;
 
     @Column(length = 20, nullable = false)
@@ -37,11 +38,8 @@ public class Member {
     @Column(length = 30, nullable = false)
     private String grade;
 
-    @Column
-    private Long teamNum;
-
     @ManyToOne
-    @JoinColumn( name = "teamNum")
+    @JoinColumn(name = "team_Num")
     private Team team;
 
 }
