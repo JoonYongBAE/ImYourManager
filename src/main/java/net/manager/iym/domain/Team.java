@@ -29,13 +29,13 @@ public class Team {
     private String teamType;
 
     @Column(length = 50, nullable = false)
-    private Long teamLocal;
+    private String teamLocal;
 
     @Column(length = 20, nullable = false)
-    private Long teamLevel;
+    private String teamLevel;
 
     @Column(length = 200)
-    private Long teamInfo;
+    private String teamInfo;
 
     @Column(length = 3000)
     private String teamLogo;
