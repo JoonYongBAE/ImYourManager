@@ -14,10 +14,12 @@ public class TeamBoard {////
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "teamBoardNum")
     private Long teamBoardNum;
 
-    @Column(length = 20, nullable = false)
-    private String id;
+    @ManyToOne
+    @JoinColumn(name="id")
+    private Member member;
 
     @Column(length = 100, nullable = false)
     private String teamBoardTitle;
@@ -33,10 +35,4 @@ public class TeamBoard {////
 
     @Column(length = 3000)
     private String teamBoardFile;
-
-    @ManyToOne
-    @JoinColumn(name="team_Num")
-    private Member member;
-
-
 }

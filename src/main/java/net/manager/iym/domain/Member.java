@@ -17,6 +17,10 @@ public class Member {
     @Column(name = "id")
     private String id;
 
+    @ManyToOne
+    @JoinColumn(name = "teamNum")
+    private Team team;
+
     @Column(length = 20, nullable = false)
     private String pass;
 
@@ -37,9 +41,5 @@ public class Member {
 
     @Column(length = 30, nullable = false)
     private String grade;
-
-    @ManyToOne
-    @JoinColumn(name = "team_Num")
-    private Team team;
 
 }

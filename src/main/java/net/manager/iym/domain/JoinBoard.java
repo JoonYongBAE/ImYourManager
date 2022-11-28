@@ -14,8 +14,12 @@ import javax.persistence.*;
 public class JoinBoard {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "joinBoardNum")
     private Long joinBoardNum;
 
+    @ManyToOne
+    @JoinColumn(name="id")
+    private Member member;
 
     @Column(length = 100, nullable = false)
     private String joinTitle;
@@ -26,9 +30,6 @@ public class JoinBoard {
     @Column(length = 30, nullable = false)
     private String grade;
 
-    @Column(length = 30, nullable = false)
-    private String name;
-
     @Column(length = 20, nullable = false)
     private String joinType;
 
@@ -37,10 +38,5 @@ public class JoinBoard {
 
     @Column(columnDefinition = "long default 0", nullable = false)
     private Long joinVisitCount;
-
-    @ManyToOne
-    @JoinColumn(name="id")
-    private Member member;
-
 
 }

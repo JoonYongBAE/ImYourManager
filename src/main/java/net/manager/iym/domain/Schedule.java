@@ -15,7 +15,12 @@ import java.util.Date;
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "scheduleNum")
     private Long scheduleNum;
+
+    @ManyToOne
+    @JoinColumn(name="id")
+    private Member member;
 
     @Column(nullable = false)
     private Long teamNum;
@@ -31,16 +36,4 @@ public class Schedule {
 
     @Column(length = 30, nullable = false)  // Date 체크필요
     private Date scheduleTime;
-
-    @Column(length = 30, nullable = false)
-    private String name;
-
-    @Column(length = 20, nullable = false)
-    private String id;
-
-
-
-    @ManyToOne
-    @JoinColumn(name="member_id")
-    private Member member;
 }
