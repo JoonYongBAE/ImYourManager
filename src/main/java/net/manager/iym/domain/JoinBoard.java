@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class JoinBoard {
+public class JoinBoard {//
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "joinBoardNum")
