@@ -41,5 +41,4 @@ public class Member {
 
     @Column(length = 30, nullable = false)
     private String grade;
-
 }
