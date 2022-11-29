@@ -1,4 +1,4 @@
 package net.manager.iym.service;
 
-public class QAService {
+public interface QAService {
 }

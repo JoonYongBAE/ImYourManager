@@ -1,7 +1,8 @@
 package net.manager.iym.controller;
 
 import net.manager.iym.dto.TeamDTO;
-import net.manager.iym.service.TeamService;
+import net.manager.iym.service.TeamServiceImpl;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.Map;
-
+@Controller
 @RequestMapping("/team")
 public class TeamController {
-    TeamService teamService;
+    TeamServiceImpl teamService;
 
     @PostMapping("/createTeamProcess")
     public String createTeamProcess(@Valid TeamDTO teamDTO, Errors errors, Model model){

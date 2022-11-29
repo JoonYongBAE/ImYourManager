@@ -16,6 +16,7 @@ import javax.validation.constraints.Pattern;
 @Builder
 @Getter
 public class TeamDTO {
+
     private Long teamNum;
 
     @NotBlank(message = "팀이름은 필수 입력사항 입니다.")
