@@ -1,8 +1,10 @@
 package net.manager.iym.service;
 
 import lombok.RequiredArgsConstructor;
+import net.manager.iym.domain.Team;
 import net.manager.iym.dto.TeamDTO;
 import net.manager.iym.repository.TeamRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -13,28 +15,31 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService{
-
+    private final ModelMapper modelMapper;
     private final TeamRepository teamRepository;
 
-    // 유효성 검사 실패한 항목을 찾아서 메세지 담아서 보내줌.
-    public Map<String, String> validateHandling(Errors errors) {
-        Map<String, String> validResult = new HashMap<>();
+public boolean checkTeamName(String teamName){   //중복 체크
+
+    return teamRepository.existsByTeamName(teamName);
+}
+
+public Map<String, String> validateHandling(Errors errors){     // 유효성 검사 핸들러
+    Map<String, String> validResult = new HashMap<>();
         //유효성검사에 통과하지 못한 항목을 가져옴.
-        for (FieldError error: errors.getFieldErrors()){
-            String validKey = String.format("%s", error.getField());
-            validResult.put(validKey, error.getDefaultMessage());
-        }
-        return validResult;
+    for (FieldError error: errors.getFieldErrors()){
+            String validKey = String.format("%s", error.getField());  // %s = 유효성검사 통과하지 못한 dto의 필드명
+            validResult.put(validKey, error.getDefaultMessage());     // dto에 작성된 default 메세지
     }
-    //중복체크
-    public void checkTeamName(TeamDTO teamDTO){
-        boolean teamNameDuplicate = teamRepository.existsByTeamName(teamDTO.getTeamName());
-        if(teamNameDuplicate){
-            throw new IllegalStateException("같은 팀이름이 이미 존재합니다.");
-        }
-    }
+    return validResult;
+}
 
-    public void createTeam(TeamDTO teamDTO) {
+public String register(TeamDTO teamDTO){
 
-    }
+    Team team = modelMapper.map(teamDTO, Team.class);
+    String teamName = teamRepository.save(team).getTeamName();
+
+    /*팀생성한 사람의 등급을 팀리더로 변경.*/
+
+    return teamName;
+}
 }

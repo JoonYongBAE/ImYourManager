@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TeamBoard extends CommonEntity{////
+public class TeamBoard extends CommonEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
