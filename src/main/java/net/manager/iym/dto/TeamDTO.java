@@ -43,6 +43,5 @@ public class TeamDTO {
 
     // repository를 통해 조회한 Team Entity를 dto로 변환하는 용도.
     public TeamDTO(Team team){
-
     }
 }
