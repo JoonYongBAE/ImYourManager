@@ -1,5 +1,6 @@
 package net.manager.iym.config;
 
+<<<<<<< HEAD
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -16,4 +17,4 @@ public class CustomServletConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/static/assets");
     }
 
-}
+

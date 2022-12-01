@@ -6,11 +6,13 @@ import net.manager.iym.repository.JoinBoardRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.stream.Collectors;
+    Long register(JoinBoardDTO joinBoardDTO);
 
+    JoinBoardDTO readOne(Long joinBoardNum);
 
-public interface JoinBoardService {
+    void modify(JoinBoardDTO joinBoardDto);
 
+    void remove(Long joinBoardNum);
+
+    PageResponseDTO<JoinBoardDTO> list(PageRequestDTO pageRequestDTO);
 }

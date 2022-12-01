@@ -17,9 +17,6 @@ public class NoticeBoard extends CommonEntity{
     @Column(name = "noticeBoardNum")
     private Long noticeBoardNum;
 
-    @ManyToOne
-    @JoinColumn(name="id")
-    private Member member;
 
     @Column(length = 100, nullable = false)
     private String noticeTitle;
