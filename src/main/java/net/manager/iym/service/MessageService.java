@@ -1,4 +1,4 @@
 package net.manager.iym.service;
 
-public class MessageService {
+public interface MessageService {
 }
