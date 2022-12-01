@@ -10,11 +10,10 @@ import javax.validation.constraints.Pattern;
 
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Builder
-@Getter
 public class TeamDTO {
 
     private Long teamNum;
@@ -38,7 +37,6 @@ public class TeamDTO {
 
     private String teamInfo;
     private String teamLogo;
-
 
 
     // repository를 통해 조회한 Team Entity를 dto로 변환하는 용도.

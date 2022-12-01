@@ -16,7 +16,6 @@ import java.util.Map;
 public class TeamController {
 
     private final TeamServiceImpl teamService;
-    private final TeamDTO teamDTO;
 
     @GetMapping("/newTeam")    ///팀생성하기 버튼 눌렀을 때
     public String createForm() {
