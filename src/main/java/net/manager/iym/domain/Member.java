@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @ToString
-public class Member extends CommonEntity{
+public class Member extends CommonEntity{//
 
     @Id
     private String id;
