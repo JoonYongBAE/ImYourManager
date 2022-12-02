@@ -16,7 +16,7 @@ public class MemberServiceImpl implements MemberService{
     private final ModelMapper modelMapper;
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Override
+    @Override//
     public String register(MemberDTO memberDTO) {
         memberDTO.setPass(bCryptPasswordEncoder.encode(memberDTO.getPass()));
         Member member = modelMapper.map(memberDTO, Member.class);
