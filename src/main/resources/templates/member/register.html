@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <title>Member Join Page</title>
+</head>
+
+
+                    <form action="/member/register" method="post">
+                        <div >
+                            <span>ID</span>
+                            <input type="text" name="id"/>
+                        </div>
+
+                        <div>
+                            <span>PASS</span>
+                            <input type="password" name="pass"/>
+                        </div>
+
+
+                        <div>
+                            <span>MAIL</span>
+                            <input type="text" name="mail"/>
+                        </div>
+
+                        <div>
+                            <span>NAME</span>
+                            <input type="text" name="name"/>
+                        </div>
+
+                        <div>
+                            <span>MemberLoc</span>
+                            <input type="text" name="memberLoc"/>
+                        </div>
+
+                        <div>
+                            <span>PHONE</span>
+                            <input type="text" name="phone"/>
+                        </div>
+
+                        <div>
+                            <span>GENDER</span>
+                            <input type="text" name="gender"/>
+                        </div>
+
+
+
+
+                            <div>
+                                <button type="submit">Submit</button>
+                                <button type="reset">Reset</button>
+                            </div>
+
+                    </form>
+
+</html>

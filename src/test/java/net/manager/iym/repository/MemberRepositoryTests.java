@@ -23,14 +23,14 @@ public class MemberRepositoryTests {
 
     @Test
     public void insertMember(){
-        IntStream.rangeClosed(1,2).forEach(i->{
-            Member member = Member.builder().id("member1").team(null)
+        IntStream.rangeClosed(1,20).forEach(i->{
+            Member member = Member.builder().id("member"+i).team(null)
                     .pass(passwordEncoder.encode("1111"))
                     .mail("ict"+i+"@naver.com").gender("man").phone("01012345"+i)
                     .name("mingyo").memberLoc("korea")
                     .build();
             member.addGrade(MemberGrade.STANDARD);
-            if (i>=10){
+            if (i>=5){
                 member.addGrade(MemberGrade.TEAMMEMBER);
             }
             memberRepository.save(member);
@@ -39,10 +39,15 @@ public class MemberRepositoryTests {
 
     @Test
     public void testRead(){
-        Optional<Member> result = memberRepository.getWithGrade("member9");
+        Optional<Member> result = memberRepository.getWithGrade("member12");
+        log.info("--------");
+        log.info(result);
         Member member = result.orElseThrow();
+        log.info("--------");
         log.info(member);
+        log.info("--------");
         log.info(member.getGradeSet());
+        log.info("--------");
         member.getGradeSet().forEach(memberGrade -> log.info(memberGrade.name()));
     }
 

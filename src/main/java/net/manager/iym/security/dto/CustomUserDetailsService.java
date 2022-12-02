@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -20,8 +21,9 @@ public class CustomUserDetailsService implements UserDetailsService { //인터�
 
     private final MemberRepository memberRepository;
     @Override
+    @Transactional//하나씩만 실행하도록 설정해준다.
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        log.info("loadUserByUserName" + id);
+        log.info("loadUserByUserName--------- : " + id);
         Optional<Member> result = memberRepository.getWithGrade(id);
         if(result.isEmpty()){
             throw new UsernameNotFoundException("User Not Found!!!");
@@ -36,8 +38,9 @@ public class CustomUserDetailsService implements UserDetailsService { //인터�
                 member.getMemberLoc(),
                 member.getName(),
                 member.getTeam(),
-                member.getGradeSet().stream().map(memberGrade -> new SimpleGrantedAuthority("GRADE_"+memberGrade.name())).collect(Collectors.toList())
-        );
+                member.getGradeSet().stream()
+                        .map(memberGrade -> new SimpleGrantedAuthority(memberGrade.name()))
+                        .collect(Collectors.toList()));
         log.info("memberSecurityDTO");
         log.info(memberSecurityDTO);
     return memberSecurityDTO; //컨트롤러에게 던져준다.

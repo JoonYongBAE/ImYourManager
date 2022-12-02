@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +18,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 import javax.sql.DataSource;
@@ -24,15 +26,16 @@ import javax.sql.DataSource;
 @Log4j2
 @Configuration
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true) //prePostEnabled = true는 원하는 곳에
-// @PreAuthorize, @PostAuthorize 어노테이션을 이용하여 사전 또는 사후 체크 설정한다.
+@EnableWebSecurity
 public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 못하게한다.
     //자동로그인을 위한 주입 필요
     private final DataSource dataSource;
     private final UserDetailsService userDetailsService;
+
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {//
         return new BCryptPasswordEncoder();
+
     }
 
 //    @Bean
@@ -42,19 +45,30 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        //security는 기본적으로 모든페이지에 적용이 되기 때문에 예외를 두고싶은 페이지를 설정하는 것이다.
 
-        log.info("------------configure-------------------");
+        log.info("------------config-------------------");
 
         //커스텀 로그인 페이지
-        http.formLogin().loginPage("/member/login");
+        http.formLogin()
+                .loginPage("/member/login");
+//                .and()//그리고 and()를 사용함으로써 http를 사용하지 않아도 된다.
+//            .logout()//로그아웃에 설정한다.
+//                .permitAll()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))//주소창에 요청해도 포스트로 인식하여 로그아웃한다.
+//                .deleteCookies("JSESSION")//로그아웃시 쿠키에서 제거한다.
+//                .invalidateHttpSession(true) //로그아웃시 세션을 종료한다.
+//                .clearAuthentication(true); //로그아웃시 권한을 제거한다.
         //CSRF 토큰 비활성화
         http.csrf().disable();
 
-        http.rememberMe()
+
+        http.rememberMe()//아이디 기억사용 옵션이다.
                 .key("12345678")
                 .tokenRepository(persistentTokenRepository())
                 .userDetailsService(userDetailsService)
-                .tokenValiditySeconds(606024*30);
+                .tokenValiditySeconds(606024 * 30);
+
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
 
@@ -81,6 +95,7 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
         return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 
     }
+
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
