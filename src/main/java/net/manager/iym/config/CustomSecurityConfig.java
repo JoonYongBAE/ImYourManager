@@ -39,7 +39,6 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
 //    public AuthenticationSuccessHandler authenticationSuccessHandler() {
 //        return new CustomSocialLoginSuccessHandler(passwordEncoder());
 //    }//소셜로그인 관련 빈생성
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -49,7 +48,6 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
         http.formLogin().loginPage("/member/login");
         //CSRF 토큰 비활성화
         http.csrf().disable();
-
         http.rememberMe()
                 .key("12345678")
                 .tokenRepository(persistentTokenRepository())
@@ -57,14 +55,11 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
                 .tokenValiditySeconds(606024*30);
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
-
 //        http.oauth2Login().loginPage("/member/login").successHandler(authenticationSuccessHandler());
-
         return http.build();
     }
 //rememberme 기능은 쿠키를 생성할 때 쿠키의 값을 인코딩하기 위한 키값과 필요한 정보를 저장하는 tokenRepository를 지정하고
 // persistentTokenRepository() 이용하여 처리함
-
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {

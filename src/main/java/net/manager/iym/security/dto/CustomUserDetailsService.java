@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 @Log4j2
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService { //인터페이스르 연결해주고 한개의 메소드를 오버라이딩해준다.
+public class CustomUserDetailsService implements UserDetailsService { //인터페이스 연결해주고 한개의 메소드를 오버라이딩해준다.
 
     private final MemberRepository memberRepository;
     @Override
-    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {  //id로 회원 정보를 조회후 회원이 맞는지 인증과정을 처리하기 위한 메소드
         log.info("loadUserByUserName" + id);
         Optional<Member> result = memberRepository.getWithGrade(id);
         if(result.isEmpty()){

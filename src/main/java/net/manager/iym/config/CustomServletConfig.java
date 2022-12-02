@@ -11,10 +11,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CustomServletConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        registry.addResourceHandler("/js/**").addResourceLocations("classpath:resources/static/js");
-        registry.addResourceHandler("/fonts/**").addResourceLocations("classpath:resources/static.fonts");
-        registry.addResourceHandler("/css/**").addResourceLocations("classpath:resources/static/css");
-        registry.addResourceHandler("/assets/**").addResourceLocations("classpath:resources/static/assets");
+        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js");
+        registry.addResourceHandler("/fonts/**").addResourceLocations("classpath:/static.fonts");
+        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css");
+        registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/static/assets");
     }
 
 }
