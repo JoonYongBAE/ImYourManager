@@ -1,4 +1,4 @@
 package net.manager.iym.controller;
 
-public class MessageController {
+public class MessageController {//
 }

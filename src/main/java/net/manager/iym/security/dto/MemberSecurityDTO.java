@@ -12,7 +12,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @ToString
-public class MemberSecurityDTO extends User {
+public class MemberSecurityDTO extends User {   // 회원임을 확인하기위한 인증용 DTO
     private final String id;
     private final String pass;
     private final String mail;

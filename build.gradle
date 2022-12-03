@@ -1,17 +1,18 @@
+
 buildscript {
-    ext{
-        queryDslVersion= "5.0.0"
+    ext {
+        queryDslVersion = "5.0.0"
     }
 }
 
+
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '2.7.3'
+    id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
 }
 
-
-group = 'net.manager'
+group = 'org.zerock'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -23,21 +24,21 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
-    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    //test때 사용하는 롬복
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
@@ -45,10 +46,33 @@ dependencies {
 
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 
+    annotationProcessor(
+
+            "javax.persistence:javax.persistence-api",
+
+            "javax.annotation:javax.annotation-api",
+
+            "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+
+
     implementation 'org.modelmapper:modelmapper:3.1.0'
+
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
+
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-security' //스프링 부트 로그인 보안관련 프레임워크
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5' //타임리프에서 인증정보를 사용하기 위해서 사용한다.
+
+
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+    implementation 'net.coobird:thumbnailator:0.4.16'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 }
 
 tasks.named('test') {
@@ -56,7 +80,7 @@ tasks.named('test') {
 }
 
 sourceSets {
-    main{
+    main {
         java {
             srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
         }

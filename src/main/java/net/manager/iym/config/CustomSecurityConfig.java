@@ -32,7 +32,6 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
     //자동로그인을 위한 주입 필요
     private final DataSource dataSource;
     private final UserDetailsService userDetailsService;
-
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {//
         return new BCryptPasswordEncoder();
@@ -56,11 +55,11 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
 
 
         http.rememberMe()//아이디 기억사용 옵션이다.
+
                 .key("12345678")
                 .tokenRepository(persistentTokenRepository())
                 .userDetailsService(userDetailsService)
                 .tokenValiditySeconds(606024 * 30);
-
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
 
@@ -87,7 +86,6 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
         return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 
     }
-
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
