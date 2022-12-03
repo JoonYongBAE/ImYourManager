@@ -3,20 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Schdule</title>
-    <link href='fullcalendar/main.css' rel='stylesheet'/>
-    <script src='fullcalendar/main.js'></script>
-    <script>
+<!--    <link href='fullcalendar/main.css' rel='stylesheet'/>-->
+<!--    <script src='fullcalendar/main.js'></script>-->
+
+    <!-- jquery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- fullcalendar CDN -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <!-- fullcalendar 언어 CDN -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+
+
+<script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
+                views:{
+                    dayGridMonth:{buttonText:'달력으로보기'},
+                    listMonth:{buttonText: '목록으로보기'}
+                },
+                headerToolbar: {
+                    right: 'dayGridMonth,listMonth',
+                    center: 'prev title next',
+                    left: 'today'
+                },
+                events:'https://fullcalendar.io/api/demo-feeds/events.json',
+                titleFormat: function (date) {
+                    // YYYY년 MM월
+                    return `${date.date.year}년 ${date.date.month + 1}월`;
+                },
+                selectable:true,
             });
             calendar.render();
         });
 
     </script>
+    <style>
+        .fc-toolbar-chunk {
+            display: flex;      // 일렬로 나란히
+        align-items: center; // 수직 가운데 정렬
+        }
+    </style>
 </head>
 <body>
-
+<h1>일정 관리</h1>
+<div id='calendar'></div>
 </body>
 </html>
+
+
+
+
+
+
