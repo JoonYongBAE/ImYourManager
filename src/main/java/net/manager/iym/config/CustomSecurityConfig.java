@@ -26,9 +26,8 @@ import javax.sql.DataSource;
 @Log4j2
 @Configuration
 @RequiredArgsConstructor
-@EnableWebSecurity
-public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 못하게한다.
-    //자동로그인을 위한 주입 필요
+@EnableWebSecurity//모든 페이지가 스프링 시큐리티를 제어 받도록 한다. 로그인을 하지 않으면 페이지에 접근을 할 수가 없다.
+public class CustomSecurityConfig {
     private final DataSource dataSource;
     private final UserDetailsService userDetailsService;
 
@@ -37,11 +36,6 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
         return new BCryptPasswordEncoder();
 
     }
-
-//    @Bean
-//    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-//        return new CustomSocialLoginSuccessHandler(passwordEncoder());
-//    }//소셜로그인 관련 빈생성
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -72,7 +66,7 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
 
-     //   http.oauth2Login().loginPage("/member/login").successHandler(authenticationSuccessHandler());
+//        http.oauth2Login().loginPage("/member/login").successHandler(authenticationSuccessHandler());
 
         return http.build();
     }
