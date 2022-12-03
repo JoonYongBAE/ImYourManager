@@ -26,8 +26,10 @@ import javax.sql.DataSource;
 @Log4j2
 @Configuration
 @RequiredArgsConstructor
-@EnableWebSecurity//모든 페이지가 스프링 시큐리티를 제어 받도록 한다. 로그인을 하지 않으면 페이지에 접근을 할 수가 없다.
-public class CustomSecurityConfig {
+@EnableGlobalMethodSecurity(prePostEnabled = true) //prePostEnabled = true는 원하는 곳에
+// @PreAuthorize, @PostAuthorize 어노테이션을 이용하여 사전 또는 사후 체크 설정한다.
+public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 못하게한다.
+    //자동로그인을 위한 주입 필요
     private final DataSource dataSource;
     private final UserDetailsService userDetailsService;
 
@@ -37,22 +39,18 @@ public class CustomSecurityConfig {
 
     }
 
+//    @Bean
+//    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+//        return new CustomSocialLoginSuccessHandler(passwordEncoder());
+//    }//소셜로그인 관련 빈생성
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        //security는 기본적으로 모든페이지에 적용이 되기 때문에 예외를 두고싶은 페이지를 설정하는 것이다.
 
-        log.info("------------config-------------------");
+        log.info("------------configure-------------------");
 
         //커스텀 로그인 페이지
-        http.formLogin()
-                .loginPage("/member/login");
-//                .and()//그리고 and()를 사용함으로써 http를 사용하지 않아도 된다.
-//            .logout()//로그아웃에 설정한다.
-//                .permitAll()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))//주소창에 요청해도 포스트로 인식하여 로그아웃한다.
-//                .deleteCookies("JSESSION")//로그아웃시 쿠키에서 제거한다.
-//                .invalidateHttpSession(true) //로그아웃시 세션을 종료한다.
-//                .clearAuthentication(true); //로그아웃시 권한을 제거한다.
+        http.formLogin().loginPage("/member/login");
         //CSRF 토큰 비활성화
         http.csrf().disable();
 
@@ -66,7 +64,7 @@ public class CustomSecurityConfig {
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
 
-//        http.oauth2Login().loginPage("/member/login").successHandler(authenticationSuccessHandler());
+     //   http.oauth2Login().loginPage("/member/login").successHandler(authenticationSuccessHandler());
 
         return http.build();
     }
