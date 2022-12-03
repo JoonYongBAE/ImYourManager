@@ -9,19 +9,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log4j2
 @Service
+@Transactional//하나씩만 실행하도록 설정해준다.
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService { //인터페이스르 연결해주고 한개의 메소드를 오버라이딩해준다.
 
     private final MemberRepository memberRepository;
     @Override
-    @Transactional//하나씩만 실행하도록 설정해준다.
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         log.info("loadUserByUserName--------- : " + id);
         Optional<Member> result = memberRepository.getWithGrade(id);
@@ -29,6 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService { //인터�
             throw new UsernameNotFoundException("User Not Found!!!");
         }
         Member member = result.get();
+
         MemberSecurityDTO memberSecurityDTO = new MemberSecurityDTO(
                 member.getId(),
                 member.getPass(),
