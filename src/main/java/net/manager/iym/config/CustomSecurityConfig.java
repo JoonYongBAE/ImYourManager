@@ -72,7 +72,7 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
 
-//        http.oauth2Login().loginPage("/member/login").successHandler(authenticationSuccessHandler());
+     //   http.oauth2Login().loginPage("/member/login").successHandler(authenticationSuccessHandler());
 
         return http.build();
     }

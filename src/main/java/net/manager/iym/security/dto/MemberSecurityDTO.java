@@ -22,6 +22,7 @@ public class MemberSecurityDTO extends User {
     private final String name;
     private final Team team;
 
+    //각각의 정보들을 매개변수로 받아서 주입해준다.
     public MemberSecurityDTO(String id, String pass,
                              String mail, String phone, String gender, String memberLoc, String name, Team team,Collection<? extends GrantedAuthority> authorities) {
         super(id, pass, authorities);//GrantedAuthority는 권한을 부여하여 권한을 받은 유저만 db를 이용할 수 있다.
