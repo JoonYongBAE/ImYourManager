@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -24,7 +23,6 @@ public class CustomUserDetailsService implements UserDetailsService { //인터�
 
     private final MemberRepository memberRepository;
     @Override
-    @Transactional//하나씩만 실행하도록 설정해준다.
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         log.info("loadUserByUserName--------- : " + id);
         Optional<Member> result = memberRepository.getWithGrade(id);
