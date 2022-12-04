@@ -15,15 +15,16 @@ public class JoinBoardRepositoryTests {
     @Autowired
     private JoinBoardRepository joinBoardRepository;
 
+    @Autowired
+    private MemberRepository memberRepository;
     @Test
     public void testInsert(){
-        IntStream.rangeClosed(4,5).forEach(i->{
+        Member member = memberRepository.findMemberById("bjy961206");
+        IntStream.rangeClosed(1,5).forEach(i->{
             JoinBoard joinBoard = JoinBoard.builder()
-                    .joinTitle("제목"+i)
-                    .joinContent("내용"+i)
-                    .joinType("모집")
-                    .joinVisitCount(0l)
-                    .build(); //joinboard게시판에 게시글 3개 만듦
+                    .joinTitle("테스트"+i).joinContent("테스트"+i+"글내용")
+                    .member(member).joinVisitCount(0l)
+                    .joinType("테스트타입"+i).build();
             JoinBoard joinBoardResult = joinBoardRepository.save(joinBoard);
             log.info("JoinBoardNum : " + joinBoardResult.getJoinBoardNum());
         });

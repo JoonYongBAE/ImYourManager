@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/main")
 public class HomeController {//
-    @GetMapping("/home")
-    public String home() {
-        return "home";
+    @GetMapping("/first1")
+    public void home1() {
+
+    }
+    @GetMapping("/first2")
+    public void home2(){
 
     }
 }

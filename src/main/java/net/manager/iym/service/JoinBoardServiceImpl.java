@@ -2,14 +2,17 @@ package net.manager.iym.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.manager.iym.domain.JoinBoard;
+import net.manager.iym.domain.Member;
 import net.manager.iym.dto.JoinBoardDTO;
 import net.manager.iym.dto.paging.PageRequestDTO;
 import net.manager.iym.dto.paging.PageResponseDTO;
 import net.manager.iym.repository.JoinBoardRepository;
+import net.manager.iym.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service //자동으로 빈을 만들어주고 service 클래스라는것을 표현한다.
 @Log4j2 //콘솔창에 설정한 정보들을 출력해준다
@@ -20,12 +23,14 @@ public class JoinBoardServiceImpl implements JoinBoardService {
     private final ModelMapper modelMapper;
     private final JoinBoardRepository joinBoardRepository;
 
+    private final MemberRepository memberRepository;
     @Override
     public Long register(JoinBoardDTO joinBoardDTO) {
-        JoinBoard joinBoard = modelMapper.map(joinBoardDTO, JoinBoard.class);//joinBoardDTO를 domain(entity)로 변환해준다.
-        Long joinBoradNum = joinBoardRepository.save(joinBoard).getJoinBoardNum();//JPA를 사용하여 테이블에 값을 넣어주고 번호를 붙여준다.
-
-        return  joinBoradNum;
+        Member member = memberRepository.findMemberById(joinBoardDTO.getId());
+        JoinBoard joinBoard = dtoToEntity(joinBoardDTO);
+        joinBoard.setMember(member);
+        Long joinBoardNum = joinBoardRepository.save(joinBoard).getJoinBoardNum();//JPA를 사용하여 테이블에 값을 넣어주고 번호를 붙여준다.
+        return joinBoardNum;
     }
 
     @Override
