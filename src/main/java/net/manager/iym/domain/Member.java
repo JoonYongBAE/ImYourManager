@@ -40,6 +40,7 @@ public class Member extends CommonEntity{//
     private String memberLoc;
 
     @ElementCollection(fetch = FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
     @Builder.Default
     private Set<MemberGrade> gradeSet = new HashSet<>();
 

@@ -13,8 +13,15 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     <!-- fullcalendar 언어 CDN -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+    <style>
+        .fc-toolbar-chunk {
+            display: flex;      // 일렬로 나란히
+        align-items: center; // 수직 가운데 정렬
+        }
+        .fc-day-number.fc-sat.fc-past{ color:#0000FF; }    /* 토요일 */
+        .fc-day-number.fc-sun.fc-past{ color:#FF0000; }    /* 일요일 */
 
-
+    </style>
 <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -24,11 +31,38 @@
                     dayGridMonth:{buttonText:'달력으로보기'},
                     listMonth:{buttonText: '목록으로보기'}
                 },
+                googleCalendarApiKey:'AIzaSyAm5ppQuhmxTZ2uU3Ahkv8XDJKgGXknkew',
+                eventSources:[
+                    {googleCalendarID: 'ko.south_korea#holiday@group.v.calendar.google.com'
+                        ,color:'white'
+                        ,textColor:'red'
+                        ,className : 'ko_event'
+                    }
+                ],
+                customButtons: {
+                    addEventButton: {
+                        text: '일정등록',
+                        click: function() {
+
+                            var popupX = (window.screen.width / 2) - (700 / 2);
+                            var popupY= (window.screen.height /2) - (500 / 2);
+                         window.open('addScheduleForm.html','일정등록','height=500, width=700, left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY);
+                         //폼작성이 완료되고 등록처리가 되면 calendar.addEvent
+                         },
+                    }
+                },
+                locale:'ko',
                 headerToolbar: {
                     right: 'dayGridMonth,listMonth',
                     center: 'prev title next',
-                    left: 'today'
+                    left: 'addEventButton'
                 },
+                footerToolbar:{
+                    right: 'today'
+                },
+
+                contentEditable: true,
+                droppable: true,
                 events:'https://fullcalendar.io/api/demo-feeds/events.json',
                 titleFormat: function (date) {
                     // YYYY년 MM월
@@ -40,12 +74,7 @@
         });
 
     </script>
-    <style>
-        .fc-toolbar-chunk {
-            display: flex;      // 일렬로 나란히
-        align-items: center; // 수직 가운데 정렬
-        }
-    </style>
+
 </head>
 <body>
 <h1>일정 관리</h1>

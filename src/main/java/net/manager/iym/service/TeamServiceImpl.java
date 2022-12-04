@@ -39,14 +39,12 @@ public Map<String, String> validateHandling(Errors errors){     // 유효성 검
     return validResult;
 }
 
-public String register(TeamDTO teamDTO){
+public Long register(TeamDTO teamDTO){
 
     Team team = modelMapper.map(teamDTO, Team.class);
-    String teamName = teamRepository.save(team).getTeamName();
+    Long teamNum = teamRepository.save(team).getTeamNum();
+   /*팀생성한 사람의 등급을 팀리더로 변경.*/
 
-
-    /*팀생성한 사람의 등급을 팀리더로 변경.*/
-
-    return teamName;
+    return teamNum;
 }
 }
