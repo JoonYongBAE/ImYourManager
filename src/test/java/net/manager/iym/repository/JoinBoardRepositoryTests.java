@@ -3,6 +3,7 @@ package net.manager.iym.repository;
 import lombok.extern.log4j.Log4j2;
 import net.manager.iym.domain.JoinBoard;
 import net.manager.iym.domain.Member;
+import net.manager.iym.dto.JoinBoardDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,7 @@ public class JoinBoardRepositoryTests {
     @Autowired
     private MemberRepository memberRepository;
     @Test
-    public void testInsert(){
+    public void testJoinBoardInsert(){
         Member member = memberRepository.findMemberById("bjy961206");
         IntStream.rangeClosed(1,5).forEach(i->{
             JoinBoard joinBoard = JoinBoard.builder()
@@ -28,5 +29,14 @@ public class JoinBoardRepositoryTests {
             JoinBoard joinBoardResult = joinBoardRepository.save(joinBoard);
             log.info("JoinBoardNum : " + joinBoardResult.getJoinBoardNum());
         });
+    }
+    @Test
+    public void testjoinBoardReadOne(){//
+        JoinBoard joinBoard = joinBoardRepository.findJoinBoardByJoinBoardNum(17l);
+        JoinBoardDTO joinBoardDTO = JoinBoardDTO.builder().joinBoardNum(joinBoard.getJoinBoardNum())
+                .joinTitle(joinBoard.getJoinTitle()).joinContent(joinBoard.getJoinContent())
+                .joinFile(joinBoard.getJoinFile()).joinVisitCount(joinBoard.getJoinVisitCount())
+                .joinType(joinBoard.getJoinType()).id(joinBoard.getMember().getId()).regDate(joinBoard.getRegDate()).build();
+        log.info(joinBoardDTO);
     }
 }

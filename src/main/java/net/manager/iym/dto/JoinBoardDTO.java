@@ -15,15 +15,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class JoinBoardDTO {//Entity에서 필요한 필드값들을 받아와 get,set을 통해 출력을 해주거나 받은 DTO 값들을 Entity로 보내준다.
 
-    @NotEmpty
-    private Long joinBoardNum;
+//    @NotEmpty
+    private Long joinBoardNum; //NotEmpty를 사용하면 변환시 null값이 넘어와 오류가 생김
     //@NotEmpty
     @Size(min = 1, max = 100)
     private String joinTitle;
     //@NotEmpty
     private String joinContent;
-    //@NotEmpty
-    private String name;
     //@NotEmpty
     private String id;
     //@NotEmpty

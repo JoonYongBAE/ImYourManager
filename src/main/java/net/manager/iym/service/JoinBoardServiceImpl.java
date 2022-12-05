@@ -1,6 +1,7 @@
 package net.manager.iym.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.manager.iym.controller.JoinBoardController;
 import net.manager.iym.domain.JoinBoard;
 import net.manager.iym.domain.Member;
 import net.manager.iym.dto.JoinBoardDTO;
@@ -25,30 +26,31 @@ public class JoinBoardServiceImpl implements JoinBoardService {
 
     private final MemberRepository memberRepository;
     @Override
-    public Long register(JoinBoardDTO joinBoardDTO) {
-        Member member = memberRepository.findMemberById(joinBoardDTO.getId());
-        JoinBoard joinBoard = dtoToEntity(joinBoardDTO);
-        joinBoard.setMember(member);
+    public Long register(JoinBoardDTO joinBoardDTO) {//조인게시글 등록서비스
+        JoinBoard joinBoard = dtoToEntity(joinBoardDTO);//받은 DTO를 entity로 변경
+        Member member = memberRepository.findMemberById(joinBoardDTO.getId());//멤버에 html에서 받은 id 값을 넣어 조회한다.
+        joinBoard.addMember(member); //변경한 Entity에는 멤버값이 없기 때문에 조인보드에 따로 멤버추가
         Long joinBoardNum = joinBoardRepository.save(joinBoard).getJoinBoardNum();//JPA를 사용하여 테이블에 값을 넣어주고 번호를 붙여준다.
         return joinBoardNum;
     }
 
     @Override
-    public JoinBoardDTO readOne(Long joinBoardNum) {
-
-
-        return null;
+    public JoinBoardDTO readOne(Long joinBoardNum) {//제목 클릭시 조인보드num 받음
+        JoinBoard joinBoard = joinBoardRepository.findJoinBoardByJoinBoardNum(joinBoardNum);//조인 보드로 레파지토리에서 보드값 불러옴
+        JoinBoardDTO joinBoardDTO = EntityToDto(joinBoard);//불러온 보드값을 DTO로 변환시킴
+        return joinBoardDTO;
     }
 
     @Override
     public void modify(JoinBoardDTO joinBoardDTO) {
-
+        JoinBoard joinBoard = joinBoardRepository.findJoinBoardByJoinBoardNum(joinBoardDTO.getJoinBoardNum());//joinboardDTO에서 num을 받아와 게시물 검색
+        joinBoard.changeTitleContentJoinType(joinBoardDTO.getJoinTitle(), joinBoardDTO.getJoinContent(), joinBoardDTO.getJoinType());//DTO로 받은 값으로 domain의 제목과 컨텐츠, 타입 수정
+        joinBoardRepository.save(joinBoard);//save를 할 때 프라이머리 키가 있다면 업데이트로 들어간다.
     }
 
     @Override
     public void remove(Long joinBoardNum) {
-
-
+        joinBoardRepository.deleteById(joinBoardNum);//넘버값으로 해당 조인게시물 삭제
     }
 
 

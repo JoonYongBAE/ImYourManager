@@ -30,12 +30,13 @@ public class JoinBoard extends CommonEntity{//
     @Column(columnDefinition = "long default 0", nullable = false)
     private Long joinVisitCount;
 
-    public void changeView(String joinTitle, String joinContent){//글 수정작업시 사용
+    public void changeTitleContentJoinType(String joinTitle, String joinContent, String joinType){//글 수정작업시 사용
         this.joinTitle = joinTitle;
         this.joinContent = joinContent;
+        this.joinType = joinType;
 
     }
-    public void setMember(Member member){ //홈페이지에서 멤버값을 받아 조인게시글 멤버컬럼에 삽입시 사용
+    public void addMember(Member member){ //홈페이지에서 멤버값을 받아 조인게시글 멤버컬럼에 삽입시 사용
         this.member = member;
     }
 }
