@@ -7,49 +7,35 @@
 <!--    <script src='fullcalendar/main.js'></script>-->
 
     <!-- jquery CDN -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <!-- fullcalendar CDN -->
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />   <!--css먼저 적어주기-->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     <!-- fullcalendar 언어 CDN -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+    <!--popop CDN-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.min.js'></script>
     <style>
         .fc-toolbar-chunk {
             display: flex;      // 일렬로 나란히
         align-items: center; // 수직 가운데 정렬
         }
-        .fc-day-number.fc-sat.fc-past{ color:#0000FF; }    /* 토요일 */
-        .fc-day-number.fc-sun.fc-past{ color:#FF0000; }    /* 일요일 */
+        thead .fc-col-header-cell fc-day fc-day-sat{ color:#0000FF; }    /* 토요일 */
+        thead .fc-col-header-cell fc-day fc-day-sun{ color:#FF0000; }    /* 일요일 */
+        #calendar{ width: 80%;
+        margin: auto;
+        margin-top: 100px;}
 
     </style>
 <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {   // resources 다 업로드 한후 이문장 이후에 내용작성
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
+                googleCalendarApiKey:'AIzaSyBa6ljJAzeR7MfYWgRQZ_tPFpNwPZr73h0',
                 initialView: 'dayGridMonth',
                 views:{
-                    dayGridMonth:{buttonText:'달력으로보기'},
-                    listMonth:{buttonText: '목록으로보기'}
-                },
-                googleCalendarApiKey:'AIzaSyAm5ppQuhmxTZ2uU3Ahkv8XDJKgGXknkew',
-                eventSources:[
-                    {googleCalendarID: 'ko.south_korea#holiday@group.v.calendar.google.com'
-                        ,color:'white'
-                        ,textColor:'red'
-                        ,className : 'ko_event'
-                    }
-                ],
-                customButtons: {
-                    addEventButton: {
-                        text: '일정등록',
-                        click: function() {
-
-                            var popupX = (window.screen.width / 2) - (700 / 2);
-                            var popupY= (window.screen.height /2) - (500 / 2);
-                         window.open('addScheduleForm.html','일정등록','height=500, width=700, left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY);
-                         //폼작성이 완료되고 등록처리가 되면 calendar.addEvent
-                         },
-                    }
+                    dayGridMonth:{buttonText:'달력'},
+                    listMonth:{buttonText: '목록'}
                 },
                 locale:'ko',
                 headerToolbar: {
@@ -57,18 +43,93 @@
                     center: 'prev title next',
                     left: 'addEventButton'
                 },
+                eventSources:[
+                    {googleCalendarId:'b350dee2d46d17f4c5421bc54cfe7bfbf25c010bdf8c4f58289129e38466427a@group.calendar.google.com'
+                },{googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+                        className:'ko_event',
+                        color:'white',
+                        textColor:'red'
+                    }],
+                displayEventTime:true,
+                displayEventEnd:true,
+                events:[
+                    {
+                    title:'영등포공원 풋살장',
+                    color: 'blue',
+                    start:'2022-12-15T18:00:00',
+                    end:'2022-12-15T20:00:00'
+                },
+                    {
+                        title:'상암월드컵경기장 풋살구장 A',
+                        color: 'blue',
+                        start:'2022-12-20T18:00:00',
+                        end:'2022-12-20T20:00:00'
+                    },
+                    {
+                        title:'구일역 1번출구 풋살구장',
+                        color: 'blue',
+                        start:'2022-12-24T22:00:00',
+                        end:'2022-12-24T24:00:00'
+                    },
+                    {
+                        title:'용산 더베이스 5구장',
+                        color: 'blue',
+                        start:'2022-12-25T20:00:00',
+                        end:'2022-12-25T22:00:00'
+                    }
+                ],
+                eventClick: function(info) {
+                    let start_year = info.event.start.getUTCFullYear();
+                    let start_month = info.event.start.getMonth() + 1;
+                    let start_date = info.event.start.getUTCDate();
+                    let start_hour = info.event.start.getHours();
+                    let end_hour = info.event.end.getHours();
+
+                    let start = start_year + "-" + start_month + "-" + start_date + " " + start_hour + "시 ~ " + end_hour + "시";
+
+                    if(!info.event.extendedProps.description) {
+                        info.event.extendedProps.description = "";
+                    }
+                    let contents = `
+						<div style='font-weight:bold; font-size:20px; margin-bottom:30px; text-align:center'>
+							${start}
+						</div>
+						<div style='font-size:18px; margin-bottom:20px'>
+							제목: ${info.event.title}
+						</div>
+						<div style='width:500px'>
+							${info.event.extendedProps.description}
+						</div>
+					  `;
+
+                    $("#popup").html(contents);
+                    $("#popup").bPopup({
+                        speed: 650,
+                        transition: 'slideIn',
+                        transitionClose: 'slideBack',
+                        position: [($(document).width()-500)/2, 30] //x, y
+                    });
+                    info.jsEvent.stopPropagation();
+                    info.jsEvent.preventDefault();
+                },
+
                 footerToolbar:{
                     right: 'today'
                 },
-
-                contentEditable: true,
-                droppable: true,
-                events:'https://fullcalendar.io/api/demo-feeds/events.json',
-                titleFormat: function (date) {
-                    // YYYY년 MM월
-                    return `${date.date.year}년 ${date.date.month + 1}월`;
+                customButtons: {
+                    addEventButton: {
+                        text: '일정등록',
+                        click: function() {
+                            var popupX = (window.screen.width / 2) - (700 / 2);
+                            var popupY= (window.screen.height /2) - (520 / 2);
+                         window.open('addScheduleForm.html','일정등록','height=520, width=700, left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY);
+                         //폼작성이 완료되고 등록처리가 되면 calendar.addEvent
+                         },
+                    }
                 },
-                selectable:true,
+
+                droppable: true,
+                editable: true
             });
             calendar.render();
         });
@@ -77,8 +138,8 @@
 
 </head>
 <body>
-<h1>일정 관리</h1>
-<div id='calendar'></div>
+<!--<h1 style="text-align: center">일정 관리</h1>-->
+<div id='calendar' ></div>
 </body>
 </html>
 

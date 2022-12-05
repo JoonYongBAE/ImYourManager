@@ -17,13 +17,10 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "scheduleNum")
     private Long scheduleNum;
-
     @ManyToOne
-    @JoinColumn(name="id")
-    private Member member;
+    @JoinColumn(name="teamNum", nullable = false)
+    private Team team;
 
-    @Column(nullable = false)
-    private Long teamNum;
 
     @Column(length = 50, nullable = false)
     private String ground;

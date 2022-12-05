@@ -19,6 +19,9 @@ public class ScheduleDTO{
     @NotEmpty(message = "경기 날짜를 입력해주세요.")
     private String scheduleDate; //일정날짜
 
+    @NotEmpty(message = "시간을 입력해주세요.")
+    private String scheduleTime;   //경기 시간
+
     @NotEmpty(message = "경기 장소를 입력해주세요.")
     private String ground; //일정지역
 
@@ -28,4 +31,5 @@ public class ScheduleDTO{
     private String vote; //일정참가여부
 
     private String name; //이름
+
 }

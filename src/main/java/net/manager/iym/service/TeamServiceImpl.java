@@ -29,15 +29,6 @@ public boolean checkTeamName(String teamName){   //중복 체크
     return teamRepository.existsByTeamName(teamName);
 }
 
-public Map<String, String> validateHandling(Errors errors){     // 유효성 검사 핸들러
-    Map<String, String> validResult = new HashMap<>();
-        //유효성검사에 통과하지 못한 항목을 가져옴.
-    for (FieldError error: errors.getFieldErrors()){
-            String validKey = String.format("%s", error.getField());  // %s = 유효성검사 통과하지 못한 dto의 필드명
-            validResult.put(validKey, error.getDefaultMessage());     // dto에 작성된 default 메세지
-    }
-    return validResult;
-}
 
 public Long register(TeamDTO teamDTO){
 
