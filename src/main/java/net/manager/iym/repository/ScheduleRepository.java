@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Override
     Optional<Schedule> findById(Long teamNum);
+    void delete(Optional<Schedule> schedule);
 }
 //
