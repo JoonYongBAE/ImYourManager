@@ -3,20 +3,26 @@ package net.manager.iym.service;
 import net.manager.iym.domain.JoinBoard;
 import net.manager.iym.domain.Member;
 import net.manager.iym.dto.JoinBoardDTO;
+
 import net.manager.iym.dto.paging.PageRequestDTO;
 import net.manager.iym.dto.paging.PageResponseDTO;
+import org.hibernate.mapping.Join;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface JoinBoardService {
 
     Long register(JoinBoardDTO joinBoardDTO);//조인보드게시글 등록 메소드 오버라이드
 
-    JoinBoardDTO readOne(Long joinBoardNum);//조인보드게시글 확인 메소드 오버라이드
+    JoinBoardDTO read(Long joinBoardNum);//조인보드게시글 확인 메소드 오버라이드
 
     void modify(JoinBoardDTO joinBoardDto);//조인보드게시글 수정 메소드 오버라이드
 
     void remove(Long joinBoardNum);//조인보드게시글 삭제 메소드 오버라이드
 
-    PageResponseDTO<JoinBoardDTO> list(PageRequestDTO pageRequestDTO);// 조인보드게시글리스트 출력 메소드 오버라이드
+    PageResponseDTO<JoinBoardDTO> list(PageRequestDTO pageRequestDTO);
 
     default JoinBoard dtoToEntity(JoinBoardDTO joinBoardDTO){//defalut를 써서 implement한 클래스도 사용가능
         //dto를 Entity로 매핑해주는 작업을 함

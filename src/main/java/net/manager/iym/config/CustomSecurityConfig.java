@@ -21,7 +21,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 // @PreAuthorize, @PostAuthorize 어노테이션을 이용하여 로그인 상태를 사전/사후 체크 설정 가능함
 public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 못하게 설정을 함
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {//
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {//비밀번호를 변경시켜준다.
         return new BCryptPasswordEncoder();
 
     }

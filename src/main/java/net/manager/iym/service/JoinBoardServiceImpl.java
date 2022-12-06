@@ -5,15 +5,25 @@ import net.manager.iym.controller.JoinBoardController;
 import net.manager.iym.domain.JoinBoard;
 import net.manager.iym.domain.Member;
 import net.manager.iym.dto.JoinBoardDTO;
+
 import net.manager.iym.dto.paging.PageRequestDTO;
 import net.manager.iym.dto.paging.PageResponseDTO;
+
 import net.manager.iym.repository.JoinBoardRepository;
 import net.manager.iym.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service //자동으로 빈을 만들어주고 service 클래스라는것을 표현한다.
 @Log4j2 //콘솔창에 설정한 정보들을 출력해준다
@@ -21,8 +31,10 @@ import java.util.Optional;
 @Transactional //이 클래스를 실행하는 중에 오류가 생기면 처음으로 되돌려준다.
 public class JoinBoardServiceImpl implements JoinBoardService {
     //@RequiredArgsConstructor에 의해서 자동으로 생성자가 주입된다.
-    private final ModelMapper modelMapper;
     private final JoinBoardRepository joinBoardRepository;
+
+    private final ModelMapper modelMapper;
+
 
     private final MemberRepository memberRepository;
     @Override
@@ -35,9 +47,9 @@ public class JoinBoardServiceImpl implements JoinBoardService {
     }
 
     @Override
-    public JoinBoardDTO readOne(Long joinBoardNum) {//제목 클릭시 조인보드num 받음
+    public JoinBoardDTO read(Long joinBoardNum) {//제목 클릭시 조인보드num 받음
         JoinBoard joinBoard = joinBoardRepository.findJoinBoardByJoinBoardNum(joinBoardNum);//조인 보드로 레파지토리에서 보드값 불러옴
-        JoinBoardDTO joinBoardDTO = EntityToDto(joinBoard);//불러온 보드값을 DTO로 변환시킴
+        JoinBoardDTO joinBoardDTO = EntityToDto(joinBoard);//불러온 조인보드값을 DTO로 변환시킴
         return joinBoardDTO;
     }
 
@@ -49,25 +61,28 @@ public class JoinBoardServiceImpl implements JoinBoardService {
     }
 
     @Override
-    public void remove(Long joinBoardNum) {
+    public void remove(Long joinBoardNum) {//게시물 삭제 서비스
         joinBoardRepository.deleteById(joinBoardNum);//넘버값으로 해당 조인게시물 삭제
     }
 
-
+    @Override
     public PageResponseDTO<JoinBoardDTO> list(PageRequestDTO pageRequestDTO) {
-        return null;
+        String[] types = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable("joinBoardNum");
+
+        Page<JoinBoard> result = joinBoardRepository.searchAll(types, keyword, pageable);
+
+        List<JoinBoardDTO> dtoList = result.getContent().stream()
+                .map(joinBoard -> modelMapper.map(joinBoard,JoinBoardDTO.class)).collect(Collectors.toList());
+
+
+        return PageResponseDTO.<JoinBoardDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int)result.getTotalElements())
+                .build();
     }
 
-
 }
-//    public List<JoinBoardDTO> getList(){
-//        List<JoinBoardDTO> allList = joinBoardRepository.findAll().stream()
-//                .map(vo ->modelMapper.map(vo, JoinBoardDTO.class))
-//                .collect(Collectors.toList());
-//        return allList;
-//        //매퍼를 통해서 findAll()을 통해서 나온 정보들은 각각 다른 TodoVO들이기 때문에
-//        //이 각각의 정보들을 vo를 DTO로 변환시켜 묶어준다.
-//        //List<TodoVO>를 List<TodoDTO>로 변환하는 작업을 stream을 이용하여 각 TodoVO는
-//        //map()을 통해서 TodoDTO로 바꾸고 collect()을 이용하여 List<TodoDTO>로 묶어준다.
-//    }
 

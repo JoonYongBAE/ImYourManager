@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.manager.iym.domain.JoinBoard;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class JoinBoardDTO {//Entity에서 필요한 필드값들을 받아와 get,set을 통해 출력을 해주거나 받은 DTO 값들을 Entity로 보내준다.
 
-//    @NotEmpty
+    //    @NotEmpty
     private Long joinBoardNum; //NotEmpty를 사용하면 변환시 null값이 넘어와 오류가 생김
     //@NotEmpty
     @Size(min = 1, max = 100)
@@ -32,6 +33,16 @@ public class JoinBoardDTO {//Entity에서 필요한 필드값들을 받아와 ge
     private String joinFile;
     //@NotEmpty
     private LocalDateTime regDate;
+
+    public JoinBoardDTO(JoinBoard joinBoard) {//리스트에서 보여줄 리스트만 넣어준다.
+        this.id = joinBoard.getMember().getId();
+        this.joinTitle = joinBoard.getJoinTitle();
+        this.joinContent = joinBoard.getJoinContent();
+        this.joinType=joinBoard.getJoinType();
+        this.regDate = joinBoard.getRegDate();
+        this.joinVisitCount = joinBoard.getJoinVisitCount();
+    }
+
 
 }
 

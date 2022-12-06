@@ -5,13 +5,19 @@ import net.manager.iym.domain.JoinBoard;
 import net.manager.iym.domain.Member;
 import net.manager.iym.domain.MemberGrade;
 import net.manager.iym.dto.JoinBoardDTO;
+
+
 import net.manager.iym.repository.JoinBoardRepository;
 import net.manager.iym.repository.JoinBoardRepositoryTests;
 import net.manager.iym.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.support.Repositories;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +31,8 @@ public class JoinBoardServiceTests {
     MemberRepository memberRepository; //
     @Autowired
     JoinBoardRepository joinBoardRepository;
+//    @Autowired
+//    JoinBoardQueryRepository joinBoardQueryRepository;
 
     @Test
     public void testRegister() {//회원값을 받아서 조인게시글에 id값 삽입하여 게시글 등록 성공
@@ -41,7 +49,7 @@ public class JoinBoardServiceTests {
     }
 
     @Test
-    public void testJoinBoardReadOne() {//게시글 조회 성공
+    public void testJoinBoardRead() {//게시글 조회 성공
         JoinBoard joinBoard = joinBoardRepository.findJoinBoardByJoinBoardNum(18l);
         log.info(joinBoard);
     }
@@ -56,4 +64,12 @@ public class JoinBoardServiceTests {
     public void testJoinBoardRemove(){//게시글 제거 성공
         joinBoardRepository.deleteById(18l);
     }
+//    @Test
+//    public ResponseEntity<JoinBoardListDTO> testJoinBoardList(Pageable pageable){
+//        Page<JoinBoard> results = joinBoardQueryRepository.getJoinBoardList(pageable);
+//
+//        return new ResponseEntity<>(JoinBoardListDTO.builder()
+//                .joinBoardList(results.getContent())
+//                .totalCount(results.getTotalElements()).totalPages((long)results.getTotalPages()).build(), HttpStatus.OK);
+//    }
 }

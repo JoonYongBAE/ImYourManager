@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -31,12 +32,18 @@ public class JoinBoardRepositoryTests {
         });
     }
     @Test
-    public void testjoinBoardReadOne(){//
+    public void testJoinBoardReadOne(){//
         JoinBoard joinBoard = joinBoardRepository.findJoinBoardByJoinBoardNum(17l);
         JoinBoardDTO joinBoardDTO = JoinBoardDTO.builder().joinBoardNum(joinBoard.getJoinBoardNum())
                 .joinTitle(joinBoard.getJoinTitle()).joinContent(joinBoard.getJoinContent())
                 .joinFile(joinBoard.getJoinFile()).joinVisitCount(joinBoard.getJoinVisitCount())
                 .joinType(joinBoard.getJoinType()).id(joinBoard.getMember().getId()).regDate(joinBoard.getRegDate()).build();
         log.info(joinBoardDTO);
+    }
+
+    @Test
+    public void testJoinBoardList(){
+        List<JoinBoard> list = joinBoardRepository.findAll();
+        log.info(list);
     }
 }
