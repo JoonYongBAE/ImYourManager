@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/main")
+@RequiredArgsConstructor
 public class HomeController {
-    @GetMapping("/home")
-    public String home() {
-        return "home";
+    @GetMapping("/first1")
+    public void home() {
 
     }
 }

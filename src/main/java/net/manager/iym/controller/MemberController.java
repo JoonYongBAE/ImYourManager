@@ -22,7 +22,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/login")
+    @GetMapping("/login1")
     public void loginGET(String error, String logout){
         log.info("Login get....");
         log.info("logout : " +logout);
@@ -46,7 +46,7 @@ public class MemberController {
         }
         log.info(memberDTO);
         memberService.register(memberDTO);
-        return "redirect:/member/register";
+        return "redirect:/main/loginAfter";
     }
 
 }
