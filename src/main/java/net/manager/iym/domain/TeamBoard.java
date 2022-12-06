@@ -30,4 +30,7 @@ public class TeamBoard extends CommonEntity{
     @Column(columnDefinition = "long default 0", nullable = false)
     private Long teamBoardVisitCount;
 
+    @Column(length = 3000)
+    private String teamBoardFile;
+
 }
