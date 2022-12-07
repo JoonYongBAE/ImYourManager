@@ -39,7 +39,7 @@ public class Member extends CommonEntity{//
     @Column(nullable = false)
     private String memberLoc;
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)//
     @Builder.Default
     private Set<MemberGrade> gradeSet = new HashSet<>();
 

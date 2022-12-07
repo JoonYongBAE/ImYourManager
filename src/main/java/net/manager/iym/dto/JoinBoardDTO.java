@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.manager.iym.domain.JoinBoard;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -33,4 +34,8 @@ public class JoinBoardDTO {//Entity에서 필요한 필드값들을 받아와 ge
     //@NotEmpty
     private LocalDateTime regDate;
 
+    private LocalDateTime modDate;
+
+
 }
+

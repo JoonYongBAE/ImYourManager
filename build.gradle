@@ -10,9 +10,11 @@ plugins {
     id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10" //dsl 추가
 }
 
-group = 'org.zerock'
+
+group = 'net.manager'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -24,10 +26,15 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 def querydslDir = "$buildDir/generated/querydsl"//추가
-
+querydsl{//추가
+    jpa= true
+    querydslSourcesDir = querydslDir
+}
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -39,20 +46,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    //test때 사용하는 롬복
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
-    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"//QueryDSL
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"//추가코드
-    annotationProcessor(
-
-            "javax.persistence:javax.persistence-api",
-
-            "javax.annotation:javax.annotation-api",
-
-            "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
-
 
     implementation 'org.modelmapper:modelmapper:3.1.0'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
@@ -70,7 +70,6 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
 sourceSets {
     main {
         java {
@@ -78,6 +77,17 @@ sourceSets {
         }
     }
 }
+compileQuerydsl{//추가
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {//추가
+    compileOnly{
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
+}
+
 
 configurations {//추가
     compileOnly{

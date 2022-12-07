@@ -21,17 +21,21 @@ public class MemberRepositoryTests {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private TeamRepository teamRepository;
     @Test
-    public void insertMember(){
-        IntStream.rangeClosed(1,20).forEach(i->{
-            Member member = Member.builder().id("member"+i).team(null)
+    public void insertMember(){ //멤버 인서트 + 팀 강제 주입 테스트 성공
+        Optional<Team> result = teamRepository.findById(1l);
+        Team team = (Team)result.orElseThrow();
+        IntStream.rangeClosed(1,1).forEach(i->{
+            Member member = Member.builder().id("member33").team(team)
                     .pass(passwordEncoder.encode("1111"))
                     .mail("ict"+i+"@naver.com").gender("man").phone("01012345"+i)
                     .name("mingyo").memberLoc("korea")
                     .build();
             member.addGrade(MemberGrade.STANDARD);
-            if (i>=5){
-                member.addGrade(MemberGrade.TEAMMEMBER);
+            if (i>=0){
+                member.addGrade(MemberGrade.TEAMLEADER);
             }
             memberRepository.save(member);
         });
