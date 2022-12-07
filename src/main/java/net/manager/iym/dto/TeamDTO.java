@@ -15,7 +15,6 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @ToString
 public class TeamDTO {
-
     private Long teamNum;
 
     @NotBlank(message = "팀이름은 필수 입력사항 입니다.")
@@ -40,6 +39,6 @@ public class TeamDTO {
 
 
     // repository를 통해 조회한 Team Entity를 dto로 변환하는 용도.
-    public TeamDTO(Team team){
-    }
+//    public TeamDTO(Team team){
+//    }
 }

@@ -1,9 +1,13 @@
 package net.manager.iym.service;
 
 import lombok.RequiredArgsConstructor;
+import net.manager.iym.domain.Member;
 import net.manager.iym.domain.Schedule;
+import net.manager.iym.domain.Team;
 import net.manager.iym.dto.ScheduleDTO;
+import net.manager.iym.repository.MemberRepository;
 import net.manager.iym.repository.ScheduleRepository;
+import net.manager.iym.repository.TeamRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,6 +19,8 @@ import java.time.LocalTime;
 
 import java.util.HashMap;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -25,57 +31,69 @@ public class ScheduleServiceImpl implements ScheduleService{
 //    private final ModelMapper modelMapper;
 
     private final ScheduleRepository scheduleRepository;
-    @Override
-    public JSONArray register(ScheduleDTO scheduleDTO) {
+    private final TeamRepository teamRepository;
+    private final MemberRepository memberRepository;
 
-        Schedule schedule = Schedule.builder()
+    public JSONArray getJsonArray(Long teamNum) {   // JSON 객체 배열로 각팀의 모든 스케줄을 반환해주는 메소드
+
+        List<Schedule> listAll = scheduleRepository.findAll(teamNum);//팀 번호로 스케쥴 모두 찾아와서 list에 저장.
+
+        HashMap<String, String> info = new HashMap<>(); // Map 타입의 info 객체
+        JSONObject daily;    // JSONObject 타입의 daily 객체
+        JSONArray list = new JSONArray();  //JSONObject를 배열로 저장할 JSONArray 타입의 list 객체
+        for(int i= 0; i< list.length();i++) {
+            info.put("id", listAll.get(i).getScheduleNum().toString());
+            info.put("start",  listAll.get(i).getScheduleDate().toString());
+            info.put("startTime", listAll.get(i).getScheduleStartTime().toString());
+            info.put("endTime", listAll.get(i).getScheduleEndTime().toString());
+            info.put("title", listAll.get(i).getGround());
+            info.put("content", listAll.get(i).getPlayType());
+            daily = new JSONObject(info);
+            list.put(daily);
+        }
+        return list;
+    }
+    @Override
+    public void register(ScheduleDTO scheduleDTO) {   // 스케줄 등록 처리
+
+
+        Optional<Member> member = memberRepository.findById(scheduleDTO.getId());   //스케줄에 있는 id로회원정보 가져오기
+        member.orElseThrow();
+        Team team = member.get().getTeam();  //가져온 회원 정보에서 team 객체 뽑아내기
+
+        Schedule schedule = Schedule.builder()   // DTO에 담겨온 정보를 entity에 하나씩  build
+                .scheduleNum(scheduleDTO.getScheduleNum())
+                .team(team)
                 .scheduleDate(LocalDateTime.parse(scheduleDTO.getScheduleDate()))
-                .scheduleTime(LocalTime.parse(scheduleDTO.getScheduleStartTime().concat(scheduleDTO.getScheduleEndTime())))
+                .scheduleStartTime(LocalTime.parse(scheduleDTO.getScheduleStartTime()))
+                .scheduleEndTime(LocalTime.parse(scheduleDTO.getScheduleEndTime()))
                 .ground(scheduleDTO.getGround())
                 .playType(scheduleDTO.getPlayType())
                 .build();    //스케줄 등록 폼에서 입력받은 값을  schedule 객체에 담기.
-        scheduleRepository.save(schedule);    // entity 에 저장.
+        scheduleRepository.save(schedule);  // DB에 저장
 
-        HashMap<String, String> info = new HashMap<>(); // Map 타입의 info 객체
-        JSONObject daily = new JSONObject(info);    // JSONObject 타입의 daily 객체
-        JSONArray list = new JSONArray();  //JSONObject를 배열로 저장할 JSONArray 타입의 list 객체
-        info.put("id", schedule.getScheduleNum().toString());
-        info.put("date",scheduleDTO.getScheduleDate());
-        info.put("startTime", scheduleDTO.getScheduleStartTime());
-        info.put("endTime", scheduleDTO.getScheduleEndTime());
-        info.put("url",scheduleDTO.getGround());
-        info.put("type",scheduleDTO.getPlayType());
-
-        list.put(daily);
-        return list;
+        Long teamNum = team.getTeamNum();   // 회원이 속한 팀의 번호 가져오기
+        getJsonArray(teamNum);   //팀번호로 스케쥴 모두 조회
     }
+
+
 
     @Override
     public JSONObject readOne(Long scheduleNum) {
-
-        return null;
+        JSONObject info = scheduleRepository.find(scheduleNum);
+        return info;
     }
 
     @Override
-    public JSONArray modify(ScheduleDTO scheduleDTO) {
+    public void modify(ScheduleDTO scheduleDTO) {
         Schedule schedule = Schedule.builder()
                 .scheduleDate(LocalDateTime.parse(scheduleDTO.getScheduleDate()))
-                .scheduleTime(LocalTime.parse(scheduleDTO.getScheduleStartTime().concat(scheduleDTO.getScheduleEndTime())))
+                .scheduleStartTime(LocalTime.parse(scheduleDTO.getScheduleStartTime()))
+                .scheduleEndTime(LocalTime.parse(scheduleDTO.getScheduleEndTime()))
                 .ground(scheduleDTO.getGround())
                 .playType(scheduleDTO.getPlayType())
                 .build();
-        scheduleRepository.save(schedule);
-        HashMap<String, String> info = new HashMap<>();
-        JSONObject daily = new JSONObject(info);
-        JSONArray list = new JSONArray();
-        info.put("id", schedule.getScheduleNum().toString());
-        info.put("date",scheduleDTO.getScheduleDate());
-        info.put("startTime", scheduleDTO.getScheduleStartTime());
-        info.put("endTime", scheduleDTO.getScheduleEndTime());
-        info.put("url",scheduleDTO.getGround());
-        info.put("type",scheduleDTO.getPlayType());
-        list.put(daily);
-        return list;
+                 getJsonArray(schedule.getScheduleNum());
     }
 
     @Override

@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface TeamRepository extends JpaRepository<Team, Long> {
     boolean existsByTeamName(String teamName);    //같은 이름을 가진 팀이 있다면 true, 없다면 false
 
+    Team findByteamNum();
+
+
+    Team findByMemberId(String id);
 }

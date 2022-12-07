@@ -3,28 +3,42 @@ package net.manager.iym.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import net.manager.iym.domain.Schedule;
+import net.manager.iym.domain.Team;
 import net.manager.iym.dto.ScheduleDTO;
+import net.manager.iym.repository.ScheduleRepository;
 import net.manager.iym.service.ScheduleService;
 import net.manager.iym.service.Validate;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/schedule")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
     private final Validate validate;
+    private final ScheduleRepository scheduleRepository;
+    private final Team team;
 
-    @RequestMapping(value = "/schedule", method = RequestMethod.GET)   //팀페이지에서 경기일정 눌렀을 때
-    public String scheduleMain(){
-        return "schedule_main";
+    @GetMapping(value = "/schedule_main")   //팀페이지에서 경기일정 눌렀을 때
+    @ResponseBody
+    public JSONArray scheduleMain(){
+         JSONArray list = scheduleService.getJsonArray(team.getTeamNum());
+         return list;
     }
     @PreAuthorize("hasRole('TEAMLEADER')")
     @PostMapping("/addSchedule")
@@ -46,8 +60,9 @@ public class ScheduleController {
 
         return "redirect:schedule/schedule_main";
     }
-//    @GetMapping("/readOne/{teamNum}_{scheduleNum}")
-//    public ResponseEntity<Schedule> selectOne(@PathVariable Long scheduleNum){
+//    @GetMapping("/readOne/{teamNum}/{scheduleNum}")
+//    public ResponseEntity<ScheduleDTO> selectOne(@RequestBody Long scheduleNum){
+//Optional<Schedule> selectSchedul= scheduleRepository.findById(scheduleNum);
 //
 //    }
 

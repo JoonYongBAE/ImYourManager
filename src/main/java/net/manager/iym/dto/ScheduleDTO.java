@@ -1,7 +1,9 @@
 package net.manager.iym.dto;
 
 import lombok.*;
+import net.manager.iym.domain.Member;
 
+import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotEmpty;
 
 @AllArgsConstructor
@@ -11,6 +13,10 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @Getter
 public class ScheduleDTO{
+
+    private Long scheduleNum;
+    @NotEmpty
+    private String id;
 
     @NotEmpty(message = "경기 날짜를 입력해주세요.")
     private String scheduleDate; //일정날짜

@@ -53,7 +53,7 @@
             </legend>
             <ul>
 
-                <li><label for="day">날 짜</label> <input type='text' class='datepicker' name='day'  style='width:140px;'required></li>
+                <li><label for="day">날 짜</label> <input type='text' class='datepicker' id='day' name= 'day' style='width:140px;'required></li>
                 <script>
                     $(function (){
                         $('.datepicker').datepicker({
@@ -64,31 +64,10 @@
                     });
                 </script>
                 <li><label for="time">시간</label>
-                    <input class="timepicker" type="text" id="start_time" step="" name="time"  required placeholder="시작시간">
-                     ~ <input class="timepicker" type="text" id="end_time" name="time"  required placeholder="종료시간"></li>
+                    <input class="timepicker" type="text" id="start_time"  name="scheduleStartTime"  required placeholder="시작시간">
+                     ~ <input class="timepicker" type="text" id="end_time" name="scheduleEndTime"  required placeholder="종료시간"></li>
                 <script>
 
-                        // $('#start_time').timepicker({
-                        //     timeFormat: 'h:mm p',
-                        //     interval: 30,
-                        //     dropdown: true,
-                        //     scrollbar:true,
-                        //      minTime:'24:00'
-                        // }).on('changeTime', function() { //stime 을 선택한 후 동작
-                        //     var from_time = $("input[name='start_time']").val();//start_time 값을 변수에 저장
-                        //     $('#end_time').timepicker('option', 'minTime', from_time); //end_time 의 minTime 지정
-                        //     if ($('#end_time').val() && $('#end_time').val() < from_time) {
-                        //         $('#end_time').timepicker('setTime', from_time);//etime을 먼저 선택한 경우 그리고 etime시간이 stime시간보다 작은경우 etime시간 변경
-                        //     }
-                        // });
-                        //
-                        // $('#end_time').timepicker({
-                        //     timeFormat: 'h:mm p',
-                        //     interval: 30,
-                        //     minTime: '24:00',
-                        //     dropdown: true,
-                        //     scrollbar:true
-                        // });
                         $(function (){
 
                         $('#start_time').timepicker({
@@ -120,8 +99,8 @@
                                                             id="ground" placeholder="구장 검색" required>
                     <button>검색</button></li>  <!--구장 검색 기능-->
                 <li><label  name="p_type">경기종류</label>
-                    <input type="radio" name="p_type"  value="self" checked><span>자체전</span>
-                    <input type="radio" name="p_type" 	value="matching"><span>매칭</span>
+                    <input type="radio" name="p_type"  value="자체전" checked><span>자체전</span>
+                    <input type="radio" name="p_type" 	value="매치"><span>매칭</span>
                 </li>
 <!--                <li><label name="vote">투표</label>-->
 <!--                    <input type="radio"	name="vote"  value="1" checked><span>등록</span>-->
@@ -130,14 +109,52 @@
             </ul>
         </fieldset>
         <div class="buttons">
-            <button type="submit">등 록</button>
-            <button type="reset">취 소</button>
+            <button type="submit" id="submit" onclick="addSchedule()">등 록</button>
+            <button type="reset" id="x">취 소</button>
         </div>
 
     </div>
 </form>
 <script>
-    $(#datetimepicker)
+    let obj = {
+        "id" : '${id}',
+        "scheduleDate" : document.getElementById('day').value,
+        "scheduleStartTime" : document.getElementById('start_time').value,
+        "scheduleEndTime":document.getElementById('ground').value,
+        "ground":document.getElementById('ground').value,
+        "playType" : $('input:radio[name=p_type]:checked').value
+    };
+    //
+    // var id = '${Id}';   // 회원의 ID를 넣어야함
+    // var day = document.getElementById('day').value;
+    // var start_time = document.getElementById('start_time').value;
+    // var end_time = document.getElementById('end_time').value;
+    // var ground = document.getElementById('ground').value;
+    // var p_type = $('input:radio[name=p_type]:checked').value;
+    // var schedule = [{id:id},day,start_time,end_time,ground,p_type}];  // schduleDTO 순서에 맞게 보내줌.(Controller에서 scheduleDTO로 받기 때문에)
+    function addSchedule(){    // 전송버튼 눌렀을때 실행되는 함수
+        $.ajax({
+            type : "POST",
+            url:'http://localhost:8081/schedule/addSchedule',   // url 형식 확인필요
+            data: JSON.stringify(obj),   // 모든 입력값을 String으로 변환.
+            success:function (data){
+                console.log("success",data);
+                alert("일정이 등록되었습니다.");
+                self.close();
+            },
+            error:function (){
+                console.log("fail");
+            }
+
+        });
+        // form.target= opener.name;
+        // form.submit();
+        // if(opener !=null){
+        //     opener.insert= null;
+        //     self.close();
+        // }
+
+    };
 </script>
 </body>
 </html>

@@ -28,52 +28,59 @@
             text-align: center;
             justify-content: center;
         }
-        #check{
-            background-color:GhostWhite;
-        }
-        .messagef{color:red; font-style: Italic;}
-        .messaget{color:blue; font-style: Italic;}
+        /*#check{*/
+        /*    background-color:GhostWhite;*/
+        /*}*/
+        /*.messagef{color:red; font-style: Italic;}*/
+        /*.messaget{color:blue; font-style: Italic;}*/
     </style>
-<script type="text/javascript">
-    $("#check").click(function (){
-        $("#create").attr("type", "button") //중복체크 안된경우 양식이 전송되지 못하게
-        //const teamName = $("#team_name").val(); //사용자가 입력한 입력값
-        $.ajax({
-            type:"get",
-            async:false,
-            url:"http://localhost:8081/team/newTeamForm/checkTeamName",
-            data:{"teamName" : $("input[name='t_name']").val()},
-            success :function(data){
-                if(data==true){
-                    $("#message").text("이미 사용중인 이름입니다.")
-                    $("#message").addClass("messagef");
-                    $("#message").removeClass("messaget");
-                }else{
-                    $("#message").text("사용가능한 이름입니다.")
-                    $("#message").addClass("messaget");
-                    $("#message").removeClass("messagef");
-                    $("#create").attr("type", "submit");
-                }
-            }
-        })
-    });
-</script>
-</head>
+<!--<script type="text/javascript">-->
+<!--    $.ajax(function check(){-->
+<!--        $("#create").attr("type", "button") //중복체크 안된경우 양식이 전송되지 못하게-->
+<!--        const teamName = $("#team_name").val(); //사용자가 입력한 입력값-->
+<!--        $.ajax({-->
+<!--            type:"get",-->
+<!--            async:false,-->
+<!--            url:"http://localhost:8081/team/newTeamForm/checkTeamName",-->
+<!--            data:teamName,-->
+<!--            success :function(data){-->
+<!--                if(data==true){-->
+<!--                    $("#message").text("이미 사용중인 이름입니다.")-->
+<!--                    $("#message").addClass("messagef");-->
+<!--                    $("#message").removeClass("messaget");-->
+<!--                }else{-->
+<!--                    $("#message").text("사용가능한 이름입니다.")-->
+<!--                    $("#message").addClass("messaget");-->
+<!--                    $("#message").removeClass("messagef");-->
+<!--                    $("#create").attr("type", "submit");-->
+<!--                }-->
+<!--            }-->
+<!--        })-->
+<!--    });-->
+<!--</script>-->
+
+        <script type="text/javascript" src="js/local.js"></script>   <!-- 지역구 옵션선택 -->
+        <script type="text/javascript" src="js/check.js" ></script> <!-- 팀 이름 글자수 & 중복 체크 -->
+        <script type="text/javascript" src="js/disable.js" ></script> <!-- 입력값 받았을때 버튼 활성화 되도록 -->
+    </head>
+
 <body>
 
 <div id="container">
-    <form action="/saveTeam" method="post">
+    <form action="NewTeam_Process.jsp" method="post" name="newTeam">
 
         <fieldset>
+
+
             <ul>
                 <li><label for="team_name">팀 이름</label>
                     <input type="text" id="team_name" name="t_name" onkeydown="Disable()" placeholder="문자10자 이내" value='' autofocus required>
-                    <input type="button" id="check" value="중복확인">
-<!--                    <input type="hidden" name="idDuplication" value="idUncheck"/>-->
-                    <span id="message"></span>   <!--중복확인의 결과멘트가 나오도록.-->
+                    <input type="button" name="check" onclick="NameCheck()" value="중복확인">
+                    <input type="hidden" name="idDuplication" value="idUncheck" />
                 </li>
-                <li><label for="loc">활동 지역</label> <select id="loc"
-                                                                name="h_area1" onChange="cat1_change(this.value,h_area2)"
+
+                <li><label for="boundary">활동 지역</label> <select id="loc"
+                                                                name="h_area1" onChange="cat1_change(this,h_area2)"
                                                                 class="h_area1" required>
                     <option>-선택-</option>
                     <option value='1'>서울</option>
@@ -124,15 +131,21 @@
                 <li><label for="info">팀 소개글</label> <textarea name="t_info"
                                                               id="info" cols="50" rows="5"
                                                               placeholder="팀에 대한 소개를 간단히 작성해주세요 (문자 200자 내외)"></textarea></li>
+
             </ul>
+
         </fieldset>
+
         <div class="buttons" Disable()>
-            <button type="submit" id="create" >등 록</button>
+            <button type="submit" onclick="checkValue()">등 록</button>
             <button type="reset" onclick= "window.close()">취 소</button>
         </div>
     </form>
+
 </div>
-<script type="text/javascript" src="/static/js/local.js"></script>   <!-- 지역구 옵션선택 -->
-<script type="text/javascript" src="/static/js/disable.js" ></script> <!-- 입력값 받았을때 버튼 활성화 되도록 -->
+
 </body>
-</html>`
+
+
+
+</html>

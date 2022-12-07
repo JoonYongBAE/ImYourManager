@@ -5,12 +5,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.validation.Errors;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ScheduleService {
-    JSONArray register (ScheduleDTO scheduleDTO);
+    JSONArray getJsonArray(Long teamNum);
+    void register (ScheduleDTO scheduleDTO);
     JSONObject readOne(Long scheduleNum);
-    JSONArray modify(ScheduleDTO scheduleDTO);
+    void modify(ScheduleDTO scheduleDTO);
     void remove(Long ScheduleNum);
 
 }
