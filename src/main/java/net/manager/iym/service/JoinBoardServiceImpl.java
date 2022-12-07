@@ -56,7 +56,7 @@ public class JoinBoardServiceImpl implements JoinBoardService {
     @Override
     public void modify(JoinBoardDTO joinBoardDTO) {
         JoinBoard joinBoard = joinBoardRepository.findJoinBoardByJoinBoardNum(joinBoardDTO.getJoinBoardNum());//joinboardDTO에서 num을 받아와 게시물 검색
-        joinBoard.changeTitleContentJoinType(joinBoardDTO.getJoinTitle(), joinBoardDTO.getJoinContent(), joinBoardDTO.getJoinType());//DTO로 받은 값으로 domain의 제목과 컨텐츠, 타입 수정
+        joinBoard.changeTitleContentJoinType(joinBoardDTO.getJoinTitle(), joinBoardDTO.getJoinContent(), joinBoardDTO.getJoinType(), joinBoardDTO.getJoinFile());//DTO로 받은 값으로 domain의 제목과 컨텐츠, 타입 수정
         joinBoardRepository.save(joinBoard);//save를 할 때 프라이머리 키가 있다면 업데이트로 들어간다.
     }
 
@@ -74,7 +74,19 @@ public class JoinBoardServiceImpl implements JoinBoardService {
         Page<JoinBoard> result = joinBoardRepository.searchAll(types, keyword, pageable);
 
         List<JoinBoardDTO> dtoList = result.getContent().stream()
-                .map(joinBoard -> modelMapper.map(joinBoard,JoinBoardDTO.class)).collect(Collectors.toList());
+                .map(joinBoard -> EntityToDto(joinBoard)).collect(Collectors.toList());
+
+//        List<JoinBoardDTO> dtoList = result.getContent().stream()
+//                .map(joinBoard -> modelMapper.map(joinBoard,JoinBoardDTO.class)).collect(Collectors.toList());
+        //위의 코드를 사용하면 멤버의 값이 담기지 않아 id가 나오지 않는 현상이 나타난다.
+
+//        List<JoinBoard> joinBoard = joinBoardRepository.findAll();
+//        List<JoinBoardDTO> dtoList = new ArrayList<>();
+//            for(JoinBoard joinBoardList : joinBoard){
+//                JoinBoardDTO joinBoardDTO = EntityToDto(joinBoardList);
+//                dtoList.add(joinBoardDTO);
+//            }
+//              위의 코드를 사용하면 멤버값을 넣어주었기 때문에 id가 나오지만 페이징이 풀리는 현상이 나타난다.
 
 
         return PageResponseDTO.<JoinBoardDTO>withAll()

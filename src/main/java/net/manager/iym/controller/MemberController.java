@@ -46,7 +46,7 @@ public class MemberController {
         }
         log.info(memberDTO);
         memberService.register(memberDTO);
-        return "redirect:/member/register";
+        return "redirect:/member/login";
     }
 
 }

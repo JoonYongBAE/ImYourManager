@@ -36,7 +36,7 @@ public interface JoinBoardService {
         JoinBoardDTO joinBoardDTO = JoinBoardDTO.builder().joinBoardNum(joinBoard.getJoinBoardNum())
                 .joinTitle(joinBoard.getJoinTitle()).joinContent(joinBoard.getJoinContent())
                 .joinFile(joinBoard.getJoinFile()).joinVisitCount(joinBoard.getJoinVisitCount())
-                .joinType(joinBoard.getJoinType()).id(joinBoard.getMember().getId()).regDate(joinBoard.getRegDate()).build();//이름
+                .joinType(joinBoard.getJoinType()).id(joinBoard.getMember().getId()).regDate(joinBoard.getRegDate()).modDate(joinBoard.getModDate()).build();//이름
         return joinBoardDTO;
     }
 }

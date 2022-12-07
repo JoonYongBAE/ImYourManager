@@ -40,8 +40,14 @@ public class JoinBoardController {//
 
     }
 
-    @GetMapping("/read, /modify")//게시글 확인, 수정 컨트롤러 GET
+    @GetMapping("/read")//게시글 확인 컨트롤러 GET
     public void read(Long joinBoardNum, PageRequestDTO pageRequestDTO, Model model){
+        JoinBoardDTO joinBoardDTO = joinBoardService.read(joinBoardNum);
+        log.info("joinBoardDTO의 값 확인 : "+joinBoardDTO);
+        model.addAttribute("joinBoardDTO", joinBoardDTO);//모델에 joinBoardDTO 값을 담아준다.
+    }
+    @GetMapping("/modify")//게시글 수정 컨트롤러 GET
+    public void modify(Long joinBoardNum, PageRequestDTO pageRequestDTO, Model model){
         JoinBoardDTO joinBoardDTO = joinBoardService.read(joinBoardNum);
         log.info("joinBoardDTO의 값 확인 : "+joinBoardDTO);
         model.addAttribute("joinBoardDTO", joinBoardDTO);//모델에 joinBoardDTO 값을 담아준다.
@@ -53,7 +59,7 @@ public class JoinBoardController {//
 
     if (bindingResult.hasErrors()){
         log.info("/register에 결과값이 안넘어옴");//결과값이 바인딩안되면 실행됨
-        return "redirect:/";
+        return "redirect:/member/register";
     }
     log.info(joinBoardDTO);
     joinBoardService.register(joinBoardDTO);
@@ -64,16 +70,20 @@ public class JoinBoardController {//
     public String modify(@Valid JoinBoardDTO joinBoardDTO, PageRequestDTO pageRequestDTO,
                          BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
+            String link = pageRequestDTO.getLink();
             log.info("/modify에 결과값이 안넘어옴");//결과값이 바인딩안되면 실행됨
-            return "redirect:/";
+            return "redirect:/main/joinboard/modify?"+link;
         }
         joinBoardService.modify(joinBoardDTO);
-     return "redirect:/";
+        redirectAttributes.addFlashAttribute("result", "modified");
+        redirectAttributes.addAttribute("joinBoardNum", joinBoardDTO.getJoinBoardNum());//주소값을 지정해줌
+     return "redirect:/main/joinboard/read";
     }
     @PostMapping("/remove")//조인 게시글 삭제 컨트롤러 POST
     public String remove(JoinBoardDTO joinBoardDTO, RedirectAttributes redirectAttributes){
         Long joinBoardNum = joinBoardDTO.getJoinBoardNum();
         joinBoardService.remove(joinBoardNum);
-        return "redirect:/";
+        redirectAttributes.addFlashAttribute("result", "removed");
+        return "redirect:/main/joinboard/list";
     }
 }

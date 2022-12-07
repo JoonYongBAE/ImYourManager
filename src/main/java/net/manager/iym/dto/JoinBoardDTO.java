@@ -34,14 +34,7 @@ public class JoinBoardDTO {//Entity에서 필요한 필드값들을 받아와 ge
     //@NotEmpty
     private LocalDateTime regDate;
 
-    public JoinBoardDTO(JoinBoard joinBoard) {//리스트에서 보여줄 리스트만 넣어준다.
-        this.id = joinBoard.getMember().getId();
-        this.joinTitle = joinBoard.getJoinTitle();
-        this.joinContent = joinBoard.getJoinContent();
-        this.joinType=joinBoard.getJoinType();
-        this.regDate = joinBoard.getRegDate();
-        this.joinVisitCount = joinBoard.getJoinVisitCount();
-    }
+    private LocalDateTime modDate;
 
 
 }

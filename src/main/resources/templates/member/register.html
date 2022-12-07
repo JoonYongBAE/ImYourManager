@@ -1,57 +1,79 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      >
+      layout:decorate="~{layout/basic.html}">
+
 <head>
-    <title>Member Join Page</title>
+    <title>Member Register Page</title>
 </head>
 
-
-                    <form action="/member/register" method="post">
-                        <div >
-                            <span>ID</span>
-                            <input type="text" name="id"/>
+<div layout:fragment="content">
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Register
+                </div>
+                <div class="card-body">
+                    <form id="registerForm" action="/member/register" method="post">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">아이디</span>
+                            <input type="text" name="id" class="form-control">
                         </div>
 
-                        <div>
-                            <span>PASS</span>
-                            <input type="password" name="pass"/>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">비밀번호</span>
+                            <input type="password" name="pass" class="form-control">
                         </div>
 
-
-                        <div>
-                            <span>MAIL</span>
-                            <input type="text" name="mail"/>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">이메일</span>
+                            <input type="email" name="mail" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">이름</span>
+                            <input type="text" name="name" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">주소</span>
+                            <input type="text" name="memberLoc" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">연락처</span>
+                            <input type="text" name="phone" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">성별</span>
+                            <select class="form-select" name="gender">
+                                <option value="man">남자</option>
+                                <option value="woman">여자</option>
+                            </select>
                         </div>
 
-                        <div>
-                            <span>NAME</span>
-                            <input type="text" name="name"/>
-                        </div>
-
-                        <div>
-                            <span>MemberLoc</span>
-                            <input type="text" name="memberLoc"/>
-                        </div>
-
-                        <div>
-                            <span>PHONE</span>
-                            <input type="text" name="phone"/>
-                        </div>
-
-                        <div>
-                            <span>GENDER</span>
-                            <input type="text" name="gender"/>
-                        </div>
-
-
-
-
-                            <div>
-                                <button type="submit">Submit</button>
-                                <button type="reset">Reset</button>
+                        <div class="my-4">
+                            <div class="float-end">
+                                <button type="submit" class="btn btn-primary submitBtn">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
-
+                        </div>
                     </form>
+                </div><!--end card body-->
 
-</html>
+            </div><!--end card-->
+        </div><!-- end col-->
+    </div><!-- end row-->
+
+
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+
+    const error = [[${error}]]
+
+    if(error && error === 'mid'){
+        alert("동일한 MID를 가진 계정이 존재합니다.")
+    }
+
+
+</script>

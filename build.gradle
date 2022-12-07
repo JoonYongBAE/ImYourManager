@@ -63,12 +63,11 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 sourceSets {
-    main.java.srcDir querydslDir//추가
-//    main{
-//        java {
-//            srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
-//        }
-//    }
+    main{
+        java {
+            srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+        }
+    }
 }
 compileQuerydsl{//추가
     options.annotationProcessorPath = configurations.querydsl
