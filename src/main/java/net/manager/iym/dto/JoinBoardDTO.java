@@ -29,8 +29,6 @@ public class JoinBoardDTO {//Entity에서 필요한 필드값들을 받아와 ge
     private String joinType;
     //@NotEmpty
     private Long joinVisitCount;
-
-    private String joinFile;
     //@NotEmpty
     private LocalDateTime regDate;
 

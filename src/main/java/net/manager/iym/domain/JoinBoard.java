@@ -25,13 +25,10 @@ public class JoinBoard extends CommonEntity{//
     private String joinContent;
     @Column(length = 20, nullable = false)
     private String joinType;
-    @Column(length = 3000)
-    private String joinFile;
     @Column(columnDefinition = "long default 0", nullable = false)
     private Long joinVisitCount;
 
-    public void changeTitleContentJoinType(String joinTitle, String joinContent, String joinType, String joinFile){//글 수정작업시 사용
-        this.joinFile = joinFile;
+    public void changeTitleContentJoinType(String joinTitle, String joinContent, String joinType){//글 수정작업시 사용
         this.joinTitle = joinTitle;
         this.joinContent = joinContent;
         this.joinType = joinType;

@@ -57,7 +57,7 @@ public class JoinBoardServiceTests {
     @Test
     public void testJoinBoardModify(){//게시글 수정 성공
         JoinBoard joinBoard = joinBoardRepository.findJoinBoardByJoinBoardNum(17l);
-        joinBoard.changeTitleContentJoinType("제목수정TDD", "글수정TDD", "타입수정TDD", "100 ");
+        joinBoard.changeTitleContentJoinType("제목수정TDD", "글수정TDD", "타입수정TDD");
         joinBoardRepository.save(joinBoard);
     }
     @Test

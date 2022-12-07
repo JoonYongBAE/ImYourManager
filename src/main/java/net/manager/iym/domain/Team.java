@@ -35,8 +35,6 @@ public class Team {
     @Column(length = 200)
     private String teamInfo;
 
-    @Column(length = 3000)
-    private String teamLogo;
 
 
 }

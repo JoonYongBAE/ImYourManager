@@ -59,7 +59,7 @@ public class JoinBoardController {//
 
     if (bindingResult.hasErrors()){
         log.info("/register에 결과값이 안넘어옴");//결과값이 바인딩안되면 실행됨
-        return "redirect:/member/register";
+        return "redirect:/";
     }
     log.info(joinBoardDTO);
     joinBoardService.register(joinBoardDTO);

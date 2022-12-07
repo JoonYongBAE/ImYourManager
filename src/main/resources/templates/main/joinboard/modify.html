@@ -22,7 +22,11 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">유형</span>
-                            <input type="text" class="form-control" name="joinType" th:value="${joinBoardDTO.joinType}">
+                            <select class="form-select" name="joinType" th:value="${joinBoardDTO.joinType}">
+                                <option value="용병모집">용병모집</option>
+                                <option value="멤버모집">멤버모집</option>
+                                <option value="경기상대모집">경기상대모집</option>
+                            </select>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">제목</span>
@@ -31,10 +35,6 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">글 내용</span>
                             <textarea class="form-control col-sm-5" rows="5" name="joinContent">[[${joinBoardDTO.joinContent}]]</textarea>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">첨부파일</span>
-                            <input type="text" class="form-control" th:value="${joinBoardDTO.joinFile}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">아이디</span>

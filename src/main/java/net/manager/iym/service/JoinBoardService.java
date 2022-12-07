@@ -28,15 +28,16 @@ public interface JoinBoardService {
         //dto를 Entity로 매핑해주는 작업을 함
         JoinBoard joinBoard = JoinBoard.builder().joinBoardNum(joinBoardDTO.getJoinBoardNum())
                 .joinTitle(joinBoardDTO.getJoinTitle()).joinContent(joinBoardDTO.getJoinContent())
-                .joinFile(joinBoardDTO.getJoinFile()).joinVisitCount(joinBoardDTO.getJoinVisitCount())
+                .joinVisitCount(joinBoardDTO.getJoinVisitCount())
                 .joinType(joinBoardDTO.getJoinType()).build();
         return  joinBoard;//joinBoardDTO에서는 id값만 있고 Member값이 없기 때문에 Member값을 따로 추가해주어야한다.
     }
     default JoinBoardDTO EntityToDto(JoinBoard joinBoard){
         JoinBoardDTO joinBoardDTO = JoinBoardDTO.builder().joinBoardNum(joinBoard.getJoinBoardNum())
                 .joinTitle(joinBoard.getJoinTitle()).joinContent(joinBoard.getJoinContent())
-                .joinFile(joinBoard.getJoinFile()).joinVisitCount(joinBoard.getJoinVisitCount())
-                .joinType(joinBoard.getJoinType()).id(joinBoard.getMember().getId()).regDate(joinBoard.getRegDate()).modDate(joinBoard.getModDate()).build();//이름
+                .joinVisitCount(joinBoard.getJoinVisitCount()).joinType(joinBoard.getJoinType())
+                .id(joinBoard.getMember().getId()).regDate(joinBoard.getRegDate())
+                .modDate(joinBoard.getModDate()).build();//이름
         return joinBoardDTO;
     }
 }

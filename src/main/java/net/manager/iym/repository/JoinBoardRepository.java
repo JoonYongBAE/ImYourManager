@@ -2,8 +2,6 @@ package net.manager.iym.repository;
 
 import net.manager.iym.domain.JoinBoard;
 import net.manager.iym.repository.search.JoinBoardSearch;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

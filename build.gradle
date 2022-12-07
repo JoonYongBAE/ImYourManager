@@ -63,11 +63,12 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 sourceSets {
-    main{
-        java {
-            srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
-        }
-    }
+    main.java.srcDir querydslDir//추가하면 domain에 Q클래스가 추가된다.
+//    main{
+//        java {
+//            srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+//        }
+//    }
 }
 compileQuerydsl{//추가
     options.annotationProcessorPath = configurations.querydsl

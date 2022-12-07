@@ -21,6 +21,7 @@ public class MemberServiceImpl implements MemberService{
         memberDTO.setPass(bCryptPasswordEncoder.encode(memberDTO.getPass()));
         Member member = modelMapper.map(memberDTO, Member.class);
         member.addGrade(MemberGrade.STANDARD);
+        //Mapper기능
 //        Member member = Member.builder()
 //                .id(memberDTO.getId()).pass(memberDTO.getPass())
 //                .name(memberDTO.getName()).gender(memberDTO.getGender())

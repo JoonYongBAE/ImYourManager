@@ -24,33 +24,31 @@ xmlns:sec="http://www.thymeleaf.org/thymleaf-extras-springsecurity5"
 
             <form action="/main/joinboard/register" method="post">
                 <div class="input-group mb-3">
-                    <span class="input-group-text">Title</span>
+                    <span class="input-group-text">제목</span>
                     <input type="text" name="joinTitle" class="form-control" placeholder="title">
                 </div>
 
                 <div class="input-group mb-3">
-                    <span class="input-group-text">content</span>
+                    <span class="input-group-text">글 내용</span>
                     <input type="text" name="joinContent" class="form-control" placeholder="Content">
                 </div>
 
                 <div class="input-group mb-3">
-                    <span class="input-group-text">id</span>
+                    <span class="input-group-text">아이디</span>
                     <input type="text" name="id" class="form-control" placeholder="id"
                     th:value="${#authentication.principal.username}" readonly>
                 </div>
-
                 <div class="input-group mb-3">
-                    <span class="input-group-text">file</span>
-                    <input type="text" name="joinFile" class="form-control" placeholder="Content">
+                    <span class="input-group-text">유형</span>
+                    <select class="form-select" name="joinType">
+                        <option value="용병모집">용병모집</option>
+                        <option value="멤버모집">멤버모집</option>
+                        <option value="경기상대모집">경기상대모집</option>
+                    </select>
                 </div>
 
                 <div class="input-group mb-3">
-                    <span class="input-group-text">type</span>
-                    <input type="text" name="joinType" class="form-control" placeholder="Content">
-                </div>
-
-                <div class="input-group mb-3">
-                    <span class="input-group-text">visitCount</span>
+                    <span class="input-group-text">조회수</span>
                     <input type="number" name="joinVisitCount" class="form-control" value=0 readonly>
                 </div>
 
