@@ -16,6 +16,8 @@ public class TeamBoardDTO {
 
     private Long teamBoardNum;
 
+    private String id;
+
     private String teamBoardTitle;
 
     private String teamBoardContent;

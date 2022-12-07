@@ -26,6 +26,7 @@ import javax.sql.DataSource;
 @Log4j2
 @Configuration
 @RequiredArgsConstructor
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true) //prePostEnabled = true는 원하는 곳에
 // @PreAuthorize, @PostAuthorize 어노테이션을 이용하여 사전 또는 사후 체크 설정한다.
 public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 못하게한다.
@@ -58,12 +59,12 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
         http.csrf().disable();
 
 
-        http.rememberMe()//아이디 기억사용 옵션이다.
-
-                .key("12345678")
-                .tokenRepository(persistentTokenRepository())
-                .userDetailsService(userDetailsService)
-                .tokenValiditySeconds(606024 * 30);
+//        http.rememberMe()//아이디 기억사용 옵션이다.
+//
+//                .key("12345678")
+//                .tokenRepository(persistentTokenRepository())
+//                .userDetailsService(userDetailsService)
+//                .tokenValiditySeconds(606024 * 30);
 
         http.logout() // 로그아웃 기능 작동함
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))

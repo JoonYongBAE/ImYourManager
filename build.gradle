@@ -26,6 +26,8 @@ repositories {
     mavenCentral()
 }
 
+def querydslDir = "$buildDir/generated/querydsl"//추가
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -39,11 +41,10 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
-
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"//추가코드
     annotationProcessor(
 
             "javax.persistence:javax.persistence-api",
@@ -54,23 +55,14 @@ dependencies {
 
 
     implementation 'org.modelmapper:modelmapper:3.1.0'
-
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
-
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-
-
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
-
     implementation 'net.coobird:thumbnailator:0.4.16'
-
     implementation 'org.springframework.boot:spring-boot-starter-security'
-
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
     runtimeOnly 'org.webjars:bootstrap:4.5.0'
 
 }
@@ -85,4 +77,11 @@ sourceSets {
             srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
         }
     }
+}
+
+configurations {//추가
+    compileOnly{
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
 }

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+
+<div layout:fragment="content">
+
+    <div class="row mt-3">
+        <div class="col">
+
+            <div class="card">
+                <div class="card-header">
+                    Board List
+                </div>
+                <div class="card-body" >
+                    <h5 class="card-title">Board List </h5>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">팀이름</th>
+                            <th scope="col">활동지역</th>
+                            <th scope="col">연령대</th>
+                            <th scope="col">유형</th>
+                            <th scope="col">실력</th>
+                        </tr>
+                        </thead>
+                        <c:forEach items="${dto}" var="dtoTeam">
+                            <tr>
+                                <td>${dtoTeam.teamNum}</td>
+                                <td>${dtoTeam.teamName}</td>
+                                <td>${dtoTeam.teamLocal}</td>
+                                <td>${dtoTeam.teamAge}</td>
+                                <td>${dtoTeam.teamType}</td>
+                                <td>${dtoTeam.teamLevel}</td>
+                            </tr>
+                        </c:forEach>
+
+
+              <!--          <tr th:each="dto:${responseDTO.dtoList}"  >
+                            <td>[[${dto.teamNum}]]</td>
+                            <td>
+                                <a th:href="|@{/board/read(bno =${dto.bno})}&${link}|" class="text-decoration-none"> [[${dto.title}]] </a>
+                                <span class="badge progress-bar-success" style="background-color: #0a53be">[[${dto.replyCount}]]</span>
+                                <div th:if="${dto.boardImages != null && dto.boardImages.size() > 0}">
+                                    <img style="width:100px" th:each="boarImage: ${dto.boardImages}" th:src="|/view/s_${boarImage.uuid}_${boarImage.fileName}|">
+                                </div>
+                            </td>
+                            <td>[[${dto.writer}]]</td>
+                            <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</td>
+                        </tr>
+-->
+
+                    </table>
+
+
+                </div><!--end card body-->
+            </div><!--end card-->
+        </div><!-- end col-->
+    </div><!-- end row-->
+
+    <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script layout:fragment="script" th:inline="javascript">
+
+    document.querySelector(".pagination").addEventListener("click", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        const target = e.target
+
+        if(target.tagName !== 'A') {
+            return
+        }
+
+        const num = target.getAttribute("data-num")
+
+        const formObj = document.querySelector("form")
+
+        formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`
+
+        formObj.submit();
+
+    },false)
+
+    document.querySelector(".clearBtn").addEventListener("click", function (e){
+        e.preventDefault()
+        e.stopPropagation()
+
+        self.location ='/board/list'
+
+    },false)
+
+    //show modal
+    const result = [[${result}]]
+
+    const modal = new bootstrap.Modal(document.querySelector(".modal"))
+
+    if(result){
+        modal.show()
+    }
+
+
+
+</script>

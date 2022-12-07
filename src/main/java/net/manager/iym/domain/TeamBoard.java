@@ -33,4 +33,13 @@ public class TeamBoard extends CommonEntity{
     @Column(length = 3000)
     private String teamBoardFile;
 
+    public void addMember(Member member){ //홈페이지에서 멤버값을 받아 조인게시글 멤버컬럼에 삽입시 사용
+        this.member = member;
+    }
+    public void changeTeamBoard(String teamBoardTitle, String teamBoardContent){//글 수정작업시 사용
+        this.teamBoardTitle = teamBoardTitle;
+        this.teamBoardContent = teamBoardContent;
+
+    }
+
 }
