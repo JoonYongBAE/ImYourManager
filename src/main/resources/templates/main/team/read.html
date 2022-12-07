@@ -25,16 +25,16 @@
                         <input type="text" class="form-control" th:value="${teamDTO.teamName}" readonly>
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text">팀 소개글</span>
-                        <input type="text" class="form-control" th:value="${teamDTO.teamInfo}" readonly>
+                        <span class="input-group-text">팀타입</span>
+                        <input type="text" class="form-control" th:value="${teamDTO.teamType}" readonly>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀평균나이</span>
                         <input type="text" class="form-control" th:value="${teamDTO.teamAge}" readonly>
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text">팀타입</span>
-                        <textarea class="form-control col-sm-5" rows="5" readonly>[[${teamDTO.teamType}]]</textarea>
+                        <span class="input-group-text">소개글</span>
+                        <textarea class="form-control col-sm-5" rows="5" readonly>[[${teamDTO.teamInfo}]]</textarea>
                     </div>용
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀활동지역</span>
