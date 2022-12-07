@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <meta charset="utf-8" />
@@ -19,9 +20,9 @@
     <div class="border-end bg-white" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-light"><a href="/index1">IM YOUR MANAGER</div>
         <div class="list-group list-group-flush">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">공지사항</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">팀게시판</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">모집게시판</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/notice/list">공지사항</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/team/list">팀게시판</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/main/joinboard/list">모집게시판</a>
         </div>
     </div>
     <!-- Page content wrapper-->
@@ -33,8 +34,9 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                        <li class="nav-item active"><a class="nav-link" href="/member/login">로그인</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
+                        <li class="nav-item active"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
+                            <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
+                        <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()" href="/member/mypage">마이페이지</a></li>
        <!--
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
