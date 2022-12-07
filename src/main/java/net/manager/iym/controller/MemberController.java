@@ -22,13 +22,21 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/login1")
+    @GetMapping("/login")
     public void loginGET(String error, String logout){
         log.info("Login get....");
         log.info("logout : " +logout);
         if(logout != null){
             log.info("user Logout");
         }
+    }
+    @GetMapping("/logout")
+    public String logout(String error, String logout){
+        log.info("logout : " +logout);
+        if(logout != null){
+            log.info("user Logout");
+        }
+        return "redirect:/index1";
     }
 
     @GetMapping("/register")
@@ -46,7 +54,7 @@ public class MemberController {
         }
         log.info(memberDTO);
         memberService.register(memberDTO);
-        return "redirect:/main/loginAfter";
+        return "redirect:/member/register";
     }
 
 }

@@ -57,9 +57,6 @@ dao.close(); // DB 연결 닫기
 <html>
 <title>팀전용게시글 리스트</title>
 
-<!-- include -->
-<jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="menubar.jsp"></jsp:include>
 
 
 
@@ -128,5 +125,4 @@ dao.close(); // DB 연결 닫기
     </div>
  </div>
  </div>
-<jsp:include page="footer.jsp"></jsp:include>
 </html>

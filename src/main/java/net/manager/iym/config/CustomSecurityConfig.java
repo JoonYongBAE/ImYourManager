@@ -49,7 +49,11 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
         log.info("------------configure-------------------");
 
         //커스텀 로그인 페이지
-        http.formLogin().loginPage("/member/login");
+        http.formLogin()
+                .loginPage("/member/login")
+                .passwordParameter("pass")
+                .usernameParameter("id")
+                .defaultSuccessUrl("/index1");
         //CSRF 토큰 비활성화
         http.csrf().disable();
 
@@ -60,6 +64,11 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
                 .tokenRepository(persistentTokenRepository())
                 .userDetailsService(userDetailsService)
                 .tokenValiditySeconds(606024 * 30);
+
+        http.logout() // 로그아웃 기능 작동함
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                .logoutSuccessUrl("/index1")
+                .invalidateHttpSession(true);
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
 

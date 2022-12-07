@@ -41,5 +41,16 @@ public class Team {
     @Column(length = 3000)
     private String teamLogo;
 
+    public void teamChange(String teamLocal, String teamAge, String teamType
+    ,String teamLevel){
+        this.teamLocal = teamLocal;
+        this.teamAge = teamAge;
+        this.teamType = teamType;
+        this.teamLevel = teamLevel;
+    }
+    public void teamInfoChange(String teamInfo){
+        this.teamInfo = teamInfo;
+    }
+
 
 }
