@@ -42,6 +42,7 @@ public class JoinBoardController {//
 
     @GetMapping("/read")//게시글 확인 컨트롤러 GET
     public void read(Long joinBoardNum, PageRequestDTO pageRequestDTO, Model model){
+        joinBoardService.updateJoinBoardNum(joinBoardNum);
         JoinBoardDTO joinBoardDTO = joinBoardService.read(joinBoardNum);
         log.info("joinBoardDTO의 값 확인 : "+joinBoardDTO);
         model.addAttribute("joinBoardDTO", joinBoardDTO);//모델에 joinBoardDTO 값을 담아준다.

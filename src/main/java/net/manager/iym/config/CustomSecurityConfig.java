@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Log4j2
 @Configuration
@@ -37,7 +38,8 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
                                                                 //defaulttargeturl과 같은 역할??
         http.csrf().disable(); //csrf 보안을 사용하지 않는 설정
 
-        http.logout().logoutSuccessUrl("/").invalidateHttpSession(true);//로그아웃시 세션삭제 true이고 로그아웃 성공시 url설정
+        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                        .logoutSuccessUrl("/index.html").invalidateHttpSession(true);//로그아웃시 세션삭제 true이고 로그아웃 성공시 url설정
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
 

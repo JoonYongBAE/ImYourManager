@@ -27,7 +27,18 @@ public class TeamController {
 
     @GetMapping("/register")
     public void teamRegisterGET(){
+        //로그인한 사람의 아이디를 받는다.
+        //받은 아이디로 팀넘을 확인하고 있을시 돌려보낸다.
+        //teamservice.teamcheck    isempty()
 
+    }
+    @PostMapping("/teamjoin")
+    public String teamJoin(@Valid TeamDTO teamDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        log.info("----팀가입 컨트롤러 시작----");
+        log.info("팀조인디티오의 값 : "+teamDTO);
+        teamService.teamJoin(teamDTO);
+
+        return "redirect:/main/team/list";
     }
     @GetMapping("/list")
     public void teamList(PageRequestDTO pageRequestDTO, Model model){

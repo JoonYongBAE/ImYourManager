@@ -55,12 +55,22 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void modify(TeamDTO teamDTO) {
+    }
+
+    @Override
+    public void remove(Long teamNum) {//보류
 
     }
 
     @Override
-    public void remove(Long teamNum) {
-
+    public void teamJoin(TeamDTO teamDTO) {//team에 로그인한 사람을 가입시킨다.
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String id = ((UserDetails) principal).getUsername();// Object타입의 principal객체를 생성하여 로그인한 사람의 id를 뽑아옴
+        Team team = modelMapper.map(teamDTO, Team.class); //Team을 멤버에 넣어주기 위해서 TeamDTO를 매핑시켜준다.
+        Member member = memberRepository.findMemberById(id); //로그인한 아이디로 멤버 값을 가져온다.
+        member.changeTeam(team);//멤버에 팀을 셋팅해준다.
+        member.addGrade(MemberGrade.TEAMMEMBER);//등급에 team에 추가해준다.
+        memberRepository.save(member);//수정한 멤버값을 DB에 저장한다.
     }
 
     @Override
