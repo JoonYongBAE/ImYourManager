@@ -44,8 +44,6 @@ public interface TeamBoardService {
                 .regDate(teamBoard.getRegDate())
                 .modDate(teamBoard.getModDate())
                 .build();
-
-
         return teamBoardDTO;
     }
 }

@@ -13,7 +13,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    JoinBoard Read
+                    모집 게시판 상세 보기
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
@@ -51,10 +51,10 @@
                     <div class="my-4" th:with="user=${#authentication.principal}">
                         <div class="float-end" th:with="link = ${pageRequestDTO.getLink()}">
                             <a th:href="|@{/main/joinboard/list}?${link}|" class="text-decoration-none">
-                                <button type="button" class="btn btn-primary">List</button>
+                                <button type="button" class="btn btn-primary">목록으로</button>
                             </a>
                             <a th:if="${user != null && user.username == joinBoardDTO.id}" th:href="|@{/main/joinboard/modify(joinBoardNum=${joinBoardDTO.joinBoardNum})}&${link}|" class="text-decoration-none">
-                                <button type="button" class="btn btn-secondary">Modify</button>
+                                <button type="button" class="btn btn-secondary">수정하기</button>
                             </a>
                         </div>
                     </div>

@@ -42,25 +42,19 @@ public class TeamBoardController {
 
     @PostMapping("/register")
     public String registerPost(@Valid TeamBoardDTO teamBoardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-
         log.info("Teamboard POST register.......");
 
         if(bindingResult.hasErrors()) {
             log.info("has errors.......");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors() );
-            return "redirect:/teamboard/register";
+            return "redirect:/main/team/teamboard/register";
         }
-
         log.info(teamBoardDTO);
-
-        Long teamBoardNum  = teamBoardService.register(teamBoardDTO);
-
-        redirectAttributes.addFlashAttribute("result", teamBoardNum);
-
+       teamBoardService.register(teamBoardDTO);
         return "redirect:/main/team/teamboard/list";
     }
 
-    @GetMapping("/read, /modify")//게시글 확인, 수정 컨트롤러 GET
+    @GetMapping("/read")//게시글 확인, 수정 컨트롤러 GET
     public void read(Long teamBoardNum, PageRequestDTO pageRequestDTO, Model model){
         TeamBoardDTO teamBoardDTO = teamBoardService.readOne(teamBoardNum);
         log.info("teamBoardDTO의 값 확인 : "+teamBoardDTO);
@@ -71,16 +65,20 @@ public class TeamBoardController {
     public String modify(@Valid TeamBoardDTO teamBoardDTO, PageRequestDTO pageRequestDTO,
                          BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
+            String link = pageRequestDTO.getLink();
             log.info("/modify에 결과값이 안넘어옴");//결과값이 바인딩안되면 실행됨
-            return "redirect:/";
+            return "redirect:/main/team/teamboard/modify?"+link;
         }
         teamBoardService.modify(teamBoardDTO);
-        return "redirect:/main/team/teamboard/list";
+        redirectAttributes.addFlashAttribute("result", "modified");
+        redirectAttributes.addAttribute("teamBoardNum", teamBoardDTO.getTeamBoardNum());//주소값을 지정해줌
+        return "redirect:/main/team/teamboard/read";
     }
     @PostMapping("/remove")//조인 게시글 삭제 컨트롤러 POST
     public String remove(TeamBoardDTO teamBoardDTO, RedirectAttributes redirectAttributes){
         Long teamBoardNum = teamBoardDTO.getTeamBoardNum();
         teamBoardService.remove(teamBoardNum);
+        redirectAttributes.addFlashAttribute("result", "removed");
         return "redirect:/main/team/teamboard/list";
     }
 }

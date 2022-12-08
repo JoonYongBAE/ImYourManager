@@ -6,7 +6,7 @@
 <div layout:fragment="content">
 
     <div class="row mt-3">
-        <form action="/teamboard/list" method="get">
+        <form action="/main/team/teamboard/list" method="get">
             <div class="col">
                 <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
                 <div class="input-group">
@@ -36,10 +36,10 @@
 
             <div class="card">
                 <div class="card-header">
-                   Team Board List
+                   팀 자유게시판
                 </div>
                 <div class="card-body" >
-                    <h5 class="card-title">TeamBoard List </h5>
+<!--                    <h5 class="card-title">TeamBoard List </h5>-->
 
                     <table class="table">
                         <thead>
@@ -47,21 +47,19 @@
                             <th scope="col">팀번호</th>
                             <th scope="col">제목</th>
                             <th scope="col">작성자</th>
+                            <th scope="col">조회수</th>
                             <th scope="col">작성시간</th>
                         </tr>
                         </thead>
 
                         <tbody th:with="link = ${pageRequestDTO.getLink()}">
                         <tr th:each="dto:${responseDTO.dtoList}"  >
-                            <td>[[${dto.bno}]]</td>
+                            <td>[[${dto.teamBoardNum}]]</td>
                             <td>
-                                <a th:href="|@{/teamboard/read(teamBoardNum =${dto.teamBoardNum})}&${link}|" class="text-decoration-none"> [[${dto.teamBoardTitle}]] </a>
-                                <span class="badge progress-bar-success" style="background-color: #0a53be">[[${dto.replyCount}]]</span>
-                                <div th:if="${dto.boardImages != null && dto.boardImages.size() > 0}">
-                                    <img style="width:100px" th:each="boarImage: ${dto.boardImages}" th:src="|/view/s_${boarImage.uuid}_${boarImage.fileName}|">
-                                </div>
+                                <a th:href="|@{/main/team/teamboard/read(teamBoardNum =${dto.teamBoardNum})}&${link}|" class="text-decoration-none"> [[${dto.teamBoardTitle}]] </a>
                             </td>
-                            <td>[[${dto.writer}]]</td>
+                            <td>[[${dto.id}]]</td>
+                            <td>[[${dto.teamBoardVisitCount}]]</td>
                             <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</td>
                         </tr>
                         </tbody>
@@ -111,6 +109,7 @@
             </div>
         </div>
     </div>
+    <a href="register">글쓰기</a>
 
 
 </div>

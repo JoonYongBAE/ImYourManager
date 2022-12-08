@@ -72,7 +72,7 @@ public class TeamBoardServiceImpl implements TeamBoardService {
         Page<TeamBoard> result = teamBoardRepository.searchAll(types, keyword, pageable);
 
         List<TeamBoardDTO> dtoList = result.getContent().stream()
-                .map(joinBoard -> modelMapper.map(joinBoard,TeamBoardDTO.class)).collect(Collectors.toList());
+                .map(teamBoard -> entityToDTO(teamBoard)).collect(Collectors.toList());
 
 
         return PageResponseDTO.<TeamBoardDTO>withAll()
