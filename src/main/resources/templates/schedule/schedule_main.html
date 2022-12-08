@@ -14,7 +14,7 @@
     <!-- fullcalendar 언어 CDN -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
     <!--popop CDN-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.min.js"></script>
+
     <style>
         .fc-toolbar-chunk {
             display: flex;      // 일렬로 나란히
@@ -22,6 +22,19 @@
         }
         /*thead .fc-col-header-cell fc-day fc-day-sat{ color:#0000FF; }    !* 토요일 *!*/
         /*thead .fc-col-header-cell fc-day fc-day-sun{ color:#FF0000; }    !* 일요일 *!*/
+        .modal{
+            position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.8); top:0; left:0; display:none;
+        }
+
+        .modal_content{
+            width:400px; height:200px;
+            background:#fff; border-radius:10px;
+            position:relative; top:50%; left:50%;
+            margin-top:-100px; margin-left:-200px;
+            text-align:center;
+            box-sizing:border-box; padding:74px 0;
+            line-height:23px; cursor:pointer;
+        }
 
     </style>
 <script>
@@ -76,55 +89,22 @@
                                           alert("가져오기 실패")
                                       }
                                   })
+                                  return arr;
                           }],
+                          eventClick: function (event){
+                              console.log(event)
+                              var no = '${id}'
+                              $.ajax({
+                                  type:"GET",
+                                  url:'',//경로 잘 모르겠음
+                                  data: no,
+                                  success:function (data){
+                                      console.log("success", data);
+                                  }
+                              })
+                              return false;
+                          },
 
-//                           eventClick: function (info) {
-//                               let start_year = info.event.start.getUTCFullYear();   // 일정 정보를 info 객체에 넣음.
-//                               let start_month = info.event.start.getMonth() + 1;
-//                               let start_date = info.event.start.getUTCDate();
-//                               let start_time = info.event.start.getHours();
-//                               let end_time = info.event.end.getHours();
-//
-//
-//                               let start = start_year + "-" + start_month + "-" + start_date;
-//                               let time = start_time + "시 ~ " + end_time + "시";
-//
-//                               let attends = "";
-//                               info.event.extendedProps.attachments.forEach(function(item) {
-//                                   attends += "<div><a href='"+item.fileUrl+"' target='_blank'>[첨부파일]</a></div>"
-//                               });
-//
-//                               if (!info.event.extendedProps.description) {
-//                                   info.event.extendedProps.description = "";
-//                               };
-//                               let contents = `
-// 						<div style='font-weight:bold; font-size:20px; margin-bottom:30px; text-align:center'>
-// 							${start}
-// 						</div>
-// 						<div>
-// 						    시 간 : ${time}
-// </div>
-// 						<div style='font-size:18px; margin-bottom:20px'>
-// 							위치: ${info.event.title}
-// 						</div>
-// 						<div style='...'>
-//
-// </div>
-// 						<div style='width:500px'>
-// 							${info.event.extendedProps.description}
-// 						</div>
-// 					  `;
-//
-//                               $("#popup").html(contents);
-//                               $("#popup").bPopup({
-//                                   speed: 650,
-//                                   transition: 'slideIn',
-//                                   transitionClose: 'slideBack',
-//                                   position: [($(document).width() - 500) / 2, 30] //x, y
-//                               });
-//                               info.jsEvent.stopPropagation();
-//                               info.jsEvent.preventDefault();
-//                           },
                           footerToolbar: {
                               right: 'today'
                           },
@@ -155,6 +135,13 @@
 <body>
 <!--<h1 style="text-align: center">일정 관리</h1>-->
 <div id='calendar' ></div>
+
+<div class="modal">
+    <div class="modal_content"
+         title="클릭하면 창이 닫힙니다.">
+
+    </div>
+</div>
 </body>
 </html>
 

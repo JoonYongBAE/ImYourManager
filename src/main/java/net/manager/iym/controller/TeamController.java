@@ -23,7 +23,7 @@ public class TeamController {
     public String createForm() {
         return "/newTeamForm";
     }
-    @GetMapping("/checkTeamName")  // 팀이름 중복확인만을 위한 값으로 매핑
+    @GetMapping("newTeamForm/checkTeamName")  // 팀이름 중복확인만을 위한 값으로 매핑
     @ResponseBody  // 값 변환을 위해 필요함.
     public boolean check(@RequestParam String teamName) throws Exception {
         //중복체크

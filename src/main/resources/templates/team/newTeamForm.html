@@ -74,8 +74,9 @@
             <ul>
                 <li><label for="team_name">팀 이름</label>
                     <input type="text" id="team_name" name="t_name" onkeydown="disable()" placeholder="문자10자 이내" value='' autofocus required>
-                    <input type="button" name="check" onclick="check()" value="중복확인">
-                    <input type="hidden" name="idDuplication" value="idUncheck" />
+                    <input type="button" id="check" value="중복확인">
+                    <!--                    <input type="hidden" name="idDuplication" value="idUncheck"/>-->
+                    <span id="message"></span>   <!--중복확인의 결과멘트가 나오도록.-->
                 </li>
 
                 <li><label for="boundary">활동 지역</label> <select id="loc"

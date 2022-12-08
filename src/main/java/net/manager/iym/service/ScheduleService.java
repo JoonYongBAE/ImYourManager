@@ -11,7 +11,7 @@ import java.util.Map;
 public interface ScheduleService {
     JSONArray getJsonArray(Long teamNum);
     void register (ScheduleDTO scheduleDTO);
-    JSONObject readOne(Long scheduleNum);
+    ScheduleDTO readOne(Long scheduleNum);
     void modify(ScheduleDTO scheduleDTO);
     void remove(Long ScheduleNum);
 
