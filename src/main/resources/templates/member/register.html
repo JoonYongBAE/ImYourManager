@@ -3,17 +3,17 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/basic.html}">
-
 <head>
-    <title>Member Register Page</title>
+    <title>Member Join Page</title>
 </head>
+
 
 <div layout:fragment="content">
     <div class="row mt-3">
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    Register
+                    JOIN
                 </div>
                 <div class="card-body">
                     <form id="registerForm" action="/member/register" method="post">
@@ -28,27 +28,28 @@
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">이메일</span>
+                            <span class="input-group-text">EMAIL</span>
                             <input type="email" name="mail" class="form-control">
                         </div>
+
                         <div class="input-group mb-3">
                             <span class="input-group-text">이름</span>
                             <input type="text" name="name" class="form-control">
                         </div>
+
                         <div class="input-group mb-3">
-                            <span class="input-group-text">주소</span>
+                            <span class="input-group-text">활동지역</span>
                             <input type="text" name="memberLoc" class="form-control">
                         </div>
+
                         <div class="input-group mb-3">
-                            <span class="input-group-text">연락처</span>
+                            <span class="input-group-text">전화번호</span>
                             <input type="text" name="phone" class="form-control">
                         </div>
+
                         <div class="input-group mb-3">
                             <span class="input-group-text">성별</span>
-                            <select class="form-select" name="gender">
-                                <option value="man">남자</option>
-                                <option value="woman">여자</option>
-                            </select>
+                            <input type="text" name="gender" class="form-control">
                         </div>
 
                         <div class="my-4">
@@ -71,9 +72,11 @@
 
     const error = [[${error}]]
 
-    if(error && error === 'mid'){
-        alert("동일한 MID를 가진 계정이 존재합니다.")
+    if(error && error === 'id'){
+        alert("동일한 ID를 가진 계정이 존재합니다.")
     }
 
 
 </script>
+
+</html>

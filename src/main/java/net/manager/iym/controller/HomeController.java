@@ -6,14 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/main")
-public class HomeController {//
-    @GetMapping("/first1")
-    public void home1() {
-
-    }
-    @GetMapping("/first2")
-    public void home2(){
+@RequestMapping()
+@RequiredArgsConstructor
+public class HomeController {
+    @GetMapping("/index1")
+    public void home() {
 
     }
 }

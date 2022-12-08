@@ -30,6 +30,14 @@ public class MemberController {
             log.info("user Logout");
         }
     }
+    @GetMapping("/logout")
+    public String logout(String error, String logout){
+        log.info("logout : " +logout);
+        if(logout != null){
+            log.info("user Logout");
+        }
+        return "redirect:/index1";
+    }
 
     @GetMapping("/register")
     public void signUp() {
