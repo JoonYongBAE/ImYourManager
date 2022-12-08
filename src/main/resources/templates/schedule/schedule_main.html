@@ -93,10 +93,10 @@
                           }],
                           eventClick: function (event){
                               console.log(event)
-                              var no = '${id}'
+                              const no = '${id}';
                               $.ajax({
                                   type:"GET",
-                                  url:'',//경로 잘 모르겠음
+                                  url:"",//경로 잘 모르겠음
                                   data: no,
                                   success:function (data){
                                       console.log("success", data);

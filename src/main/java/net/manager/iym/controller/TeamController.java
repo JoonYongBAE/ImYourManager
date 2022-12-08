@@ -25,9 +25,9 @@ public class TeamController {
     }
     @GetMapping("newTeamForm/checkTeamName")  // 팀이름 중복확인만을 위한 값으로 매핑
     @ResponseBody  // 값 변환을 위해 필요함.
-    public boolean check(@RequestParam String teamName) throws Exception {
+    public boolean check(@RequestParam Map<String, String> teamName) throws Exception {
         //중복체크
-       boolean result=  teamService.checkTeamName(teamName);
+       boolean result=  teamService.checkTeamName(teamName.get(teamName));
        return result;
     }
 
