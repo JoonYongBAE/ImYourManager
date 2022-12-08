@@ -30,7 +30,10 @@ public class Team {
     private String teamType;
 
     @Column(length = 50, nullable = false)
-    private String teamLocal;
+    private String teamLocal1;
+
+    @Column(length = 50, nullable = false)
+    private String teamLocal2;
 
     @Column(length = 20, nullable = false)
     private String teamLevel;

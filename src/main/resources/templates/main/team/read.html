@@ -40,10 +40,11 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">소개글</span>
                         <textarea name="teamInfo" class="form-control col-sm-5" rows="5" readonly>[[${teamDTO.teamInfo}]]</textarea>
-                    </div>용
+                    </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀활동지역</span>
-                        <input type="text" name="teamLocal" class="form-control" th:value="${teamDTO.teamLocal}" readonly>
+                        <input type="text" name="teamLocal1" class="form-control" th:value="${teamDTO.teamLocal1}" readonly>
+                        <input type="text" name="teamLocal2" class="form-control" th:value="${teamDTO.teamLocal2}" readonly>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀레벨</span>
