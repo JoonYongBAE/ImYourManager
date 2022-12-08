@@ -31,7 +31,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 //    private final ModelMapper modelMapper;
 
     private final ScheduleRepository scheduleRepository;
-    private final TeamRepository teamRepository;
     private final MemberRepository memberRepository;
 
     public JSONArray getJsonArray(Long teamNum) {   // JSON 객체 배열로 각팀의 모든 스케줄을 반환해주는 메소드
@@ -44,10 +43,9 @@ public class ScheduleServiceImpl implements ScheduleService{
         for(int i= 0; i< list.length();i++) {
             info.put("id", listAll.get(i).getScheduleNum().toString());
             info.put("start",  listAll.get(i).getScheduleDate().toString());
-            info.put("startTime", listAll.get(i).getScheduleStartTime().toString());
-            info.put("endTime", listAll.get(i).getScheduleEndTime().toString());
-            info.put("title", listAll.get(i).getGround());
-            info.put("content", listAll.get(i).getPlayType());
+            info.put("end", listAll.get(i).getScheduleEndTime().toString());
+            info.put("url", listAll.get(i).getGround());
+            info.put("type", listAll.get(i).getPlayType());
             daily = new JSONObject(info);
             list.put(daily);
         }

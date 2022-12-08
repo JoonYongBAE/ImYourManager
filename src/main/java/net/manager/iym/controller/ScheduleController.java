@@ -38,10 +38,9 @@ public class ScheduleController {
     @ResponseBody
     public JSONArray scheduleMain(){
          JSONArray list = scheduleService.getJsonArray(team.getTeamNum());
-         return list;
+         return list;  // json array로 내보내기.
     }
-    @PreAuthorize("hasRole('TEAMLEADER')")
-    @PostMapping("/addSchedule")
+    @PreAuthorize("hasRole('TEAMLEADER')")    @PostMapping("/addSchedule")
     public String newSchedule(@RequestBody @Valid ScheduleDTO scheduleDTO, Errors errors, Model model) {
 
         if (errors.hasErrors()) {
@@ -54,15 +53,15 @@ public class ScheduleController {
                 model.addAttribute(key, validResult.get(key));
             }
 
-            return "schedule/addScheduleForm";
+            return "schedule/addScheduleForm";   // 통과하지 못하면 다시 폼으로
         }
         scheduleService.register(scheduleDTO);
 
-        return "redirect:schedule/schedule_main";
+        return "redirect:schedule/schedule_main"; // 등록성공하면 메인페이지로 이동.
     }
 //    @GetMapping("/readOne/{teamNum}/{scheduleNum}")
 //    public ResponseEntity<ScheduleDTO> selectOne(@RequestBody Long scheduleNum){
-//Optional<Schedule> selectSchedul= scheduleRepository.findById(scheduleNum);
+//Optional<Schedule> selectSchedule= scheduleRepository.findById(scheduleNum);
 //
 //    }
 

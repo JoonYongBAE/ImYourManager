@@ -28,54 +28,53 @@
             text-align: center;
             justify-content: center;
         }
-        /*#check{*/
-        /*    background-color:GhostWhite;*/
-        /*}*/
-        /*.messagef{color:red; font-style: Italic;}*/
-        /*.messaget{color:blue; font-style: Italic;}*/
+        #check{
+            background-color:GhostWhite;
+        }
+        .messagef{color:red; font-style: Italic;}
+        .messaget{color:blue; font-style: Italic;}
     </style>
-<!--<script type="text/javascript">-->
-<!--    $.ajax(function check(){-->
-<!--        $("#create").attr("type", "button") //중복체크 안된경우 양식이 전송되지 못하게-->
-<!--        const teamName = $("#team_name").val(); //사용자가 입력한 입력값-->
-<!--        $.ajax({-->
-<!--            type:"get",-->
-<!--            async:false,-->
-<!--            url:"http://localhost:8081/team/newTeamForm/checkTeamName",-->
-<!--            data:teamName,-->
-<!--            success :function(data){-->
-<!--                if(data==true){-->
-<!--                    $("#message").text("이미 사용중인 이름입니다.")-->
-<!--                    $("#message").addClass("messagef");-->
-<!--                    $("#message").removeClass("messaget");-->
-<!--                }else{-->
-<!--                    $("#message").text("사용가능한 이름입니다.")-->
-<!--                    $("#message").addClass("messaget");-->
-<!--                    $("#message").removeClass("messagef");-->
-<!--                    $("#create").attr("type", "submit");-->
-<!--                }-->
-<!--            }-->
-<!--        })-->
-<!--    });-->
-<!--</script>-->
+<script type="text/javascript">
+    $.ajax(function check(){
+        $("#create").attr("type", "button") //중복체크 안된경우 양식이 전송되지 못하게
+        const teamName = $("#team_name").val(); //사용자가 입력한 입력값
+        $.ajax({
+            type:"get",
+            async:false,
+            url:"team/newTeamForm/checkTeamName",
+            data:teamName,
+            success :function(data){
+                if(data==true){
+                    $("#message").text("이미 사용중인 이름입니다.")
+                    $("#message").addClass("messagef");
+                    $("#message").removeClass("messaget");
+                }else{
+                    $("#message").text("사용가능한 이름입니다.")
+                    $("#message").addClass("messaget");
+                    $("#message").removeClass("messagef");
+                    $("#create").attr("type", "submit");
+                }
+            }
+        })
+    });
+</script>
 
         <script type="text/javascript" src="js/local.js"></script>   <!-- 지역구 옵션선택 -->
-        <script type="text/javascript" src="js/check.js" ></script> <!-- 팀 이름 글자수 & 중복 체크 -->
         <script type="text/javascript" src="js/disable.js" ></script> <!-- 입력값 받았을때 버튼 활성화 되도록 -->
     </head>
 
 <body>
 
 <div id="container">
-    <form action="NewTeam_Process.jsp" method="post" name="newTeam">
+    <form action="save" method="post" name="newTeam">
 
         <fieldset>
 
 
             <ul>
                 <li><label for="team_name">팀 이름</label>
-                    <input type="text" id="team_name" name="t_name" onkeydown="Disable()" placeholder="문자10자 이내" value='' autofocus required>
-                    <input type="button" name="check" onclick="NameCheck()" value="중복확인">
+                    <input type="text" id="team_name" name="t_name" onkeydown="disable()" placeholder="문자10자 이내" value='' autofocus required>
+                    <input type="button" name="check" onclick="check()" value="중복확인">
                     <input type="hidden" name="idDuplication" value="idUncheck" />
                 </li>
 
@@ -136,8 +135,8 @@
 
         </fieldset>
 
-        <div class="buttons" Disable()>
-            <button type="submit" onclick="checkValue()">등 록</button>
+        <div class="buttons" >
+            <button type="submit" onclick="">등 록</button>
             <button type="reset" onclick= "window.close()">취 소</button>
         </div>
     </form>

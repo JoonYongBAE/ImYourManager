@@ -22,9 +22,6 @@
         }
         /*thead .fc-col-header-cell fc-day fc-day-sat{ color:#0000FF; }    !* 토요일 *!*/
         /*thead .fc-col-header-cell fc-day fc-day-sun{ color:#FF0000; }    !* 일요일 *!*/
-        #calendar{ width: 80%;
-        margin: auto;
-        margin-top: 100px;}
 
     </style>
 <script>
@@ -32,6 +29,7 @@
 
                   var calendarEl = document.getElementById('calendar');
                       var calendar = new FullCalendar.Calendar(calendarEl, {
+
                           googleCalendarApiKey: 'AIzaSyBa6ljJAzeR7MfYWgRQZ_tPFpNwPZr73h0',
                           initialView: 'dayGridMonth',
                           local: 'ko',
@@ -56,57 +54,81 @@
                               }],
                           displayEventTime: true,
                           displayEventEnd: true,
+                          events : [
+                              function() {
+                                  var arr = {
+                                      id:'id',
+                                      start:'start'+'T'+'startTime',
+                                      end:'start'+'T'+'endTime',
+                                      url: 'title',
+                                      extendedProps:{ type:'content'}
+                                  };
+                                  $.ajax({
+                                      contentType:'application/json',
+                                      dataType:'json',
+                                      url:'schedule/schedule_main',
+                                      type:'GET',
+                                      async:false,
+                                      success:function(resp){
+                                          arr = resp;
+                                      },
+                                      error:function (){
+                                          alert("가져오기 실패")
+                                      }
+                                  })
+                          }],
 
-                          eventClick: function (info) {
-                              let start_year = info.event.start.getUTCFullYear();   // 일정 정보를 info 객체에 넣음.
-                              let start_month = info.event.start.getMonth() + 1;
-                              let start_date = info.event.start.getUTCDate();
-                              let start_time = info.event.start.getHours();
-                              let end_time = info.event.end.getHours();
-
-
-                              let start = start_year + "-" + start_month + "-" + start_date;
-                              let time = start_time + "시 ~ " + end_time + "시";
-
-                              let attends = "";
-                              info.event.extendedProps.attachments.forEach(function(item) {
-                                  attends += "<div><a href='"+item.fileUrl+"' target='_blank'>[첨부파일]</a></div>"
-                              });
-
-                              if (!info.event.extendedProps.description) {
-                                  info.event.extendedProps.description = "";
-                              };
-                              let contents = `
-						<div style='font-weight:bold; font-size:20px; margin-bottom:30px; text-align:center'>
-							${start}
-						</div>
-						<div>
-						    시 간 : ${time}
-</div>
-						<div style='font-size:18px; margin-bottom:20px'>
-							위치: ${info.event.title}
-						</div>
-						<div style='...'>
-
-</div>
-						<div style='width:500px'>
-							${info.event.extendedProps.description}
-						</div>
-					  `;
-
-                              $("#popup").html(contents);
-                              $("#popup").bPopup({
-                                  speed: 650,
-                                  transition: 'slideIn',
-                                  transitionClose: 'slideBack',
-                                  position: [($(document).width() - 500) / 2, 30] //x, y
-                              });
-                              info.jsEvent.stopPropagation();
-                              info.jsEvent.preventDefault();
-                          },
+//                           eventClick: function (info) {
+//                               let start_year = info.event.start.getUTCFullYear();   // 일정 정보를 info 객체에 넣음.
+//                               let start_month = info.event.start.getMonth() + 1;
+//                               let start_date = info.event.start.getUTCDate();
+//                               let start_time = info.event.start.getHours();
+//                               let end_time = info.event.end.getHours();
+//
+//
+//                               let start = start_year + "-" + start_month + "-" + start_date;
+//                               let time = start_time + "시 ~ " + end_time + "시";
+//
+//                               let attends = "";
+//                               info.event.extendedProps.attachments.forEach(function(item) {
+//                                   attends += "<div><a href='"+item.fileUrl+"' target='_blank'>[첨부파일]</a></div>"
+//                               });
+//
+//                               if (!info.event.extendedProps.description) {
+//                                   info.event.extendedProps.description = "";
+//                               };
+//                               let contents = `
+// 						<div style='font-weight:bold; font-size:20px; margin-bottom:30px; text-align:center'>
+// 							${start}
+// 						</div>
+// 						<div>
+// 						    시 간 : ${time}
+// </div>
+// 						<div style='font-size:18px; margin-bottom:20px'>
+// 							위치: ${info.event.title}
+// 						</div>
+// 						<div style='...'>
+//
+// </div>
+// 						<div style='width:500px'>
+// 							${info.event.extendedProps.description}
+// 						</div>
+// 					  `;
+//
+//                               $("#popup").html(contents);
+//                               $("#popup").bPopup({
+//                                   speed: 650,
+//                                   transition: 'slideIn',
+//                                   transitionClose: 'slideBack',
+//                                   position: [($(document).width() - 500) / 2, 30] //x, y
+//                               });
+//                               info.jsEvent.stopPropagation();
+//                               info.jsEvent.preventDefault();
+//                           },
                           footerToolbar: {
                               right: 'today'
                           },
+                          interactive:true,
                           customButtons: {
                               addEventButton: {
                                   text: '일정등록',

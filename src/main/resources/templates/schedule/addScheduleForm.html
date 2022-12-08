@@ -117,8 +117,8 @@
 </form>
 <script>
     let obj = {
-        "id" : '${id}',
-        "scheduleDate" : document.getElementById('day').value,
+        "id" : '${id}',  // 로그인된 회원의 아이디
+        "scheduleDate" : document.getElementById('day').value,   // 각각 인풋값 넣어주기
         "scheduleStartTime" : document.getElementById('start_time').value,
         "scheduleEndTime":document.getElementById('ground').value,
         "ground":document.getElementById('ground').value,
@@ -135,12 +135,12 @@
     function addSchedule(){    // 전송버튼 눌렀을때 실행되는 함수
         $.ajax({
             type : "POST",
-            url:'http://localhost:8081/schedule/addSchedule',   // url 형식 확인필요
+            url:'schedule/addSchedule',   // url 형식 확인필요 (데이터를 보낼곳)
             data: JSON.stringify(obj),   // 모든 입력값을 String으로 변환.
             success:function (data){
                 console.log("success",data);
                 alert("일정이 등록되었습니다.");
-                self.close();
+               // self.close();  //등록성공하면 메인페이지로 이동.
             },
             error:function (){
                 console.log("fail");
