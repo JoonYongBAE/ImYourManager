@@ -9,6 +9,7 @@ import lombok.*;
 public class TeamDTO {
 
     private Long teamNum;
+    private String id;
     private String teamName;
     private String teamAge;
     private String teamType;

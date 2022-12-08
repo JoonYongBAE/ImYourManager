@@ -9,7 +9,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface TeamRepository extends JpaRepository<Team, Long>, TeamSearch {
-    @Query("select b from Team b where b.teamNum =:teamNum")
-    Optional<Team> findById(Long teamNum);
     Team findTeamByTeamNum(Long teamNum);
 }

@@ -13,9 +13,12 @@ import javax.persistence.*;
 public class Team {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teamNum")
     private Long teamNum;
+
+    @Column(nullable = false)
+    private String id;
 
     @Column(length = 20, nullable = false)
     private String teamName;
