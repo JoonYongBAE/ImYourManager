@@ -28,7 +28,6 @@ public class TeamBoardDTO {
 
     private LocalDateTime modDate;
 
-    private List<String> fileNames;
 
 
 }

@@ -53,9 +53,9 @@
 
                         <tbody th:with="link = ${pageRequestDTO.getLink()}">
                         <tr th:each="dto:${responseDTO.dtoList}"  >
-                            <td>[[${dto.noticeboardNum}]]</td>
+                            <td>[[${dto.noticeBoardNum}]]</td>
                             <td>
-                                <a th:href="|@{/board/read(noticeboardNum =${dto.noticeboardNum})}&${link}|" class="text-decoration-none"> [[${dto.title}]] </a>
+                                <a th:href="|@{/board/read(noticeBoardNum =${dto.noticeBoardNum})}&${link}|" class="text-decoration-none"> [[${dto.noticeTitle}]] </a>
 
                             </td>
                             <td>[[${dto.id}]]</td>

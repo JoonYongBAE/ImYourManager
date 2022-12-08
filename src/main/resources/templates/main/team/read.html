@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/basic.html}">
+      layout:decorate="~{layout/teamclick.html}">
 
 
 <head>
@@ -13,7 +13,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    JoinBoard Read
+                    Team Read
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
@@ -39,7 +39,7 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">소개글</span>
                         <textarea class="form-control col-sm-5" rows="5" readonly>[[${teamDTO.teamInfo}]]</textarea>
-                    </div>용
+                    </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀활동지역</span>
                         <input type="text" class="form-control" th:value="${teamDTO.teamLocal}" readonly>

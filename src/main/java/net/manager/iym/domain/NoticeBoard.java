@@ -21,6 +21,10 @@ public class NoticeBoard extends CommonEntity{
     @Column(length = 100, nullable = false)
     private String noticeTitle;
 
+    @ManyToOne
+    @JoinColumn(name="id")
+    private Member member;
+
     @Column(length = 3000, nullable = false)
     private String noticeContent;
 
@@ -29,5 +33,14 @@ public class NoticeBoard extends CommonEntity{
 
     @Column(length = 3000)
     private String noticeFile;
+
+    public void addMember(Member member){ //홈페이지에서 멤버값을 받아 조인게시글 멤버컬럼에 삽입시 사용
+        this.member = member;
+    }
+
+    public void change(String noticeTitle, String noticeContent){
+        this.noticeTitle = noticeTitle;
+        this.noticeContent = noticeContent;
+    }
 
 }
