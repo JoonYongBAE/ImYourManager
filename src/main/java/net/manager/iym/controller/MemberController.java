@@ -36,6 +36,7 @@ public class MemberController {
             log.info("user Logout");
         }
     }
+
     @GetMapping("/logout")
     public String logout(String error, String logout){
         log.info("logout : " +logout);
@@ -63,28 +64,32 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
-    @GetMapping("/mypage")
-    public void readMypage(Model model){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String id = ((UserDetails) principal).getUsername();
-        MemberDTO memberDTO = memberService.readMember(id);
-        log.info(memberDTO);
-        model.addAttribute("memberDTO", memberDTO);
-    }
-
 //    @GetMapping("/mypage")
-//    public void readMypage(String id, Model model){
-////        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-////        String id = ((UserDetails) principal).getUsername();
-//
+//    public void readMypage(Model model){
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String id = ((UserDetails) principal).getUsername();
 //        MemberDTO memberDTO = memberService.readMember(id);
 //        log.info(memberDTO);
 //        model.addAttribute("memberDTO", memberDTO);
 //    }
 
+    @GetMapping("/mypage")
+    public void readMypage(Model model){
+        MemberDTO memberDTO = memberService.readMember();
+        log.info(memberDTO);
+        model.addAttribute("memberDTO", memberDTO);
+    }
+
+//    @GetMapping("/modify")
+//    public void modify(String id, Model model){
+//        MemberDTO memberDTO = memberService.readMember(id);
+//        log.info(memberDTO);
+//        model.addAttribute("memberDTO",memberDTO);
+//    }
+
     @GetMapping("/modify")
-    public void modify(String id, Model model){
-        MemberDTO memberDTO = memberService.readMember(id);
+    public void modify(Model model){
+        MemberDTO memberDTO = memberService.readMember();
         log.info(memberDTO);
         model.addAttribute("memberDTO",memberDTO);
     }

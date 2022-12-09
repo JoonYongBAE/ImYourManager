@@ -26,7 +26,6 @@ public class NoticeBoardController {
 
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
-
         PageResponseDTO<NoticeBoardDTO> responseDTO = noticeBoardService.list(pageRequestDTO);
         log.info(responseDTO);
         model.addAttribute("responseDTO", responseDTO);
@@ -34,7 +33,6 @@ public class NoticeBoardController {
 
     @GetMapping("/register")
     public void registerGET(){
-
     }
 
     @PostMapping("/register")
@@ -44,7 +42,6 @@ public class NoticeBoardController {
             log.info("has errors.......");
             return "redirect:/";
         }
-
         log.info(noticeBoardDTO);
         noticeBoardService.register(noticeBoardDTO);
         return "redirect:/main/notice/list";
@@ -56,7 +53,6 @@ public class NoticeBoardController {
         NoticeBoardDTO noticeBoardDTO = noticeBoardService.readOne(noticeBoardNum);
         log.info(noticeBoardDTO);
         model.addAttribute("noticeBoardDTO", noticeBoardDTO);
-
     }
 
     @GetMapping("/modify")
@@ -86,6 +82,5 @@ public class NoticeBoardController {
         redirectAttributes.addFlashAttribute("result","removed");
         return "redirect:/main/notice/list";
     }
-
 
 }

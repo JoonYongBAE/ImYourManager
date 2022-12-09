@@ -18,7 +18,8 @@ public class MemberServiceImpl implements MemberService{
     private final ModelMapper modelMapper;
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Override//
+
+    @Override
     public String register(MemberDTO memberDTO) {
         memberDTO.setPass(bCryptPasswordEncoder.encode(memberDTO.getPass()));
         Member member = modelMapper.map(memberDTO, Member.class);
@@ -34,35 +35,32 @@ public class MemberServiceImpl implements MemberService{
         return id;
     }
 
-    @Override
-    public MemberDTO readMember(String id) {
-        Member member = memberRepository.findMemberById(id);
-        MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
-        return memberDTO;
-    }
-
 //    @Override
 //    public MemberDTO readMember(String id) {
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String id = ((UserDetails) principal).getUsername();
 //        Member member = memberRepository.findMemberById(id);
 //        MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
 //        return memberDTO;
 //    }
 
     @Override
-    public void modify(MemberDTO memberDTO) {
+    public MemberDTO readMember() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String id = ((UserDetails) principal).getUsername();
+        Member member = memberRepository.findMemberById(id);
+        MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
+        return memberDTO;
+    }
 
+    @Override
+    public void modify(MemberDTO memberDTO) {
         Member member = memberRepository.findMemberById(memberDTO.getId());
         member.change(memberDTO.getPass(), memberDTO.getMail(), member.getPhone(), memberDTO.getMemberLoc());
         memberRepository.save(member);
-
     }
 
     @Override
     public void remove(String id) {
-
         memberRepository.deleteById(id);
-
     }
+
 }

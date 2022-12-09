@@ -11,31 +11,23 @@ import java.util.stream.Collectors;
 
 public interface NoticeBoardService {
     Long register(NoticeBoardDTO noticeBoardDTO);
-
     NoticeBoardDTO readOne(Long noticeBoardNum);
-
     void modify(NoticeBoardDTO noticeBoardDTO);
-
     void remove(Long noticeBoardNum);
-
     PageResponseDTO<NoticeBoardDTO> list(PageRequestDTO pageRequestDTO);
-
     void updateNoticeBoardNum(Long noticeBoardNum);
 
     default NoticeBoard dtoToEntity(NoticeBoardDTO noticeBoardDTO){
-
         NoticeBoard noticeBoard = NoticeBoard.builder()
                 .noticeBoardNum(noticeBoardDTO.getNoticeBoardNum())
                 .noticeTitle(noticeBoardDTO.getNoticeTitle())
                 .noticeContent(noticeBoardDTO.getNoticeContent())
                 .noticeVisitCount(noticeBoardDTO.getNoticeVisitCount())
                 .build();
-
         return noticeBoard;
     }
 
     default NoticeBoardDTO entityToDTO(NoticeBoard noticeBoard) {
-
         NoticeBoardDTO noticeBoardDTO = NoticeBoardDTO.builder()
                 .noticeBoardNum(noticeBoard.getNoticeBoardNum())
                 .noticeTitle(noticeBoard.getNoticeTitle())
@@ -44,7 +36,6 @@ public interface NoticeBoardService {
                 .id(noticeBoard.getMember().getId()).regDate(noticeBoard.getRegDate())
                 .modDate(noticeBoard.getModDate())
                 .build();
-
         return noticeBoardDTO;
     }
 

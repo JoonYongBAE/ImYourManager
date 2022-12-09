@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/basic.html}">
+
 <head>
     <meta charset="UTF-8">
     <title>NoticeBoard List</title>
 </head>
-<div layout:fragment="content">
 
+<div layout:fragment="content">
     <div class="row mt-3">
         <form action="/main/notice/list" method="get">
             <div class="col">
@@ -18,7 +19,6 @@
                             <option value="">---</option>
                             <option value="t" th:selected="${pageRequestDTO.type =='t'}">제목</option>
                             <option value="c" th:selected="${pageRequestDTO.type =='c'}">내용</option>
-<!--                            <option value="w" th:selected="${pageRequestDTO.type =='w'}">작성자</option>-->
                             <option value="tc" th:selected="${pageRequestDTO.type =='tc'}">제목 내용</option>
                         </select>
                     </div>
@@ -40,7 +40,7 @@
                 <div class="card-header">
                     공지사항 목록
                 </div>
-                <div class="card-body" >
+                <div class="card-body">
                     <table class="table">
                         <thead>
                         <tr>
@@ -53,10 +53,11 @@
                         </thead>
 
                         <tbody th:with="link = ${pageRequestDTO.getLink()}">
-                        <tr th:each="dto:${responseDTO.dtoList}"  >
+                        <tr th:each="dto:${responseDTO.dtoList}">
                             <td>[[${dto.noticeBoardNum}]]</td>
                             <td>
-                            <a th:href="|@{/main/notice/read(noticeBoardNum =${dto.noticeBoardNum})}&${link}|" class="text-decoration-none"> [[${dto.noticeTitle}]] </a>
+                                <a th:href="|@{/main/notice/read(noticeBoardNum =${dto.noticeBoardNum})}&${link}|"
+                                   class="text-decoration-none"> [[${dto.noticeTitle}]] </a>
 
                             </td>
                             <td>[[${dto.id}]]</td>
@@ -76,18 +77,16 @@
                             </li>
 
                             <th:block th:each="i: ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
-                                <li th:class="${responseDTO.page == i}?'page-item active':'page-item'" >
-                                    <a class="page-link"  th:data-num="${i}">[[${i}]]</a>
+                                <li th:class="${responseDTO.page == i}?'page-item active':'page-item'">
+                                    <a class="page-link" th:data-num="${i}">[[${i}]]</a>
                                 </li>
                             </th:block>
 
                             <li class="page-item" th:if="${responseDTO.next}">
-                                <a class="page-link"  th:data-num="${responseDTO.end + 1}">Next</a>
+                                <a class="page-link" th:data-num="${responseDTO.end + 1}">Next</a>
                             </li>
                         </ul>
                     </div>
-
-
                 </div><!--end card body-->
             </div><!--end card-->
         </div><!-- end col-->
@@ -124,7 +123,7 @@
 
         const target = e.target
 
-        if(target.tagName !== 'A') {
+        if (target.tagName !== 'A') {
             return
         }
 
@@ -136,25 +135,23 @@
 
         formObj.submit();
 
-    },false)
+    }, false)
 
-    document.querySelector(".clearBtn").addEventListener("click", function (e){
+    document.querySelector(".clearBtn").addEventListener("click", function (e) {
         e.preventDefault()
         e.stopPropagation()
 
-        self.location ='/main/notice/list'
+        self.location = '/main/notice/list'
 
-    },false)
+    }, false)
 
     //show modal
     const result = [[${result}]]
 
     const modal = new bootstrap.Modal(document.querySelector(".modal"))
 
-    if(result){
+    if (result) {
         modal.show()
     }
-
-
 
 </script>

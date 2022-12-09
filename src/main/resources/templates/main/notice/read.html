@@ -3,7 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/basic.html}">
 
-
 <head>
     <meta charset="UTF-8">
     <title>NoticeBoard Read</title>
@@ -28,7 +27,8 @@
 
                     <div class="input-group mb-3">
                         <span class="input-group-text">내용</span>
-                        <textarea class="form-control col-sm-5" rows="5" readonly>[[${noticeBoardDTO.noticeContent}]]</textarea>
+                        <textarea class="form-control col-sm-5" rows="5"
+                                  readonly>[[${noticeBoardDTO.noticeContent}]]</textarea>
                     </div>
 
                     <div class="input-group mb-3">
@@ -43,11 +43,13 @@
 
                     <div class="input-group mb-3">
                         <span class="input-group-text">작성일</span>
-                        <input type="text" class="form-control" th:value="${#temporals.format(noticeBoardDTO.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+                        <input type="text" class="form-control"
+                               th:value="${#temporals.format(noticeBoardDTO.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">수정일</span>
-                        <input type="text" class="form-control" th:value="${#temporals.format(noticeBoardDTO.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+                        <input type="text" class="form-control"
+                               th:value="${#temporals.format(noticeBoardDTO.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
                     </div>
 
                     <div class="my-4" th:with="user=${#authentication.principal}">
@@ -56,21 +58,17 @@
                                 <button type="button" class="btn btn-primary">목록</button>
                             </a>
                             <a th:if="${user != null && user.username == noticeBoardDTO.id}"
-                               th:href="|@{/main/notice/modify(noticeBoardNum=${noticeBoardDTO.noticeBoardNum})}&${link}|" class="text-decoration-none">
+                               th:href="|@{/main/notice/modify(noticeBoardNum=${noticeBoardDTO.noticeBoardNum})}&${link}|"
+                               class="text-decoration-none">
                                 <button type="button" class="btn btn-secondary">수정</button>
                             </a>
                         </div>
                     </div>
-
-
                 </div><!--end card body-->
-        </div><!-- end col-->
-    </div><!-- end row-->
+            </div><!-- end col-->
+        </div><!-- end row-->
 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     </div>
 </div><!-- layout fragment end -->
@@ -84,25 +82,24 @@
 
     const replyPaging = document.querySelector('.replyPaging') //페이지 목록 DOM
 
-    function printPages(data){ //페이지 목록 출력
+    function printPages(data) { //페이지 목록 출력
 
         //pagination
         let pageStr = '';
 
-        if(data.prev) {
-            pageStr +=`<li class="page-item"><a class="page-link" data-page="${data.start-1}">PREV</a></li>`
+        if (data.prev) {
+            pageStr += `<li class="page-item"><a class="page-link" data-page="${data.start - 1}">PREV</a></li>`
         }
 
-        for(let i = data.start; i <= data.end; i++){
-            pageStr +=`<li class="page-item ${i == data.page?"active":""} "><a class="page-link" data-page="${i}">${i}</a></li>`
+        for (let i = data.start; i <= data.end; i++) {
+            pageStr += `<li class="page-item ${i == data.page ? "active" : ""} "><a class="page-link" data-page="${i}">${i}</a></li>`
         }
 
-        if(data.next) {
-            pageStr +=`<li class="page-item"><a class="page-link" data-page="${data.end +1}">NEXT</a></li>`
+        if (data.next) {
+            pageStr += `<li class="page-item"><a class="page-link" data-page="${data.end + 1}">NEXT</a></li>`
         }
         replyPaging.innerHTML = pageStr
     }
-
 
 </script>
 </html>

@@ -23,17 +23,11 @@ public class NoticeBoardSearchImpl extends QuerydslRepositorySupport implements 
 
     @Override
     public Page<NoticeBoard> search1(Pageable pageable) {
-
         QNoticeBoard noticeBoard = QNoticeBoard.noticeBoard;
-
         JPQLQuery<NoticeBoard> query = from(noticeBoard);
-
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-
         booleanBuilder.or(noticeBoard.noticeTitle.contains("11"));
-
         booleanBuilder.or(noticeBoard.noticeContent.contains("11"));
-
         query.where(booleanBuilder);
         query.where(noticeBoard.noticeBoardNum.gt(0L));
 
@@ -41,25 +35,18 @@ public class NoticeBoardSearchImpl extends QuerydslRepositorySupport implements 
         this.getQuerydsl().applyPagination(pageable, query);
 
         List<NoticeBoard> list = query.fetch();
-
         long count = query.fetchCount();
-
-
         return null;
     }
 
     @Override
     public Page<NoticeBoard> searchAll(String[] types, String keyword, Pageable pageable) {
-
         QNoticeBoard noticeBoard = QNoticeBoard.noticeBoard;
         JPQLQuery<NoticeBoard> query = from(noticeBoard);
 
         if( (types != null && types.length > 0) && keyword != null ){ //검색 조건과 키워드가 있다면
-
             BooleanBuilder booleanBuilder = new BooleanBuilder(); // (
-
             for(String type: types){
-
                 switch (type){
                     case "t":
                         booleanBuilder.or(noticeBoard.noticeTitle.contains(keyword));
@@ -82,11 +69,8 @@ public class NoticeBoardSearchImpl extends QuerydslRepositorySupport implements 
         this.getQuerydsl().applyPagination(pageable, query);
 
         List<NoticeBoard> list = query.fetch();
-
         long count = query.fetchCount();
-
         return new PageImpl<>(list, pageable, count);
     }
-
 
 }

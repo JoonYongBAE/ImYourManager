@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/basic.html}">
 
@@ -20,11 +19,13 @@
                     <form th:action="@{/main/notice/modify}" method="post" id="f1">
                         <div class="input-group mb-3">
                             <span class="input-group-text">게시글번호</span>
-                            <input type="text" class="form-control" th:value="${noticeBoardDTO.noticeBoardNum}" name="noticeBoardNum" readonly>
+                            <input type="text" class="form-control" th:value="${noticeBoardDTO.noticeBoardNum}"
+                                   name="noticeBoardNum" readonly>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">제목</span>
-                            <input type="text" class="form-control" name="noticeTitle" th:value="${noticeBoardDTO.noticeTitle}">
+                            <input type="text" class="form-control" name="noticeTitle"
+                                   th:value="${noticeBoardDTO.noticeTitle}">
                         </div>
 
                         <div class="input-group mb-3">
@@ -39,16 +40,21 @@
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">조회수</span>
-                            <input type="text" class="form-control" name="noticeVisitCount" th:value="${noticeBoardDTO.noticeVisitCount}" readonly>
+                            <input type="text" class="form-control" name="noticeVisitCount"
+                                   th:value="${noticeBoardDTO.noticeVisitCount}" readonly>
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">작성일</span>
-                            <input type="text" class="form-control" th:value="${#temporals.format(noticeBoardDTO.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+                            <input type="text" class="form-control"
+                                   th:value="${#temporals.format(noticeBoardDTO.regDate, 'yyyy-MM-dd HH:mm:ss')}"
+                                   readonly>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">수정일</span>
-                            <input type="text" class="form-control" th:value="${#temporals.format(noticeBoardDTO.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+                            <input type="text" class="form-control"
+                                   th:value="${#temporals.format(noticeBoardDTO.modDate, 'yyyy-MM-dd HH:mm:ss')}"
+                                   readonly>
                         </div>
 
                         <div class="my-4">
@@ -78,7 +84,7 @@
 
     let errorMsg = ''
 
-    if(errors){
+    if (errors) {
         for (let i = 0; i < errors.length; i++) {
             errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`
         }
@@ -89,32 +95,32 @@
     const link = [[${pageRequestDTO.getLink()}]]
     const formObj = document.querySelector("#f1")
 
-    document.querySelector(".modBtn").addEventListener("click", function(e){
+    document.querySelector(".modBtn").addEventListener("click", function (e) {
         e.preventDefault()
         e.stopPropagation()
 
         formObj.action = `/main/notice/modify?${link}`
-        formObj.method ='post'
+        formObj.method = 'post'
         formObj.submit()
 
 
     }, false)
 
-    document.querySelector(".removeBtn").addEventListener("click", function(e){
+    document.querySelector(".removeBtn").addEventListener("click", function (e) {
         e.preventDefault()
         e.stopPropagation()
 
         formObj.action = `/main/notice/remove`
-        formObj.method ='post'
+        formObj.method = 'post'
         formObj.submit()
     }, false)
 
-    document.querySelector(".listBtn").addEventListener("click", function(e){
+    document.querySelector(".listBtn").addEventListener("click", function (e) {
         e.preventDefault()
         e.stopPropagation()
 
         formObj.reset()
-        self.location =`/main/notice/list?${link}`
+        self.location = `/main/notice/list?${link}`
 
     }, false)
 
