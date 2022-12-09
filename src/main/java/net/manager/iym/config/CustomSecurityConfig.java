@@ -47,9 +47,9 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        log.info("------------configure-------------------");
+        log.info("------------로그인 환경설정중(configure)-------");
 
-        //커스텀 로그인 페이지
+        //로그인 페이지
         http.formLogin()
                 .loginPage("/member/login")
                 .passwordParameter("pass")
@@ -83,7 +83,7 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
-        //로그인 오류 페이지 대신 로그인 페이지로 이동시킨다.
+        //로그인 오류 페이지 대신 로그인 페이지로 이동시킴
         return new Custom403Handler();
     }
 
@@ -96,10 +96,4 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
         return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 
     }
-//    @Bean
-//    public PersistentTokenRepository persistentTokenRepository() {
-//        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
-//        repo.setDataSource(dataSource);
-//        return repo;
-//    }
 }

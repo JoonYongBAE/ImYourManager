@@ -24,6 +24,8 @@ public interface JoinBoardService {
 
     PageResponseDTO<JoinBoardDTO> list(PageRequestDTO pageRequestDTO);
 
+    void updateJoinBoardNum(Long joinBoardNum);//조회수 증가시킴
+
     default JoinBoard dtoToEntity(JoinBoardDTO joinBoardDTO){//defalut를 써서 implement한 클래스도 사용가능
         //dto를 Entity로 매핑해주는 작업을 함
         JoinBoard joinBoard = JoinBoard.builder()

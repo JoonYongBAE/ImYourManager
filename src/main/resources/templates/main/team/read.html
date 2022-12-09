@@ -16,38 +16,42 @@
                     Team Read
                 </div>
                 <div class="card-body">
+                    <form action="/main/team/teamjoin" method="post">
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀고유번호</span>
-                        <input type="text" class="form-control" th:value="${teamDTO.teamNum}" readonly>
+                        <input type="text" name="teamNum" class="form-control" th:value="${teamDTO.teamNum}" readonly>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀이름</span>
-                        <input type="text" class="form-control" th:value="${teamDTO.teamName}" readonly>
+                        <input type="text" name="teamName" class="form-control" th:value="${teamDTO.teamName}" readonly>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀리더</span>
-                        <input type="text" class="form-control" th:value="${teamDTO.id}" readonly>
+                        <input type="text" name="id" class="form-control" th:value="${teamDTO.id}" readonly>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀타입</span>
-                        <input type="text" class="form-control" th:value="${teamDTO.teamType}" readonly>
+                        <input type="text" name="teamType" class="form-control" th:value="${teamDTO.teamType}" readonly>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀평균나이</span>
-                        <input type="text" class="form-control" th:value="${teamDTO.teamAge}" readonly>
+                        <input type="text" name="teamAge" class="form-control" th:value="${teamDTO.teamAge}" readonly>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">소개글</span>
-                        <textarea class="form-control col-sm-5" rows="5" readonly>[[${teamDTO.teamInfo}]]</textarea>
+                        <textarea name="teamInfo" class="form-control col-sm-5" rows="5" readonly>[[${teamDTO.teamInfo}]]</textarea>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀활동지역</span>
-                        <input type="text" class="form-control" th:value="${teamDTO.teamLocal}" readonly>
+                        <input type="text" name="teamLocal1" class="form-control" th:value="${teamDTO.teamLocal1}" readonly>
+                        <input type="text" name="teamLocal2" class="form-control" th:value="${teamDTO.teamLocal2}" readonly>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">팀레벨</span>
-                        <input type="text" class="form-control" th:value="${teamDTO.teamLevel}" readonly>
+                        <input type="text" name="teamLevel" class="form-control" th:value="${teamDTO.teamLevel}" readonly>
                     </div>
+                        <button type="submit">[[${teamDTO.teamName}]]에 가입하기</button>
+                    </form>
                     <div class="my-4" th:with="user=${#authentication.principal}">
                         <div class="float-end" th:with="link = ${pageRequestDTO.getLink()}">
                             <a th:href="|@{/main/team/list}?${link}|" class="text-decoration-none">

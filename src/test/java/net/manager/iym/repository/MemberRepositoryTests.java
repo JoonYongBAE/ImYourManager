@@ -54,5 +54,11 @@ public class MemberRepositoryTests {
         log.info("--------");
         member.getGradeSet().forEach(memberGrade -> log.info(memberGrade.name()));
     }
-
+    @Test
+    public void testMemberInfo(){
+        Member bjy7883 =memberRepository.findMemberById("bjy7883");
+        Member mn1206 = memberRepository.findMemberById("mn1206");
+        log.info("bjy7883의 담긴 값 확인 : "+bjy7883);
+        log.info("mn1206의 담긴 값 확인 : "+mn1206);
+    }
 }

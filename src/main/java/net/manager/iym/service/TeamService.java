@@ -10,5 +10,6 @@ public interface TeamService {
     TeamDTO readOne(Long teamNum);
     void modify(TeamDTO teamDTO);
     void remove(Long teamNum);
+    void teamJoin(TeamDTO teamDTO);
     PageResponseDTO<TeamDTO> list(PageRequestDTO pageRequestDTO);
 }

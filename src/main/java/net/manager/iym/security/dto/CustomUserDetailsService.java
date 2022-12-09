@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {//인터페
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         log.info("받은 id명(loadUserByUserName) : " + id);
-        Optional<Member> result = memberRepository.getWithGrade(id);
+        Optional<Member> result = memberRepository.getWithGrade(id);//id를 grade와 함께 가져와서 담아준다.
         if(result.isEmpty()){
             throw new UsernameNotFoundException("User를 찾을 수 없음(loadUserByUserName오류)");
         }
@@ -36,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {//인터페
                 member.getPhone(), member.getGender(), member.getMemberLoc(),
                 member.getName(), member.getTeam(),
                 member.getGradeSet().stream().map(memberGrade ->
-                                new SimpleGrantedAuthority(memberGrade.name()))
+                                new SimpleGrantedAuthority("ROLE_"+memberGrade.name()))
                 .collect(Collectors.toList()));
         log.info("---memberSecurityDTO 작동 시점확인---" +memberSecurityDTO);
     return memberSecurityDTO; //컨트롤러에게 던져준다.

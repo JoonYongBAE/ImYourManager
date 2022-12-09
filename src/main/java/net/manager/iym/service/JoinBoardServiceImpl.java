@@ -83,5 +83,10 @@ public class JoinBoardServiceImpl implements JoinBoardService {
                 .build();
     }
 
+    @Override
+    public void updateJoinBoardNum(Long joinBoardNum) {
+        joinBoardRepository.updateJoinVisitCount(joinBoardNum);
+    }
+
 }
 
