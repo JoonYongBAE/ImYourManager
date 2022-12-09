@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>TeamMemberList</title>
+</head>
+<body>
+<table>
+    <thead>
+    <th>아이디</th>
+    <th>이름</th>
+    <th>이메일</th>
+    <th>핸드폰번호</th>
+    <th>성별</th>
+    <th>지역</th>
+    </thead>
+    <tr th:each="memberListDTO:${memberListDTO}">
+        <td>[[${memberListDTO.id}]]</td>
+        <td>[[${memberListDTO.name}]]</td>
+        <td>[[${memberListDTO.mail}]]</td>
+        <td>[[${memberListDTO.phone}]]</td>
+        <td>[[${memberListDTO.gender}]]</td>
+        <td>[[${memberListDTO.memberLoc}]]</td>
+    </tr>
+</table>
+
+</body>
+</html>

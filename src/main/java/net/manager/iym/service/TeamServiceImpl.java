@@ -6,6 +6,8 @@ import net.manager.iym.domain.Member;
 import net.manager.iym.domain.MemberGrade;
 import net.manager.iym.domain.Team;
 import net.manager.iym.dto.JoinBoardDTO;
+import net.manager.iym.dto.MemberDTO;
+import net.manager.iym.dto.MemberListDTO;
 import net.manager.iym.dto.TeamDTO;
 import net.manager.iym.dto.paging.PageRequestDTO;
 import net.manager.iym.dto.paging.PageResponseDTO;
@@ -42,6 +44,7 @@ public class TeamServiceImpl implements TeamService {
         Member member = memberRepository.findMemberById(id);//뽑아온 아이디로 멤버값 뽑음
         member.changeTeam(team);//팀 체인지 메소드를 통해서 로그인한 멤버의 null값이었던 팀값을 방금 생성한 팀의 teamNum으로 변경시킴
         member.addGrade(MemberGrade.TEAMLEADER);//팀을 생성했기에 로그인한 사람의 등급을 리더로 지명
+        member.addGrade(MemberGrade.TEAMMEMBER);//팀 리더이면서 팀멤버도 맞기에 멤버도 등록
         memberRepository.save(member);//멤버를 업데이트하여 데이터 베이스에 저장해줌
         return member.getTeam().getTeamNum();//팀 넘버를 리턴해서 팀넘버 알려줌
     }
@@ -89,6 +92,18 @@ public class TeamServiceImpl implements TeamService {
                 .dtoList(dtoList)
                 .total((int)result.getTotalElements())
                 .build();
+    }
+
+    @Override
+    public List<MemberListDTO> teamMemberlist(Long teamNum) {//팀num을 받아서 팀의 리스트를 뽑아준다.
+        Team team = teamRepository.findTeamByTeamNum(teamNum);
+        List<Member> memberList = memberRepository.findMembersByTeam(team);
+        List<MemberListDTO> memberListDTOList = memberList.stream()//코드를 해석하면 memberList에 담긴 list 개수 만큼 for문을 돌릴것인데
+                .map(member -> modelMapper.map(member, MemberListDTO.class)).collect(Collectors.toList());//member를 MemberDTO로 modelmapper를 할 것이고
+        // 리스트 타입으로<toList()>로 바꿔줄 것임 ex)toList()가 아닌 toSet()으로 하면 처음 받은 List타입을 set타입으로 바꿔준다.
+
+
+        return memberListDTOList;
     }
 
 }

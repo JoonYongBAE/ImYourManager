@@ -26,17 +26,15 @@ public class MemberRepositoryTests {
     @Test
     public void insertMember(){ //멤버 인서트 + 팀 강제 주입 테스트 성공
         Optional<Team> result = teamRepository.findById(1l);
-        Team team = (Team)result.orElseThrow();
-        IntStream.rangeClosed(1,1).forEach(i->{
-            Member member = Member.builder().id("member33").team(team)
+        Team team = (Team)result.orElseThrow();//팀 null값 익셉션 해준 테스트
+        IntStream.rangeClosed(1,10).forEach(i->{
+            Member member = Member.builder().id("member"+i).team(team)
                     .pass(passwordEncoder.encode("1111"))
-                    .mail("ict"+i+"@naver.com").gender("man").phone("01012345"+i)
-                    .name("mingyo").memberLoc("korea")
+                    .mail("ict"+i+"@naver.com").gender("man").phone("010123456"+i)
+                    .name("min"+i).memberLoc("korea")
                     .build();
             member.addGrade(MemberGrade.STANDARD);
-            if (i>=0){
-                member.addGrade(MemberGrade.TEAMLEADER);
-            }
+            member.addGrade(MemberGrade.TEAMMEMBER);
             memberRepository.save(member);
         });
     }

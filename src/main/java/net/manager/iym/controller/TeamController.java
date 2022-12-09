@@ -2,8 +2,11 @@ package net.manager.iym.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.manager.iym.domain.Member;
 import net.manager.iym.domain.Team;
 import net.manager.iym.dto.JoinBoardDTO;
+import net.manager.iym.dto.MemberDTO;
+import net.manager.iym.dto.MemberListDTO;
 import net.manager.iym.dto.TeamDTO;
 import net.manager.iym.dto.paging.PageRequestDTO;
 import net.manager.iym.dto.paging.PageResponseDTO;
@@ -14,9 +17,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/main/team")
@@ -32,13 +37,10 @@ public class TeamController {
         //teamservice.teamcheck    isempty()
 
     }
-    @PostMapping("/teamjoin")
-    public String teamJoin(@Valid TeamDTO teamDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        log.info("----팀가입 컨트롤러 시작----");
-        log.info("팀조인디티오의 값 : "+teamDTO);
-        teamService.teamJoin(teamDTO);
-
-        return "redirect:/main/team/list";
+    @GetMapping("/teammemberlist")
+    public void teamMemberList(@RequestParam(value = "teamNum")Long teamNum, Model model){
+        List<MemberListDTO> memberListDTOList = teamService.teamMemberlist(teamNum);
+        model.addAttribute("memberListDTO", memberListDTOList);
     }
     @GetMapping("/list")
     public void teamList(PageRequestDTO pageRequestDTO, Model model){
@@ -55,6 +57,14 @@ public class TeamController {
         TeamDTO teamDTO = teamService.readOne(teamNum);
         log.info("teamDTO의 값 확인하기 : "+teamDTO);
         model.addAttribute("teamDTO", teamDTO);
+    }
+    @PostMapping("/teamjoin")
+    public String teamJoin(@Valid TeamDTO teamDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        log.info("----팀가입 컨트롤러 시작----");
+        log.info("팀조인디티오의 값 : "+teamDTO);
+        teamService.teamJoin(teamDTO);
+
+        return "redirect:/main/team/list";
     }
     @PostMapping("/register")
     public String teamRegisterPOST(@Valid TeamDTO teamDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
