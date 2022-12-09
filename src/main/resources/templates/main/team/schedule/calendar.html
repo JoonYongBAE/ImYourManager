@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymleaf-extras-springsecurity5"
+      layout:decorate="~{layout/teamclick.html}"
+>
 <head>
   <meta charset="UTF-8">
-  <title>Schdule</title>
-  <!--    <link href='fullcalendar/main.css' rel='stylesheet'/>-->
+  <title>Team Calendar</title>
+</head>
+<div layout:fragment="content">  <!--    <link href='fullcalendar/main.css' rel='stylesheet'/>-->
   <!--    <script src='fullcalendar/main.js'></script>-->
 
   <!-- jquery CDN -->
@@ -122,12 +127,13 @@
 
   </script>
 
-</head>
+
 <body>
 <!--<h1 style="text-align: center">일정 관리</h1>-->
-<div id='calendar' ></div>
+<div id='calendar' style="width:80%; margin: 0 auto"></div>
 
 </body>
+</div>
 </html>
 
 

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymleaf-extras-springsecurity5"
+      layout:decorate="~{layout/teamclick.html}"
 >
 <head>
     <meta charset="UTF-8">
     <title>TeamMemberList</title>
 </head>
+<div layout:fragment="content">
+
 <body>
 <table>
     <thead>
