@@ -1,10 +1,12 @@
 package net.manager.iym.repository;
 
 import net.manager.iym.domain.Member;
+import net.manager.iym.domain.Team;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
@@ -16,6 +18,10 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     // social 필드가 false 값인 tuple(row)만 가져옴
 
     Member findMemberById(String id); //Id로 멤버 정보를 불러와준다.
+
+    @Query("select m from Member m where m.team = :team")
+    List<Member> findMembersByTeam(Team team);
+
 
 
 }
