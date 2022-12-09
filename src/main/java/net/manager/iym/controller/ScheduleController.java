@@ -13,6 +13,7 @@ import net.manager.iym.service.Validate;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/main/team/schedule")
 @Log4j2
@@ -33,11 +34,12 @@ public class ScheduleController {
 //    private final Team team;
 
     @GetMapping(value = "/calendar")   //팀페이지에서 경기일정 눌렀을 때
-    public JSONArray scheduleMain(){
+    public void scheduleMain(){
 //        JSONArray list = scheduleService.getJsonArray(team.getTeamNum());
 //        log.info(list);
 //        return list;  // json array로 내보내기.
-        return null;
+//        return /main/team/schedule/calendar;
+        //return "redirect:/main/team/schedule/calendar";
     }
 //    @PreAuthorize("hasRole('TEAMLEADER')")
 //    @PostMapping("/addSchedule")
