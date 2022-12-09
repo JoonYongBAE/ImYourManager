@@ -16,7 +16,7 @@ public class JoinBoard extends CommonEntity{//
     @GeneratedValue(strategy = GenerationType.IDENTITY)//DB의 컬럼값 1씩 증가를 따라서 자동적용
     @Column(name = "joinBoardNum")
     private Long joinBoardNum;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne//(cascade = CascadeType.PERSIST)
     @JoinColumn(name="id")
     private Member member;
     @Column(length = 100, nullable = false)

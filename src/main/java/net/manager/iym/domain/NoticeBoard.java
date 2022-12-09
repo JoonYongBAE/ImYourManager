@@ -20,7 +20,7 @@ public class NoticeBoard extends CommonEntity{
     @Column(length = 100, nullable = false)
     private String noticeTitle;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne//(cascade = CascadeType.PERSIST)
     @JoinColumn(name="id")
     private Member member;
 

@@ -17,7 +17,7 @@ public class TeamBoard extends CommonEntity{////
     @Column(name = "teamBoardNum")
     private Long teamBoardNum;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne//(cascade = CascadeType.PERSIST)
     @JoinColumn(name="id")
     private Member member;
 

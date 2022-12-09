@@ -17,7 +17,7 @@ public class Member extends CommonEntity{//
     @Id
     private String id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne//(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "teamNum")
     private Team team;
 
