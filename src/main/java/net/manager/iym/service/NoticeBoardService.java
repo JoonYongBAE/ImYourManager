@@ -41,7 +41,8 @@ public interface NoticeBoardService {
                 .noticeTitle(noticeBoard.getNoticeTitle())
                 .noticeContent(noticeBoard.getNoticeContent())
                 .noticeVisitCount(noticeBoard.getNoticeVisitCount())
-                .id(noticeBoard.getMember().getId()).regDate(noticeBoard.getRegDate())
+                .id(noticeBoard.getMember().getId())
+                .regDate(noticeBoard.getRegDate())
                 .modDate(noticeBoard.getModDate())
                 .build();
 

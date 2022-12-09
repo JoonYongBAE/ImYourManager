@@ -80,7 +80,10 @@ public class TeamBoardServiceImpl implements TeamBoardService {
                 .dtoList(dtoList)
                 .total((int)result.getTotalElements())
                 .build();
-
+    }
+    @Override
+    public void updateTeamBoardNum(Long teamBoardNum){
+        teamBoardRepository.updateTeamBoardVisitCount(teamBoardNum);
     }
 }
 

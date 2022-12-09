@@ -2,6 +2,7 @@ package net.manager.iym.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.manager.iym.dto.NoticeBoardDTO;
 import net.manager.iym.dto.TeamBoardDTO;
 import net.manager.iym.dto.paging.PageRequestDTO;
 import net.manager.iym.dto.paging.PageResponseDTO;
@@ -27,10 +28,7 @@ public class TeamBoardController {
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
 
-        //PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
-
-        PageResponseDTO<TeamBoardDTO> responseDTO =
-                teamBoardService.list(pageRequestDTO);
+        PageResponseDTO<TeamBoardDTO> responseDTO = teamBoardService.list(pageRequestDTO);
 
         log.info(responseDTO);
 
@@ -54,14 +52,22 @@ public class TeamBoardController {
         return "redirect:/main/team/teamboard/list";
     }
 
-    @GetMapping("/read")//게시글 확인, 수정 컨트롤러 GET
+    @GetMapping("/read")//게시글 확인
     public void read(Long teamBoardNum, PageRequestDTO pageRequestDTO, Model model){
+        teamBoardService.updateTeamBoardNum(teamBoardNum);
         TeamBoardDTO teamBoardDTO = teamBoardService.readOne(teamBoardNum);
         log.info("teamBoardDTO의 값 확인 : "+teamBoardDTO);
         model.addAttribute("teamBoardDTO", teamBoardDTO);
     }
 
-    @PostMapping("/modify")//조인게시글 수정 컨트롤러 POST
+    @GetMapping("/modify")
+    public void modify(Long teamBoardNum, PageRequestDTO pageRequestDTO, Model model){
+        TeamBoardDTO teamBoardDTO = teamBoardService.readOne(teamBoardNum);
+        log.info(teamBoardDTO);
+        model.addAttribute("teamBoardDTO", teamBoardDTO);
+    }
+
+    @PostMapping("/modify")//
     public String modify(@Valid TeamBoardDTO teamBoardDTO, PageRequestDTO pageRequestDTO,
                          BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){

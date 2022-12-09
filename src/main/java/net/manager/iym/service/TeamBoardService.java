@@ -20,6 +20,8 @@ public interface TeamBoardService {
 
     PageResponseDTO<TeamBoardDTO> list(PageRequestDTO pageRequestDTO);
 
+    void updateTeamBoardNum(Long teamBoardNum);
+
     default TeamBoard dtoToEntity(TeamBoardDTO teamBoardDTO){
 
         TeamBoard teamBoard = TeamBoard.builder()

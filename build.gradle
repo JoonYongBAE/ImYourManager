@@ -57,6 +57,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-security' //스프링 부트 로그인 보안관련 프레임워크
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5' //타임리프에서 인증정보를 사용하기 위해서 사용한다.
+
+    implementation group: 'org.json', name: 'json', version: '20090211'
+
 }
 
 tasks.named('test') {
