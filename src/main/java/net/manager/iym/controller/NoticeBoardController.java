@@ -27,11 +27,8 @@ public class NoticeBoardController {
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
 
-        PageResponseDTO<NoticeBoardDTO> responseDTO =
-                noticeBoardService.list(pageRequestDTO);
-
+        PageResponseDTO<NoticeBoardDTO> responseDTO = noticeBoardService.list(pageRequestDTO);
         log.info(responseDTO);
-
         model.addAttribute("responseDTO", responseDTO);
     }
 
@@ -42,33 +39,52 @@ public class NoticeBoardController {
 
     @PostMapping("/register")
     public String registerPost(@Valid NoticeBoardDTO noticeBoardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-
-        log.info("board POST register.......");
-
+        log.info("noticeboard POST register.......");
         if(bindingResult.hasErrors()) {
             log.info("has errors.......");
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors() );
-            return "redirect:/main/notice/register";
+            return "redirect:/";
         }
 
         log.info(noticeBoardDTO);
-
-        Long noticeBoardNum  = noticeBoardService.register(noticeBoardDTO);
-
-        redirectAttributes.addFlashAttribute("result", noticeBoardNum);
-
+        noticeBoardService.register(noticeBoardDTO);
         return "redirect:/main/notice/list";
     }
 
-    @GetMapping({"/read", "/modify"})
+    @GetMapping("/read")
     public void read(Long noticeBoardNum, PageRequestDTO pageRequestDTO, Model model){
-
+        noticeBoardService.updateNoticeBoardNum(noticeBoardNum);
         NoticeBoardDTO noticeBoardDTO = noticeBoardService.readOne(noticeBoardNum);
-
         log.info(noticeBoardDTO);
+        model.addAttribute("noticeBoardDTO", noticeBoardDTO);
 
-        model.addAttribute("noticeBoardNum", noticeBoardDTO);
+    }
 
+    @GetMapping("/modify")
+    public void modify(Long noticeBoardNum, PageRequestDTO pageRequestDTO, Model model){
+        NoticeBoardDTO noticeBoardDTO = noticeBoardService.readOne(noticeBoardNum);
+        log.info(noticeBoardDTO);
+        model.addAttribute("noticeBoardDTO", noticeBoardDTO);
+    }
+
+    @PostMapping("/modify")
+    public String modify(@Valid NoticeBoardDTO noticeBoardDTO, PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if(bindingResult.hasErrors()){
+            String link = pageRequestDTO.getLink();
+            log.info("modify error...");
+            return "redirect:/main/notice/modify?";
+        }
+        noticeBoardService.modify((noticeBoardDTO));
+        redirectAttributes.addFlashAttribute("result","modified");
+        redirectAttributes.addAttribute("noticeBoardNum",noticeBoardDTO.getNoticeBoardNum());
+        return "redirect:/main/notice/read";
+    }
+
+    @PostMapping("remove")
+    public String remove(NoticeBoardDTO noticeBoardDTO, RedirectAttributes redirectAttributes){
+        Long noticeBoardNum = noticeBoardDTO.getNoticeBoardNum();
+        noticeBoardService.remove(noticeBoardNum);
+        redirectAttributes.addFlashAttribute("result","removed");
+        return "redirect:/main/notice/list";
     }
 
 

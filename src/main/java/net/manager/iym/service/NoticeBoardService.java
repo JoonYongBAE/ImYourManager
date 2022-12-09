@@ -20,6 +20,8 @@ public interface NoticeBoardService {
 
     PageResponseDTO<NoticeBoardDTO> list(PageRequestDTO pageRequestDTO);
 
+    void updateNoticeBoardNum(Long noticeBoardNum);
+
     default NoticeBoard dtoToEntity(NoticeBoardDTO noticeBoardDTO){
 
         NoticeBoard noticeBoard = NoticeBoard.builder()
@@ -28,13 +30,6 @@ public interface NoticeBoardService {
                 .noticeContent(noticeBoardDTO.getNoticeContent())
                 .noticeVisitCount(noticeBoardDTO.getNoticeVisitCount())
                 .build();
-
-//        if(noticeBoardDTO.getFileNames() != null){
-//            noticeBoardDTO.getFileNames().forEach(fileName -> {
-//                String[] arr = fileName.split("_");
-//                noticeBoard.addImage(arr[0], arr[1]);
-//            });
-//        }
 
         return noticeBoard;
     }
@@ -45,16 +40,10 @@ public interface NoticeBoardService {
                 .noticeBoardNum(noticeBoard.getNoticeBoardNum())
                 .noticeTitle(noticeBoard.getNoticeTitle())
                 .noticeContent(noticeBoard.getNoticeContent())
-                .id(noticeBoard.getMember().getId())
-                .regDate(noticeBoard.getRegDate())
+                .noticeVisitCount(noticeBoard.getNoticeVisitCount())
+                .id(noticeBoard.getMember().getId()).regDate(noticeBoard.getRegDate())
                 .modDate(noticeBoard.getModDate())
                 .build();
-
-//        List<String> fileNames =
-//                noticeBoard.getImageSet().stream().sorted().map(boardImage ->
-//                        boardImage.getUuid()+"_"+boardImage.getFileName()).collect(Collectors.toList());
-//
-//        noticeBoardDTO.setFileNames(fileNames);
 
         return noticeBoardDTO;
     }

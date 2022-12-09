@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class NoticeBoardDTO {
 
-    private Long noticeBoardNum; //NotEmpty를 사용하면 변환시 null값이 넘어와 오류가 생김
+    private Long noticeBoardNum;
     //@NotEmpty
     @Size(min = 1, max = 100)
     private String noticeTitle;
@@ -26,7 +26,6 @@ public class NoticeBoardDTO {
     private String id;
     //@NotEmpty
     private Long noticeVisitCount;
-
     //@NotEmpty
     private LocalDateTime regDate;
 

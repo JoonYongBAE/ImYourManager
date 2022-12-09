@@ -37,35 +37,23 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         NoticeBoard noticeBoard = dtoToEntity(noticeBoardDTO);
         Member member = memberRepository.findMemberById(noticeBoardDTO.getId());//멤버에 html에서 받은 id 값을 넣어 조회한다.
         noticeBoard.addMember(member); //변경한 Entity에는 멤버값이 없기 때문에 조인보드에 따로 멤버추가
-
         Long noticeBoardNum = noticeBoardRepository.save(noticeBoard).getNoticeBoardNum();
-
         return noticeBoardNum;
     }
 
     @Override
     public NoticeBoardDTO readOne(Long noticeBoardNum) {
 
-        //board_image까지 조인 처리되는 findByWithImages()를 이용
-        Optional<NoticeBoard> result = noticeBoardRepository.findById(noticeBoardNum);
-
-        NoticeBoard noticeBoard = result.orElseThrow();
-
+        NoticeBoard noticeBoard = noticeBoardRepository.findNoticeBoardByNoticeBoardNum(noticeBoardNum);
         NoticeBoardDTO noticeBoardDTO = entityToDTO(noticeBoard);
-
         return noticeBoardDTO;
     }
 
     @Override
     public void modify(NoticeBoardDTO noticeBoardDTO) {
 
-        Optional<NoticeBoard> result = noticeBoardRepository.findById(noticeBoardDTO.getNoticeBoardNum());
-
-        NoticeBoard noticeBoard = result.orElseThrow();
-
+        NoticeBoard noticeBoard = noticeBoardRepository.findNoticeBoardByNoticeBoardNum(noticeBoardDTO.getNoticeBoardNum());
         noticeBoard.change(noticeBoardDTO.getNoticeTitle(), noticeBoardDTO.getNoticeContent());
-
-
         noticeBoardRepository.save(noticeBoard);
 
     }
@@ -87,7 +75,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         Page<NoticeBoard> result = noticeBoardRepository.searchAll(types, keyword, pageable);
 
         List<NoticeBoardDTO> dtoList = result.getContent().stream()
-                .map(board -> modelMapper.map(board,NoticeBoardDTO.class)).collect(Collectors.toList());
+                .map(noticeBoard -> entityToDTO(noticeBoard)).collect(Collectors.toList());
 
 
         return PageResponseDTO.<NoticeBoardDTO>withAll()
@@ -98,23 +86,10 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     }
 
-
-//
-//    @Override
-//    public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
-//        String[] types = pageRequestDTO.getTypes();
-//        String keyword = pageRequestDTO.getKeyword();
-//        Pageable pageable = pageRequestDTO.getPageable("noticeboardNum");
-//
-//        Page<BoardListAllDTO> result = noticeBoardRepository.searchWithAll(types, keyword, pageable);
-//
-//        return PageResponseDTO.<BoardListAllDTO>withAll()
-//                .pageRequestDTO(pageRequestDTO)
-//                .dtoList(result.getContent())
-//                .total((int)result.getTotalElements())
-//                .build();
-//    }
-
+    @Override
+    public void updateNoticeBoardNum(Long noticeBoardNum){
+        noticeBoardRepository.updateNoticeVisitCount(noticeBoardNum);
+    }
 
 }
 

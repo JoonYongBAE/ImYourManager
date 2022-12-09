@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Schdule</title>
+  <!--    <link href='fullcalendar/main.css' rel='stylesheet'/>-->
+  <!--    <script src='fullcalendar/main.js'></script>-->
+
+  <!-- jquery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <!-- fullcalendar CDN -->
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />   <!--css먼저 적어주기-->
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+  <!-- fullcalendar 언어 CDN -->
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+  <!--popop CDN-->
+
+  <style>
+    .fc-toolbar-chunk {
+      display: flex;      // 일렬로 나란히
+    align-items: center; // 수직 가운데 정렬
+    }
+    /*thead .fc-col-header-cell fc-day fc-day-sat{ color:#0000FF; }    !* 토요일 *!*/
+    /*thead .fc-col-header-cell fc-day fc-day-sun{ color:#FF0000; }    !* 일요일 *!*/
+    .modal{
+      position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.8); top:0; left:0; display:none;
+    }
+
+    .modal_content{
+      width:400px; height:200px;
+      background:#fff; border-radius:10px;
+      position:relative; top:50%; left:50%;
+      margin-top:-100px; margin-left:-200px;
+      text-align:center;
+      box-sizing:border-box; padding:74px 0;
+      line-height:23px; cursor:pointer;
+    }
+
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {   // resources 다 업로드 한후 이문장 이후에 내용작성
+
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+
+        googleCalendarApiKey: 'AIzaSyBa6ljJAzeR7MfYWgRQZ_tPFpNwPZr73h0',
+        initialView: 'dayGridMonth',
+        local: 'ko',
+        views: {
+          dayGridMonth: {buttonText: '달력'},
+          listMonth: {buttonText: '목록'}
+        },
+        locale: 'ko',
+        headerToolbar: {
+          right: 'dayGridMonth,listMonth',
+          center: 'prev title next',
+          left: 'addEventButton'
+        },
+        eventSources: [
+          {
+            googleCalendarId: 'b350dee2d46d17f4c5421bc54cfe7bfbf25c010bdf8c4f58289129e38466427a@group.calendar.google.com'
+          }, {
+            googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+            className: 'ko_event',
+            color: 'white',
+            textColor: 'red'
+          }],
+        displayEventTime: true,
+        displayEventEnd: true,
+        events : [
+          function() {
+            var arr = {
+              id:'id',
+              start:'start'+'T'+'startTime',
+              end:'start'+'T'+'endTime',
+              url: 'title',
+              extendedProps:{ type:'content'}
+            };
+            $.ajax({
+              contentType:'application/json',
+              dataType:'json',
+              url:'schedule/schedule_main',
+              type:'GET',
+              async:false,
+              success:function(resp){
+                arr = resp;
+              },
+              error:function (){
+                alert("가져오기 실패")
+              }
+            })
+            return arr;
+          }],
+        eventClick: function (event){
+          console.log(event)
+          return false;
+        },
+
+        footerToolbar: {
+          right: 'today'
+        },
+        interactive:true,
+        customButtons: {
+          addEventButton: {
+            text: '일정등록',
+            click: function () {
+              //window.name= "schedule_main";   // 메인페이지 이름
+              var popupX = (window.screen.width / 2) - (700 / 2);
+              var popupY = (window.screen.height / 2) - (460 / 2);
+              window.open('addScheduleForm.html', '일정등록', 'height=460, width=700, left=' + popupX + ', top=' + popupY + ', screenX=' + popupX + ', screenY= ' + popupY);
+              //폼작성이 완료되고 등록처리가 되면 calendar.addEvent
+            },
+          }
+        },
+        droppable: true,
+        editable: true,
+        selectable:true
+      });
+      calendar.render();
+    });
+
+
+  </script>
+
+</head>
+<body>
+<!--<h1 style="text-align: center">일정 관리</h1>-->
+<div id='calendar' ></div>
+
+<div class="modal">
+  <div class="modal_content"
+       title="클릭하면 창이 닫힙니다.">
+
+  </div>
+</div>
+</body>
+</html>
+
+
+
