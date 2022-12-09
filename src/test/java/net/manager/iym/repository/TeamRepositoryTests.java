@@ -15,7 +15,7 @@ public class TeamRepositoryTests {
     @Test
     public void testRegisterTeam(){
         Team team = Team.builder()
-                .teamAge("30대").teamName("ict300").teamType("남성").teamLocal("춘천").teamLevel("3")
+                .teamAge("30대").teamName("ict300").teamType("남성").teamLocal1("춘천").teamLocal2("우두동").teamLevel("3")
                 .teamInfo("안녕하세요 매주 축구합니다.")
                 .build();
             teamRepository.save(team);

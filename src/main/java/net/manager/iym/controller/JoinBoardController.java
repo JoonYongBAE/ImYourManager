@@ -7,6 +7,7 @@ import net.manager.iym.dto.JoinBoardDTO;
 import net.manager.iym.dto.paging.PageRequestDTO;
 import net.manager.iym.dto.paging.PageResponseDTO;
 import net.manager.iym.service.JoinBoardService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,7 +36,8 @@ public class JoinBoardController {//
 
         model.addAttribute("responseDTO", responseDTO); //담은 조인보드DTO 리스트를 뷰로 보내줌
     }
-    @GetMapping("/register") //게시글 등록 컨트롤러 GET
+    @GetMapping("/register")//게시글 등록 컨트롤러 GET
+    @PreAuthorize("hasRole('TEAMLEADER')")
     public void joinBoardRegisterGet(){
 
     }
