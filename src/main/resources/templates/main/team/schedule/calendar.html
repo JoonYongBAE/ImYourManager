@@ -67,30 +67,30 @@
           }],
         displayEventTime: true,
         displayEventEnd: true,
-        events : [
-          function() {
-            var arr = {
-              id:'id',
-              start:'start'+'T'+'startTime',
-              end:'start'+'T'+'endTime',
-              url: 'title',
-              extendedProps:{ type:'content'}
-            };
-            $.ajax({
-              contentType:'application/json',
-              dataType:'json',
-              url:'schedule/schedule_main',
-              type:'GET',
-              async:false,
-              success:function(resp){
-                arr = resp;
-              },
-              error:function (){
-                alert("가져오기 실패")
-              }
-            })
-            return arr;
-          }],
+        // events : [
+        //   function() {
+        //     var arr = {
+        //       id:'id',
+        //       start:'start'+'T'+'startTime',
+        //       end:'start'+'T'+'endTime',
+        //       url: 'title',
+        //       extendedProps:{ type:'content'}
+        //     };
+        //     $.ajax({
+        //       contentType:'application/json',
+        //       dataType:'json',
+        //       url:'schedule/schedule_main',
+        //       type:'GET',
+        //       async:false,
+        //       success:function(resp){
+        //         arr = resp;
+        //       },
+        //       error:function (){
+        //         alert("가져오기 실패")
+        //       }
+        //     })
+        //     return arr;
+        //   }],
         eventClick: function (event){
           console.log(event)
           return false;
@@ -127,12 +127,6 @@
 <!--<h1 style="text-align: center">일정 관리</h1>-->
 <div id='calendar' ></div>
 
-<div class="modal">
-  <div class="modal_content"
-       title="클릭하면 창이 닫힙니다.">
-
-  </div>
-</div>
 </body>
 </html>
 
