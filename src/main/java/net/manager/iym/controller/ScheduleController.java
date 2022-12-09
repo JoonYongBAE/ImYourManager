@@ -36,13 +36,17 @@ public class ScheduleController {
     private final ScheduleRepository scheduleRepository;
     private final Team team;
 
+    @PreAuthorize("hasRole('TEAMLEADER,TEAMMEMBER')")
     @GetMapping(value = "/schedule_main")   //팀페이지에서 경기일정 눌렀을 때
-    public JSONArray scheduleMain(){
+    public JSONArray scheduleMain() {
          JSONArray list = scheduleService.getJsonArray(team.getTeamNum());
          log.info(list);
          return list;  // json array로 내보내기.
+
     }
-    @PreAuthorize("hasRole('TEAMLEADER')")    @PostMapping("/addSchedule")
+
+    @PreAuthorize("hasRole('TEAMLEADER')")
+    @PostMapping("/addSchedule")
     public String newSchedule(@RequestBody @Valid ScheduleDTO scheduleDTO, Errors errors, Model model) {
 
         log.info(scheduleDTO);
@@ -65,6 +69,7 @@ public class ScheduleController {
 
         return "redirect:schedule/schedule_main"; // 등록성공하면 메인페이지로 이동.
     }
+    @PreAuthorize("hasRole('TEAMLEADER,TEAMMEMBER')")
     @PostMapping("/readOne/{teamNum}/{scheduleNum}")
     public ScheduleDTO selectOne(@RequestBody Map<String, String> scheduleNum){
         ScheduleDTO scheduleDTO = scheduleService.readOne(Long.valueOf(scheduleNum.get("data")));
@@ -73,6 +78,7 @@ public class ScheduleController {
         return scheduleDTO;
 
     }
+
 
 
 }
