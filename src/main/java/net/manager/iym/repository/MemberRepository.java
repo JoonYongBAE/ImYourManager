@@ -2,10 +2,14 @@ package net.manager.iym.repository;
 
 import net.manager.iym.domain.Member;
 import net.manager.iym.domain.Team;
+import org.hibernate.annotations.SQLUpdate;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +26,8 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     @Query("select m from Member m where m.team = :team")
     List<Member> findMembersByTeam(Team team);
 
-
-
+    @Modifying
+    @Transactional//update와 delete문에는 넣어주어야함
+    @Query("update Member m set m.team = null where m.team = :team")
+    void updateDeleteTeam(Team team); //update는 void를 사용해야함. List에 담을 수 없음
 }

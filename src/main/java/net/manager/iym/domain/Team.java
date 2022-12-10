@@ -41,6 +41,17 @@ public class Team {
     @Column(length = 200)
     private String teamInfo;
 
+    public void changeTeam(String teamName,String teamInfo, String teamAge,
+         String teamType, String teamLevel, String teamLocal1, String teamLocal2
+         ){
+        this.teamName = teamName;
+        this.teamInfo = teamInfo;
+        this.teamAge = teamAge;
+        this.teamType = teamType;
+        this.teamLevel = teamLevel;
+        this.teamLocal1 = teamLocal1;
+        this.teamLocal2 = teamLocal2;
+    }
 
 
 }

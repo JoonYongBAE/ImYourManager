@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -25,9 +27,9 @@ public class MemberRepositoryTests {
     private TeamRepository teamRepository;
     @Test
     public void insertMember(){ //멤버 인서트 + 팀 강제 주입 테스트 성공
-        Optional<Team> result = teamRepository.findById(1l);
+        Optional<Team> result = teamRepository.findById(6l);
         Team team = (Team)result.orElseThrow();//팀 null값 익셉션 해준 테스트
-        IntStream.rangeClosed(1,10).forEach(i->{
+        IntStream.rangeClosed(1,3).forEach(i->{
             Member member = Member.builder().id("member"+i).team(team)
                     .pass(passwordEncoder.encode("1111"))
                     .mail("ict"+i+"@naver.com").gender("man").phone("010123456"+i)
@@ -58,5 +60,12 @@ public class MemberRepositoryTests {
         Member mn1206 = memberRepository.findMemberById("mn1206");
         log.info("bjy7883의 담긴 값 확인 : "+bjy7883);
         log.info("mn1206의 담긴 값 확인 : "+mn1206);
+    }
+    @Test
+    public void testMemberTeamUpdate(){
+        Team team = teamRepository.findTeamByTeamNum(3l);
+        log.info("team :" + team);
+        memberRepository.updateDeleteTeam(team);
+
     }
 }
