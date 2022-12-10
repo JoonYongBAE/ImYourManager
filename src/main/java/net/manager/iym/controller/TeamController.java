@@ -52,4 +52,3 @@ public class TeamController {
         return "redirect:/team";   //일단 팀등록후 팀게시판으로 (팀페이지 바로 생성해서 띄운다면 변경해야함.)
     }
 }
-0

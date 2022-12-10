@@ -91,20 +91,22 @@
 
                   var calendarEl = document.getElementById('calendar');
                       var calendar = new FullCalendar.Calendar(calendarEl, {
-                          timeZone:'UTC',
                           googleCalendarApiKey: 'AIzaSyBa6ljJAzeR7MfYWgRQZ_tPFpNwPZr73h0',
                           initialView: 'dayGridMonth',
-                          local: 'en',
                           views: {
                               dayGridMonth: {buttonText: '달력'},
-                              listMonth: {buttonText: '목록'}
+                              listMonth: {buttonText: '목록'},
+                              customButtons: 'addEventButton'
                           },
+                          titleFormat: function(date) { // title 설정
+                              return date.date.year +"년 "+(date.date.month +1)+"월";
+                          }  ,
                           headerToolbar: {
                               right: 'dayGridMonth,listMonth',
                               center: 'prev title next',
-                              left: 'addEventButton'
+                               left: 'addEventButton'
                           },
-                          eventTimeFormat: { // like '14:30:00'
+                          eventTimeFormat: { // like '14:30:00',
                               hour: 'numeric',
                               minute: '2-digit',
                               meridiem: false
@@ -116,52 +118,66 @@
                                   googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
                                   className: 'ko_event',
                                   color: 'white',
-                                  textColor: 'red'
+                                  textColor: 'red',
                               }],
                           displayEventTime: true,
                           displayEventEnd: true,
-                          eventClick: function(arg) {
-                              // 있는 일정 클릭시,
-                              console.log("#등록된 일정 클릭#");
-                              console.log(arg.event);
-
-                              if (confirm('일정을 삭제하시겠습니까?')) {
-                                  arg.event.remove()
-                              }
-                          },
                           footerToolbar: {
                               right: 'today'
                           },
                           interactive:true,
+                          // dateClick:function (arg){
+                          //      modal('my_modal');
+                          //     const start_time1 = document.getElementById('start_time').getHours();
+                          //     const start_time2 = document.getElementById('start_time').getMinutes();
+                          //     const end_time1= document.getElementById('end_time').getHours();
+                          //     const end_time2 = document.getElementById('end_time').getMinutes();
+                          //     const ground = document.getElementById('ground').val;
+                          //     const type = document.getElementsByName('p_type').values().toString();
+                          //
+                          //     calendar.addEvent({
+                          //         title: ground,
+                          //         start: arg.start+"T"+start_time1+":"+start_time2,
+                          //         end: arg.end+"T"+end_time1+":"+end_time2,
+                          //         extendedProps:{
+                          //             p_type:type
+                          //         }
+                          //     });
+                          //     calendar.unselect();
+                          // },
                           customButtons: {   //사용자 정의로 생성된 버튼
                               addEventButton: {
                                   text: '일정등록',
-                                  click: function() {  // 버튼을 클릭했을 때 모달창 띄우기
-                                      modal('my_modal');
-                                      const date = document.getElementById('day');
-                                      const start_time = document.getElementById('start_time');
-                                      const end_time= document.getElementById('end_time');
-                                      const ground = document.getElementById('ground');
-                                      // const  type= document.getElementsByName('p_type').values();
-                                      calendar.addEvent({
-                                          title: ground,
-                                          start: date+'T'+start_time,
-                                          end: date+'T'+end_time,
-                                          className: ['p_type']
-                                      });
-                                      console.log(start_time);
-                                      calendar.unselect();
-                                  }
+                                  click: function (arg){
+                                      // opens events in a popup window
+                                      window.open('https://calendar.google.com/calendar','', 'width=1000,height=700');
+
+                                      arg.jsEvent.preventDefault() // don't navigate in main tab
+
+                          //             modal('my_modal');
+                          //             const day = arg.start
+                          //             const start_time = document.getElementById('start_time');
+                          //             const end_time= document.getElementById('end_time');
+                          //             const ground = document.getElementById('ground');
+                          //             // const  type= document.getElementsByName('p_type').values();
+                          //             calendar.addEvent({
+                          //                 title: ground,
+                          //                 start: day+'T'+start_time,
+                          //                 end: day+'T'+end_time,
+                          //
+                          //             });
+                          //             console.log(start_time);
+                          //             calendar.unselect();
+                                 }
                               }
                           },
                           droppable: true,
                           editable: true,
                           selectable:true
-
                       });
                       calendar.render();
             });
-
+<!--================================================================================-->
        function modal(id) {
            const zIndex = 9999;
            const modal = $('#' + id);
@@ -238,41 +254,40 @@
 
 </head>
 <!--<h1 style="text-align: center">일정 관리</h1>-->
+<body>
 <div id='calendar' ></div>
 
-<div id="my_modal">
-    <form >
-        <div id="container">
-            <fieldset>
-                <legend>
-                    <h2>일정 등록</h2>
-                </legend>
-                <ul>
-                    <li><label for="day">날 짜</label> <input type='text' class='datepicker' id='day' name= 'day' style='width:140px;'required></li>
-                    <li><label for="time">시간</label>
-                        <input class="timepicker" type="text" id="start_time"  name="scheduleStartTime"  required placeholder="시작시간">
-                        ~ <input class="timepicker" type="text" id="end_time" name="scheduleEndTime"  required placeholder="종료시간"></li>
+<!--<div id="my_modal">-->
+<!--    <form >-->
+<!--        <div id="container">-->
+<!--            <fieldset>-->
+<!--                <legend>-->
+<!--                    <h2>일정 등록</h2>-->
+<!--                </legend>-->
+<!--                <ul>-->
+<!--&lt;!&ndash;                    <li><label for="day">날 짜</label> <input type='text' class='datepicker' id='day' name= 'day' style='width:140px;'required></li>&ndash;&gt;-->
+<!--                    <li><label for="time">시간</label>-->
+<!--                        <input class="timepicker" type="text" id="start_time"  name="scheduleStartTime"  required placeholder="시작시간">-->
+<!--                        ~ <input class="timepicker" type="text" id="end_time" name="scheduleEndTime"  required placeholder="종료시간"></li>-->
 
-                    <li><label for="ground">장 소</label> <input type="text"
-                                                               id="ground" placeholder="ex)영등포공원 풋살장" required>
+<!--                    <li><label for="ground">장 소</label> <input type="text"-->
+<!--                                                               id="ground" placeholder="ex)영등포공원 풋살장" required>-->
+<!--&lt;!&ndash;                    <li ><label  name="p_type">경기종류</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <input type="radio" class="p_type" value="자체전" checked><span>자체전</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <input type="radio" class="p_type" value="매치"><span>매칭</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </li>&ndash;&gt;-->
+<!--                </ul>-->
+<!--            </fieldset>-->
+<!--            <div class="buttons">-->
+<!--                <button type="submit" onclick="addEventListener()">등 록</button>-->
+<!--                <button type="reset" id="x">취 소</button>-->
+<!--            </div>-->
 
-                    <li><label  name="p_type">경기종류</label>
-                        <input type="radio" class="p_type" value="자체전" checked><span>자체전</span>
-                        <input type="radio" class="p_type" value="매치"><span>매칭</span>
-                    </li>
-
-                </ul>
-            </fieldset>
-            <div class="buttons">
-                <button type="submit" onclick="addSchedule()">등 록</button>
-                <button type="reset" id="x">취 소</button>
-            </div>
-
-        </div>
-    </form>
-<!--    <a class="modal_close_btn">닫기</a>-->
-</div>
-
+<!--        </div>-->
+<!--    </form>-->
+<!--&lt;!&ndash;    <a class="modal_close_btn">닫기</a>&ndash;&gt;-->
+<!--</div>-->
+</body>
 </html>
 
 
