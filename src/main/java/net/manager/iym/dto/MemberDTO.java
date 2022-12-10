@@ -21,7 +21,7 @@ public class MemberDTO {
     @NotEmpty
     private String mail;
 
-//    private Team team;
+    private Team team;
     @NotEmpty
     private String phone;
     @NotEmpty

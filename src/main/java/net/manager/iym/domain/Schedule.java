@@ -18,7 +18,7 @@ public class Schedule {
     @Column(name = "scheduleNum")
     private Long scheduleNum;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne//(cascade = CascadeType.PERSIST)
     @JoinColumn(name="id")
     private Member member;
 

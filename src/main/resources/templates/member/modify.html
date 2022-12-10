@@ -14,7 +14,7 @@
             <div class="card-header">
                 마이페이지
             </div>
-            <form th:action="@{/member/modify}" method="post" id="registerForm">
+            <form th:action="@{index1}" method="post" id="registerForm">
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">아이디</span>
@@ -23,12 +23,12 @@
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">비밀번호</span>
-                    <input type="text" class="form-control" th:value="${memberDTO.pass}" name="pass">
+                    <input type="password" class="form-control" th:value="${memberDTO.pass}" name="pass">
                 </div>
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">EMAIL</span>
-                    <input type="text" class="form-control" th:value="${memberDTO.mail}" name="mail">
+                    <input type="email" class="form-control" th:value="${memberDTO.mail}" name="mail">
                 </div>
 
                 <div class="input-group mb-3">

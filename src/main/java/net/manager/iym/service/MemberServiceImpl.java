@@ -3,6 +3,7 @@ package net.manager.iym.service;
 import lombok.RequiredArgsConstructor;
 import net.manager.iym.domain.Member;
 import net.manager.iym.domain.MemberGrade;
+import net.manager.iym.domain.TeamBoard;
 import net.manager.iym.dto.MemberDTO;
 import net.manager.iym.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
@@ -10,6 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -53,8 +57,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public void modify(MemberDTO memberDTO) {
+        memberDTO.setPass(bCryptPasswordEncoder.encode(memberDTO.getPass()));
         Member member = memberRepository.findMemberById(memberDTO.getId());
-        member.change(memberDTO.getPass(), memberDTO.getMail(), member.getPhone(), memberDTO.getMemberLoc());
+        member.change(memberDTO.getPass(), memberDTO.getMail(), memberDTO.getPhone(), memberDTO.getMemberLoc());
         memberRepository.save(member);
     }
 
