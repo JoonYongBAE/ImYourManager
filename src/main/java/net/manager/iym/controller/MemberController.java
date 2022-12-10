@@ -6,6 +6,7 @@ import net.manager.iym.dto.MemberDTO;
 
 import net.manager.iym.service.MemberService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,5 +57,35 @@ public class MemberController {
         memberService.register(memberDTO);
         return "redirect:/member/login";
     }
+    @GetMapping("/mypage")
+    public void readMypage(Model model){
+        MemberDTO memberDTO = memberService.readMember();
+        log.info(memberDTO);
+        model.addAttribute("memberDTO", memberDTO);
+    }
+    @GetMapping("/modify")
+    public void modify(Model model){
+        MemberDTO memberDTO = memberService.readMember();
+        log.info(memberDTO);
+        model.addAttribute("memberDTO",memberDTO);
+    }
+
+    @PostMapping("/modify")
+    public String modify(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        memberService.modify((memberDTO));
+        redirectAttributes.addFlashAttribute("result","modified");
+        redirectAttributes.addAttribute("id",memberDTO.getId());
+        return "redirect:/member/mypage";
+    }
+
+    @PostMapping("/remove")
+    public String delete(MemberDTO memberDTO, RedirectAttributes redirectAttributes){
+        String id = memberDTO.getId();
+        memberService.remove(id);
+        redirectAttributes.addFlashAttribute("result","removed");
+        return "redirect:/member/login";
+    }
+
+
 
 }

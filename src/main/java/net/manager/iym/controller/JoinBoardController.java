@@ -37,7 +37,7 @@ public class JoinBoardController {//
         model.addAttribute("responseDTO", responseDTO); //담은 조인보드DTO 리스트를 뷰로 보내줌
     }
     @GetMapping("/register")//게시글 등록 컨트롤러 GET
-    @PreAuthorize("hasRole('TEAMLEADER')")
+    //@PreAuthorize("hasRole('TEAMLEADER')")
     public void joinBoardRegisterGet(){
 
     }

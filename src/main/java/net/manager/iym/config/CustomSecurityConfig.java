@@ -71,6 +71,9 @@ public class CustomSecurityConfig {//로그인을 안하면 보드에 접근을 
                 .logoutSuccessUrl("/index1")
                 .invalidateHttpSession(true);
 
+//        http.authorizeRequests()
+//                        .antMatchers("notice/register").hasRole("ADMIN"); //ADMIN권한이 있는 사람만 접근 가능
+
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
 
      //   http.oauth2Login().loginPage("/member/login").successHandler(authenticationSuccessHandler());

@@ -78,5 +78,12 @@ public class Member extends CommonEntity{//
     public void clearGrade(){
         this.gradeSet.clear();
     }
+
+    public void change(String pass, String mail, String phone, String memberLoc){
+        this.pass = pass;
+        this.mail = mail;
+        this.phone = phone;
+        this.memberLoc = memberLoc;
+    }
 }
 

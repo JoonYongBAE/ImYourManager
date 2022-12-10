@@ -6,6 +6,8 @@ import net.manager.iym.domain.MemberGrade;
 import net.manager.iym.dto.MemberDTO;
 import net.manager.iym.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,17 +35,26 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public MemberDTO readMember(String id) {
-        return null;
+    public MemberDTO readMember() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String id = ((UserDetails) principal).getUsername();
+        Member member = memberRepository.findMemberById(id);
+        MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
+        return memberDTO;
     }
 
     @Override
     public void modify(MemberDTO memberDTO) {
-
+        memberDTO.setPass(bCryptPasswordEncoder.encode(memberDTO.getPass()));
+        Member member = memberRepository.findMemberById(memberDTO.getId());
+        member.change(memberDTO.getPass(), memberDTO.getMail(), memberDTO.getPhone(), memberDTO.getMemberLoc());
+        memberRepository.save(member);
     }
 
     @Override
-    public void delete(String id) {
-
+    public void remove(String id) {
+        memberRepository.deleteById(id);
     }
+
+
 }

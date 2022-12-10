@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.manager.iym.domain.Member;
 import net.manager.iym.repository.MemberRepository;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -19,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional//하나씩만 실행하도록 설정해준다.
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {//인터페이스르 연결해주고 한개의 메소드를 오버라이딩해준다.
+public class CustomUserDetailsService implements UserDetailsService {//인터페이스를 연결해주고 한개의 메소드를 오버라이딩해준다.
 
     private final MemberRepository memberRepository;
     @Override
@@ -41,4 +44,19 @@ public class CustomUserDetailsService implements UserDetailsService {//인터페
         log.info("---memberSecurityDTO 작동 시점확인---" +memberSecurityDTO);
     return memberSecurityDTO; //컨트롤러에게 던져준다.
     }
+//    public Collection<? extends GrantedAuthority> getAuthorities() {  //권한 만들기 모르겠음!
+//
+//        Member member;
+//        Collection<GrantedAuthority> collect = new ArrayList<>();
+//        collect.add(new GrantedAuthority() {
+//
+//            public String getAuthority() {
+//                return member.getRole().toString();
+//            }
+//        });
+//        return collect;
+//    }
+
+
+
 }
