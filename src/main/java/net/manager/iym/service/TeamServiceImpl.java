@@ -20,12 +20,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TeamServiceImpl implements TeamService {
 
     private final ModelMapper modelMapper;
@@ -58,13 +60,31 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void modify(TeamDTO teamDTO) {
+        Team team = teamRepository.findTeamByTeamNum(teamDTO.getTeamNum());
+        team.changeTeam(teamDTO.getTeamName(),teamDTO.getTeamInfo(), teamDTO.getTeamAge(),
+                teamDTO.getTeamType(), teamDTO.getTeamLevel(), teamDTO.getTeamLocal1(), teamDTO.getTeamLocal2());
+        teamRepository.save(team);//팀 정보 수정
     }
 
     @Override
-    public void remove(Long teamNum) {//보류
-
+    public void remove(Long teamNum) {//팀삭제
+        Team team = teamRepository.findTeamByTeamNum(teamNum);//팀num을 받아와 팀을 검색
+        List<Member> memberList = memberRepository.findMembersByTeam(team);//등급을 낮추기 위해 현재 팀원들을 수집
+        for (Member member : memberList){//팀 멤버의 등급을 낮추는 for문
+            member.removeGrade(MemberGrade.TEAMMEMBER);
+            member.removeGrade(MemberGrade.TEAMLEADER);
+            memberRepository.save(member);//?????이 과정을 crud로 해결할 수 있다면 어떻게 query문을 짜야 하는지?
+        }
+        memberRepository.updateDeleteTeam(team);//해당팀이 소속된 멤버에서 팀을 제거해주는 업데이트를 실행
+       teamRepository.deleteByTeamNum(teamNum);//팀원이 다 제거되었기 때문에 팀을 삭제하는 Delete문 실행 가능
     }
-
+    @Override
+    public void removeTeamMember(String id) {//팀원 강퇴
+        Member member = memberRepository.findMemberById(id);
+        member.changeTeam(null);
+        member.removeGrade(MemberGrade.TEAMMEMBER);
+        memberRepository.save(member);
+    }
     @Override
     public void teamJoin(TeamDTO teamDTO) {//team에 로그인한 사람을 가입시킨다.
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

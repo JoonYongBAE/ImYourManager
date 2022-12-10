@@ -75,6 +75,8 @@ public class Member extends CommonEntity{//
         this.gradeSet.add(memberGrade);
     }
 
+    public void removeGrade(MemberGrade memberGrade) {this.gradeSet.remove(memberGrade);}
+
     public void clearGrade(){
         this.gradeSet.clear();
     }
