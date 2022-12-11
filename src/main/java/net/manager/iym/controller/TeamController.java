@@ -4,13 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.manager.iym.domain.Member;
 import net.manager.iym.domain.Team;
-import net.manager.iym.dto.JoinBoardDTO;
-import net.manager.iym.dto.MemberDTO;
-import net.manager.iym.dto.MemberListDTO;
-import net.manager.iym.dto.TeamDTO;
+import net.manager.iym.dto.*;
 import net.manager.iym.dto.paging.PageRequestDTO;
 import net.manager.iym.dto.paging.PageResponseDTO;
 import net.manager.iym.service.TeamService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,12 +28,12 @@ import java.util.List;
 public class TeamController {
     private final TeamService teamService;
 
+    @PreAuthorize("hasRole('STANDARD')")
     @GetMapping("/register")
     public void teamRegisterGET(){
         //로그인한 사람의 아이디를 받는다.
         //받은 아이디로 팀넘을 확인하고 있을시 돌려보낸다.
         //teamservice.teamcheck    isempty()
-
     }
     @GetMapping("/teammemberlist")
     public void teamMemberList(@RequestParam(value = "teamNum")Long teamNum, Model model){
@@ -66,6 +64,8 @@ public class TeamController {
 
         return "redirect:/main/team/list";
     }
+
+
     @PostMapping("/register")
     public String teamRegisterPOST(@Valid TeamDTO teamDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
        log.info("-----팀생성 컨트롤러 시작-----");
@@ -78,4 +78,34 @@ public class TeamController {
         log.info(teamNum);
         return "redirect:/main/team/list";
     }
+
+    @GetMapping("/modify")
+    public void modify(Long teamNum, PageRequestDTO pageRequestDTO, Model model){
+        TeamDTO teamDTO = teamService.readOne(teamNum);
+        log.info(teamDTO);
+        model.addAttribute("teamDTO", teamDTO);
+    }
+
+    @PostMapping("/modify")//
+    public String modify(@Valid TeamDTO teamDTO, PageRequestDTO pageRequestDTO,
+                         BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()){
+            String link = pageRequestDTO.getLink();
+            log.info("/modify에 결과값이 안넘어옴");//결과값이 바인딩안되면 실행됨
+            return "redirect:/main/team/modify?"+link;
+        }
+        teamService.modify(teamDTO);
+        redirectAttributes.addFlashAttribute("result", "modified");
+        redirectAttributes.addAttribute("teamNum", teamDTO.getTeamNum());//주소값을 지정해줌
+        return "redirect:/main/team/read";
+    }
+
+    @PostMapping("/remove")//조인 게시글 삭제 컨트롤러 POST
+    public String remove(TeamDTO teamDTO, RedirectAttributes redirectAttributes){
+        Long teamNum = teamDTO.getTeamNum();
+        teamService.remove(teamNum);
+        redirectAttributes.addFlashAttribute("result", "removed");
+        return "redirect:/main/team/list";
+    }
+
 }

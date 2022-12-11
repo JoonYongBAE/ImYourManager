@@ -28,6 +28,8 @@ public class TeamBoardDTO {
 
     private LocalDateTime modDate;
 
+    //private Long teamNum;
+
 
 
 }

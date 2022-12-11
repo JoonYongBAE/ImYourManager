@@ -7,6 +7,7 @@ import net.manager.iym.dto.TeamBoardDTO;
 import net.manager.iym.dto.paging.PageRequestDTO;
 import net.manager.iym.dto.paging.PageResponseDTO;
 import net.manager.iym.service.TeamBoardService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
 @RequestMapping("/main/team/teamboard")
 @Log4j2
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('TEAMMEMBER')")
 public class TeamBoardController {
 
     private final TeamBoardService teamBoardService;
@@ -35,6 +37,7 @@ public class TeamBoardController {
         model.addAttribute("responseDTO", responseDTO);
     }
 
+    @PreAuthorize("hasRole('TEAMMEMBER')")
     @GetMapping("/register")
     public void registerGet(){}
 

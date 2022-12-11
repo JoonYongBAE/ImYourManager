@@ -26,6 +26,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/main/team/schedule")
 @Log4j2
+@PreAuthorize("hasRole('TEAMMEMBER')")
 public class ScheduleController {
 
 //    private final ScheduleService scheduleService;
@@ -33,6 +34,7 @@ public class ScheduleController {
 //    private final ScheduleRepository scheduleRepository;
 //    private final Team team;
 
+    @PreAuthorize("hasRole('TEAMMEMBER')")
     @GetMapping(value = "/calendar")   //팀페이지에서 경기일정 눌렀을 때
     public void scheduleMain(){
 //        JSONArray list = scheduleService.getJsonArray(team.getTeamNum());

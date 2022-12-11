@@ -27,16 +27,18 @@ public class MemberRepositoryTests {
     private TeamRepository teamRepository;
     @Test
     public void insertMember(){ //멤버 인서트 + 팀 강제 주입 테스트 성공
-        Optional<Team> result = teamRepository.findById(6l);
+        Optional<Team> result = teamRepository.findById(2l);
         Team team = (Team)result.orElseThrow();//팀 null값 익셉션 해준 테스트
-        IntStream.rangeClosed(1,3).forEach(i->{
-            Member member = Member.builder().id("member"+i).team(team)
+        IntStream.rangeClosed(11,20).forEach(i->{
+            Member member = Member.builder().id("teammember"+i).team(team)
                     .pass(passwordEncoder.encode("1111"))
-                    .mail("ict"+i+"@naver.com").gender("man").phone("010123456"+i)
-                    .name("min"+i).memberLoc("korea")
+                    .mail("team"+i+"@test.com").gender("man").phone("010-1234-5678")
+                    .name("teammember"+i).memberLoc("서울시 마포구")
                     .build();
             member.addGrade(MemberGrade.STANDARD);
             member.addGrade(MemberGrade.TEAMMEMBER);
+//            member.addGrade(MemberGrade.TEAMLEADER);
+//            member.addGrade(MemberGrade.ADMIN);
             memberRepository.save(member);
         });
     }
