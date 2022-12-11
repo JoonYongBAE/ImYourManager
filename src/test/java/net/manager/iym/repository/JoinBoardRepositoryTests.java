@@ -22,7 +22,7 @@ public class JoinBoardRepositoryTests {
     private MemberRepository memberRepository;
     @Test
     public void testJoinBoardInsert(){
-        Member member = memberRepository.findMemberById("bjy961206");
+        Member member = memberRepository.findMemberById("test");
         IntStream.rangeClosed(1,5).forEach(i->{
             JoinBoard joinBoard = JoinBoard.builder()
                     .joinTitle("테스트"+i).joinContent("테스트"+i+"글내용")
@@ -33,7 +33,7 @@ public class JoinBoardRepositoryTests {
         });
     }
     @Test
-    public void testJoinBoardReadOne(){//
+    public void testJoinBoardReadOne(){
         JoinBoard joinBoard = joinBoardRepository.findJoinBoardByJoinBoardNum(17l);
         JoinBoardDTO joinBoardDTO = JoinBoardDTO.builder().joinBoardNum(joinBoard.getJoinBoardNum())
                 .joinTitle(joinBoard.getJoinTitle()).joinContent(joinBoard.getJoinContent())

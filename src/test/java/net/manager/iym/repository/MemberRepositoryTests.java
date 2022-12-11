@@ -28,10 +28,10 @@ public class MemberRepositoryTests {
         Optional<Team> result = teamRepository.findById(1l);
         Team team = (Team)result.orElseThrow();
         IntStream.rangeClosed(1,1).forEach(i->{
-            Member member = Member.builder().id("member33").team(team)
+            Member member = Member.builder().id("member1").team(team)
                     .pass(passwordEncoder.encode("1111"))
                     .mail("ict"+i+"@naver.com").gender("man").phone("01012345"+i)
-                    .name("mingyo").memberLoc("korea")
+                    .name("tester").memberLoc("seoul")
                     .build();
             member.addGrade(MemberGrade.STANDARD);
             if (i>=0){

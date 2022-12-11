@@ -45,7 +45,7 @@
                     <input type="text" class="form-control" th:value="${memberDTO.gender}" readonly>
                 </div>
 
-                <div>
+                <div class="my-4">
                     <a th:href="|@{/member/modify(id=${memberDTO.id})}&${link}|" class="text-decoration-none">
                         <button type="button" class="btn btn-secondary">수정</button>
                     </a>

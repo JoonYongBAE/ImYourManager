@@ -27,7 +27,7 @@ public class MemberServiceTests {
         log.info("---------------------------------------------");
         log.info(memberService.getClass().getName());
         MemberDTO memberDTO = MemberDTO.builder()
-                .memberLoc("seoul").id("member123").pass("1234").name("bjy").gender("man").phone("01031322412").mail("test@test.com") //.team(null)
+                .memberLoc("seoul").id("member123").pass("1234").name("tester").gender("man").phone("01012345678").mail("test@test.com") //.team(null)
                 .build();
         String id = memberService.register(memberDTO);
 

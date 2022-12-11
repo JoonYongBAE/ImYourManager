@@ -11,4 +11,5 @@ public interface TeamService {
     void modify(TeamDTO teamDTO);
     void remove(Long teamNum);
     PageResponseDTO<TeamDTO> list(PageRequestDTO pageRequestDTO);
+
 }
