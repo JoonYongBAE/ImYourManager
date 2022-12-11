@@ -36,7 +36,7 @@ public class TeamServiceTests {
     }
     @Test
     public void testTeamRemove() {
-        teamService.remove(5l);
+        teamService.remove(1l);
 
     }
     @Test
