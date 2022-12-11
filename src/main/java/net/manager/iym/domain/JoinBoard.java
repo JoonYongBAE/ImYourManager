@@ -5,11 +5,11 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Entity
 @Builder
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class JoinBoard extends CommonEntity{//
     @Id

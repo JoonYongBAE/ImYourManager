@@ -4,11 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Entity
 @Builder
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class Team {
 

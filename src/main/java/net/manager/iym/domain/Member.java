@@ -6,10 +6,10 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@NoArgsConstructor
 @Entity
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @ToString
 public class Member extends CommonEntity{//

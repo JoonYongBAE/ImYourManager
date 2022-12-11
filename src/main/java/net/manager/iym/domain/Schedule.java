@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
+@NoArgsConstructor
 @Entity
 @Builder
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class Schedule {
     @Id
