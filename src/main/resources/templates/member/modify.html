@@ -23,9 +23,9 @@
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">비밀번호</span>
-                    <input type="password" class="form-control" th:value="${memberDTO.pass}" name="pass"
-                           pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{5,15}$"
-                           placeholder="영문 대소문자, 숫자, 특수문자를 포함(5~15자리)">
+                    <input type="password" class="form-control" th:value="${memberDTO.pass}" name="pass">
+<!--                           pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{5,15}$"-->
+<!--                           placeholder="영문 대소문자, 숫자, 특수문자를 포함(5~15자리)">-->
                 </div>
 
                 <div class="input-group mb-3">
