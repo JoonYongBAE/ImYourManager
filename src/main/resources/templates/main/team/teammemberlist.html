@@ -30,6 +30,7 @@
                         <th scope="col">핸드폰번호</th>
                         <th scope="col">성별</th>
                         <th scope="col">지역</th>
+<!--                        <th scope="col">팀원강퇴</th>-->
                     </tr>
                     </thead>
 
@@ -40,6 +41,11 @@
                         <td>[[${memberListDTO.phone}]]</td>
                         <td>[[${memberListDTO.gender}]]</td>
                         <td>[[${memberListDTO.memberLoc}]]</td>
+<!--                       <td> <form action="/main/team/removeteammember" method="post">-->
+<!--                            <input type="hidden" name="id" value="${memberListDTO.memberLoc}">-->
+<!--                            <input type="submit" value="강퇴s하기">-->
+
+<!--                        </form></td>-->
                     </tr>
                     </tbody>
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -107,5 +108,12 @@ public class TeamController {
         redirectAttributes.addFlashAttribute("result", "removed");
         return "redirect:/main/team/list";
     }
+//    @PostMapping("/removeteammember")
+//    @PreAuthorize("hasRole('TEAMLEADER')")
+//    public String removeTeamMember(HttpServletRequest httpServletRequest){
+//        String id = httpServletRequest.getParameter("id");
+//         teamService.removeTeamMember(id);
+//         return "redirect:/main/team/list";
+//    }
 
 }
