@@ -1,13 +1,13 @@
 /** 지역구 선택 카테고리 분류
  *
  */
-var cat1_num = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+const cat1_num = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
 	16);
-var cat1_name = new Array('서울', '부산', '대구', '인천', '광주', '대전', '울산', '강원',
+const cat1_name = new Array('서울', '부산', '대구', '인천', '광주', '대전', '울산', '강원',
 	'경기', '경남', '경북', '전남', '전북', '제주', '충남', '충북');
 
-var cat2_num = new Array();
-var cat2_name = new Array();
+const cat2_num = new Array();
+const cat2_name = new Array();
 
 cat2_num[1] = new Array(17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
 	30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41);

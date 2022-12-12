@@ -1,151 +1,150 @@
 <!DOCTYPE html>
-<html lang="ko">
-
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/basic.html}">+
+<meta charset="utf-8"/>
 <head>
-    <meta charset="UTF-8">
-    <title>새로운 팀 등록하기</title>
-    <style>
-        #container {
-            width: 600px;
-            margin: 50px auto;
-        }
+    <title>Team Register Page</title>
 
-        label {
-            width: 80px;
-            float: left;
-            font-weight: bold;
-        }
+</head>
 
-        ul>li {
-            list-style: none;
-            margin: 10px;
-            line-height: 50px;
-        }
+<div layout:fragment="content">
 
-        .buttons {
-            width: 100%;
-            margin-top: 20px;
-            text-align: center;
-            justify-content: center;
-        }
-        #check{
-            background-color:GhostWhite;
-        }
-        .messagef{color:red; font-style: Italic;}
-        .messaget{color:blue; font-style: Italic;}
-    </style>
-<script type="text/javascript">
-    $.ajax(function check(){
-        $("#create").attr("type", "button") //중복체크 안된경우 양식이 전송되지 못하게
-        const teamName = $("#team_name").val(); //사용자가 입력한 입력값
-        $.ajax({
-            type:"get",
-            async:false,
-            url:"team/newTeamForm/checkTeamName",
-            data:teamName,
-            success :function(data){
-                if(data==true){
-                    $("#message").text("이미 사용중인 이름입니다.")
-                    $("#message").addClass("messagef");
-                    $("#message").removeClass("messaget");
-                }else{
-                    $("#message").text("사용가능한 이름입니다.")
-                    $("#message").addClass("messaget");
-                    $("#message").removeClass("messagef");
-                    $("#create").attr("type", "submit");
-                }
-            }
-        })
-    });
-</script>
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Team Register
+                </div>
+                <div class="card-body">
+                    <form id="registerForm" action="/main/team/register" method="post">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">팀이름</span>
+                            <input type="text" id="teamName" name="teamName" class="form-control" onkeyup="checkName()" placeholder="문자10자 이내" value='' autofocus required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span id="chkMsg"></span>
+                        </div>
 
-        <script type="text/javascript" src="js/local.js"></script>   <!-- 지역구 옵션선택 -->
-        <script type="text/javascript" src="js/disable.js" ></script> <!-- 입력값 받았을때 버튼 활성화 되도록 -->
-    </head>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">연령대</span>
+                            <select type="text" name="teamAge" class="form-control">
+                                <option name="t_age" value="">-선택-</option>
+                                <option name="t_age" value="10">10대</option>
+                                <option name="t_age" value="20">20대</option>
+                                <option name="t_age" value="30">30대</option>
+                                <option name="t_age" value="40">40대</option>
+                                <option name="t_age" value="50">50대</option>
+                                <option name="t_age" value="60">60대</option>
+                                <option name="t_age" value="70">70대</option>
+                            </select>
+                        </div>
 
-<body>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">팀유형</span>
+                            <select type="text" name="teamType" class="form-control" required>
+                                <option name="t_type" value="">-선택-</option>
+                                <option name="t_type" value="male">남성팀</option>
+                                <option name="t_type" value="female">여성팀</option>
+                                <option name="t_type" value="mixed">혼성팀</option>
+                                <option name="t_type" value="youth">청소년팀</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">팀지역</span>
 
-<div id="container">
-    <form action="save" method="post" name="newTeam">
+                            <select id="loc"
+                                    name="teamLocal1" onchange="cat1_change(this.value,teamLocal2)"
+                                    class="teamLocal1" required >
+                                <option>-선택-</option>
+                                <option value='1'>서울</option>
+                                <option value='2'>부산</option>
+                                <option value='3'>대구</option>
+                                <option value='4'>인천</option>
+                                <option value='5'>광주</option>
+                                <option value='6'>대전</option>
+                                <option value='7'>울산</option>
+                                <option value='8'>강원</option>
+                                <option value='9'>경기</option>
+                                <option value='10'>경남</option>
+                                <option value='11'>경북</option>
+                                <option value='12'>전남</option>
+                                <option value='13'>전북</option>
+                                <option value='14'>제주</option>
+                                <option value='15'>충남</option>
+                                <option value='16'>충북</option>
 
-        <fieldset>
+                            </select> <select name="teamLocal2" onchange="cat2_change(this.value)" class="form-control">
+                            <option>-선택-</option>
+                        </select>
+                            <script layout:fragment="script" th:inline="javascript" src="js/local.js"></script>   <!-- 지역구 옵션선택 -->
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">실 력</span>
+                            <select name="teamLevel" class="form-control"
+                                    id="level" required>
+                                <option name="t_level" value="">-선택-</option>
+                                <option name="t_level" value="high">상</option>
+                                <option name="t_level" value="middle">중</option>
+                                <option name="t_level" value="low">하</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">팀소개</span>
+                            <textarea name="teamInfo" class="form-control"
+                                      id="info" cols="50" rows="5"
+                                      placeholder="팀에 대한 소개를 간단히 작성해주세요 (문자 200자 내외)"></textarea></li>
+                        </div>
+                        <div class="my-4">
+                            <div class="float-end">
+                                <button type="submit" class="btn btn-primary submitBtn">등 록</button>
+                                <button type="reset" class="btn btn-secondary">취 소</button>
+                            </div>
+                        </div>
+                    </form>
+                </div><!--end card body-->
 
+            </div><!--end card-->
+        </div><!-- end col-->
+    </div><!-- end row-->
 
-            <ul>
-                <li><label for="team_name">팀 이름</label>
-                    <input type="text" id="team_name" name="t_name" onkeydown="disable()" placeholder="문자10자 이내" value='' autofocus required>
-                    <input type="button" id="check" value="중복확인">
-                    <!--                    <input type="hidden" name="idDuplication" value="idUncheck"/>-->
-                    <span id="message"></span>   <!--중복확인의 결과멘트가 나오도록.-->
-                </li>
-
-                <li><label for="boundary">활동 지역</label> <select id="loc"
-                                                                name="h_area1" onChange="cat1_change(this,h_area2)"
-                                                                class="h_area1" required>
-                    <option>-선택-</option>
-                    <option value='1'>서울</option>
-                    <option value='2'>부산</option>
-                    <option value='3'>대구</option>
-                    <option value='4'>인천</option>
-                    <option value='5'>광주</option>
-                    <option value='6'>대전</option>
-                    <option value='7'>울산</option>
-                    <option value='8'>강원</option>
-                    <option value='9'>경기</option>
-                    <option value='10'>경남</option>
-                    <option value='11'>경북</option>
-                    <option value='12'>전남</option>
-                    <option value='13'>전북</option>
-                    <option value='14'>제주</option>
-                    <option value='15'>충남</option>
-                    <option value='16'>충북</option>
-                </select> <select name="h_area2" onChange="cat2_change(this.value)">
-                    <option>-선택-</option>
-                </select></li>
-                <li><label for="age">연령대 </label> <select name="t_age"
-                                                          id="age" required>
-                    <option name="t_age" value="">-선택-</option>
-                    <option name="t_age" value="10">10대</option>
-                    <option name="t_age" value="20">20대</option>
-                    <option name="t_age" value="30">30대</option>
-                    <option name="t_age" value="40">40대</option>
-                    <option name="t_age" value="50">50대</option>
-                    <option name="t_age" value="60">60대</option>
-                    <option name="t_age" value="70">70대</option>
-                </select></li>
-                <li><label for="type">유형</label> <select name="t_type"
-                                                         id="type" required>
-                    <option name="t_type" value="">-선택-</option>
-                    <option name="t_type" value="male">남성팀</option>
-                    <option name="t_type" value="female">여성팀</option>
-                    <option name="t_type" value="mixed">혼성팀</option>
-                    <option name="t_type" value="youth">청소년팀</option>
-                </select></li>
-                <li><label for="level">실력</label> <select name="t_level"
-                                                          id="level" required>
-                    <option name="t_level" value="">-선택-</option>
-                    <option name="t_level" value="high">상</option>
-                    <option name="t_level" value="middle">중</option>
-                    <option name="t_level" value="low">하</option>
-                </select></li>
-                <li><label for="info">팀 소개글</label> <textarea name="t_info"
-                                                              id="info" cols="50" rows="5"
-                                                              placeholder="팀에 대한 소개를 간단히 작성해주세요 (문자 200자 내외)"></textarea></li>
-
-            </ul>
-
-        </fieldset>
-
-        <div class="buttons" >
-            <button type="submit" onclick="">등 록</button>
-            <button type="reset" onclick= "window.close()">취 소</button>
-        </div>
-    </form>
 
 </div>
 
-</body>
+<script layout:fragment="script" th:inline="javascript">
+
+    const error = [[${error}]]
+
+    if (error && error === 'mid') {
+        alert("동일한 MID를 가진 계정이 존재합니다.")
+    }
+</script>
+<script layout:fragment="script" th:inline="javascript">
+    function checkName(){
+        const name = $('#teamName').val();
+        const sendData = {"name": name};
+        $.ajax({
+            url:'/main/team/register/teamName',
+            method:'post',
+            data:sendData,
+            success:function(result) {
+                if (result == false){
+                    $('#chkMsg').css("color","blue");
+                    $('#chkMsg').html(" 사용가능 ");
+                } else {
+                    $('#chkMsg').css("color","red");
+                    $('#chkMsg').html(" 사용불가 ");
+                }
+            },
+            error: function(){
+                alert("에러입니다");
+            }
+        });
+    };
+</script>
 
 
 
-</html>
+
